@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "Data Wrangling in the Tidyverse",
+    "section": "Welcome",
+    "text": "Welcome\nData Wrangling in the Tidyverse v 2\nSplash page provides an overview of the book\n\nR\nmy_list = list(1, 2, 3)\ntypeof(my_list)"
+  },
+  {
+    "objectID": "file_and_path_management.html",
+    "href": "file_and_path_management.html",
+    "title": "1  The Hello World Example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "iteration.html",
+    "href": "iteration.html",
+    "title": "2  Unit 2 example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "reproducible_examples.html",
+    "href": "reproducible_examples.html",
+    "title": "3  Unit 2 example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "parallel_processing.html",
+    "href": "parallel_processing.html",
+    "title": "4  Unit 2 example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "cache.html",
+    "href": "cache.html",
+    "title": "5  Unit 2 example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "simulations.html",
+    "href": "simulations.html",
+    "title": "6  Unit 2 example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "programming.html",
+    "href": "programming.html",
+    "title": "7  Unit 2 example",
+    "section": "",
+    "text": "Hello Quarto World!"
+  },
+  {
+    "objectID": "appendix_quarto_notes.html",
+    "href": "appendix_quarto_notes.html",
+    "title": "Appendix A — Additional Notes",
+    "section": "",
+    "text": "Sample appendix"
+  }
+]
