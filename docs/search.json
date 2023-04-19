@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "appendix_quarto_notes.html#links",
+    "href": "appendix_quarto_notes.html#links",
+    "title": "Appendix A — Quarto Notes",
+    "section": "A.1 Links",
+    "text": "A.1 Links\nInformation on setting up a book: https://quarto.org/docs/books/\nInformation on setting up Github Pages to publish on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs"
+  },
+  {
+    "objectID": "appendix_quarto_notes.html#rendering",
+    "href": "appendix_quarto_notes.html#rendering",
+    "title": "Appendix A — Quarto Notes",
+    "section": "A.2 Rendering",
+    "text": "A.2 Rendering\nHitting the Render button renders the single active chapter.\nCall quarto::quarto_render() to render all documents in the active project directory\nYou can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets"
+  }
+]

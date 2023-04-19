@@ -1,4 +1,4 @@
-# Quarto Notes {#sec-appendix}
+# Quarto Notes
 
 ## Links
 
