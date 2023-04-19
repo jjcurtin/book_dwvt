@@ -8,7 +8,7 @@
 
 <meta name="description" content="TBA">
 
-<title>Data Wrangling in the Tidyverse - 1&nbsp; The Hello World Example</title>
+<title>Data Wrangling in the Tidyverse - 1&nbsp; Best Practices for File and Path Management</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Hello World Example</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -119,37 +119,37 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Hello World Example</span></a>
+  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unit 2 example</span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Iteration</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Unit 2 example</span></a>
+  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Unit 2 example</span></a>
+  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Unit 2 example</span></a>
+  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cache</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unit 2 example</span></a>
+  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simulations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./programming.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Unit 2 example</span></a>
+  <a href="./programming.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Programming Notes</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -162,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_quarto_notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Notes</span></a>
+  <a href="./appendix_quarto_notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Quarto Notes</span></a>
   </div>
 </li>
       </ul>
@@ -172,14 +172,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#use-of-rstudio-projects" id="toc-use-of-rstudio-projects" class="nav-link active" data-scroll-target="#use-of-rstudio-projects"><span class="toc-section-number">1.1</span>  Use of RStudio Projects</a></li>
+  <li><a href="#relative-paths" id="toc-relative-paths" class="nav-link" data-scroll-target="#relative-paths"><span class="toc-section-number">1.2</span>  Relative Paths</a></li>
+  <li><a href="#use-of-here" id="toc-use-of-here" class="nav-link" data-scroll-target="#use-of-here"><span class="toc-section-number">1.3</span>  Use of <code>here()</code></a></li>
+  <li><a href="#sourcing-from-github" id="toc-sourcing-from-github" class="nav-link" data-scroll-target="#sourcing-from-github"><span class="toc-section-number">1.4</span>  Sourcing from Github</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="toc-section-number">1.5</span>  Additional Resources</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/file_and_path_management.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="unit_001" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Hello World Example</span></span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></h1>
 </div>
 
 
@@ -194,9 +204,55 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Hello Quarto World!</p>
+<section id="use-of-rstudio-projects" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="use-of-rstudio-projects"><span class="header-section-number">1.1</span> Use of RStudio Projects</h2>
+<p>The use of RStudio Projects is critical to good managament of your paths and files. When you work within a project, you will have a working directory set within that project (based on where the project files is saved. This working directory can then be combined with relative paths for reading and writing data and other files. It also means that if you share the folders that contain your project (e.g., scripts, data), the paths will continue to work for that colleague as well, regardless of where they situate the folders on their computer.</p>
+<p>Wickham et al., describe the <a href="https://r4ds.hadley.nz/workflow-scripts.html#projects">rationale and benefits</a> for using projects. Please read this! They also <a href="https://r4ds.hadley.nz/workflow-scripts.html#rstudio-projects">clearly describe</a> the steps to set up a new project so I won’t repeat them here.</p>
+<p>For our course, we strongly recommend that you set up a project called “iaml”. Inside that root project folder, you can establish a folder for “homework”, and inside that folder you can have sub-folders for each unit (e.g., “unit_2”, “unit_3”). In addition to the homework folder, you might have folders for exams (e.g., “midterm”) and other material that you save (e.g., “pdfs”).</p>
+</section>
+<section id="relative-paths" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="relative-paths"><span class="header-section-number">1.2</span> Relative Paths</h2>
+<p>You should also get in the habit of setting relative paths (relative to your project root) near the start of your script so that you can call those paths easily throughout. Added bonus, if you move those folders within your project, you just need to change one line of code. For example if your raw data and processed data live in separate folders you might have two paths set:</p>
+<p><code>path_raw &lt;- "data/raw"</code></p>
+<p><code>path_processed &lt;- "data/processed"</code></p>
+<p>You can use these path objects with the <code>here()</code> function, which is described next.</p>
+</section>
+<section id="use-of-here" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="use-of-here"><span class="header-section-number">1.3</span> Use of <code>here()</code></h2>
+<p><code>here()</code> in the package <code>here</code> is a replacement for <code>file.path()</code> that we find to work comparable (and better in a few specific circumstances; e.g., when knitting Rmd files). It is very easy to use if you are using Projects as recommended above. That said, it can also be used with the use of Projects, but we dont review that here because you WILL use projects! To use <code>here()</code>, you should load the <code>here</code> package at the top of your script (i.e., <code>library(here)</code>).</p>
+<p>You can then use <code>here()</code> as a replacement anywhere you would have used <code>file.path()</code></p>
+<p>For example, if you want to load a csv file in the folder that you indicated above by <code>path_raw</code>, you could use this line of code:</p>
+<p><code>d &lt;- read_csv(here(path_raw, "raw_data.csv"))</code></p>
+<p>alternatively, you could supply the relative path directly (though this is not preferred because it can be cumbersome if you move the folder later)</p>
+<p><code>d &lt;- read_csv(here("data/processed", "raw_data.csv"))</code></p>
+</section>
+<section id="sourcing-from-github" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sourcing-from-github"><span class="header-section-number">1.4</span> Sourcing from Github</h2>
+<p>Scripts in public repositories on GithHub can be sourced directly from the remote repository on GitHub using <code>source_url()</code> from the `devtools’ package. To do this, follow these steps:</p>
+<ol type="1">
+<li>Find the url to the specific file/script you would like to source. This can be done by simply clinical on the file through GitHub in your browser. For example, the url to <code>fun_modeling.R</code> in my lab_support repo is:</li>
+</ol>
+<p><code>https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R</code></p>
+<ol start="2" type="1">
+<li>Add <code>?raw=true</code> to the end of that url. For example:</li>
+</ol>
+<p><code>https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R?raw=true</code></p>
+<ol start="3" type="1">
+<li>Pass this url as a string into devtools::source_url()` in your R script. For example:</li>
+</ol>
+<p><code>devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R?raw=true")</code></p>
+<p>Its that easy. Using this method will allow you to continue to use the most up-to-date version of that script even as the repo owner improves it over time. It also doesnt require you to worry about where a local clone of that repo might live on your computer or the computers of anyone with which you share your code.</p>
+</section>
+<section id="additional-resources" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">1.5</span> Additional Resources</h2>
+<ul>
+<li><a href="https://malco.io/2018/11/05/why-should-i-use-the-here-package-when-i-m-already-using-projects/">Blog</a> with links on the use of projects and <code>here()</code> package</li>
+<li><a href="https://bookdown.org/daniel_dauber_io/r4np_book/starting-your-r-projects.html#organising-your-projects">Good advice</a> for folder management in projects.</li>
+<li><a href="https://www.r-bloggers.com/2020/01/rstudio-projects-and-working-directories-a-beginners-guide/">More good advice</a> on projects and file management</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -340,7 +396,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./iteration.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Unit 2 example</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Iteration</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
