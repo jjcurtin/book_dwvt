@@ -12,5 +12,33 @@
     "title": "Appendix A — Quarto Notes",
     "section": "A.2 Rendering",
     "text": "A.2 Rendering\nHitting the Render button renders the single active chapter.\nCall quarto::quarto_render() to render all documents in the active project directory\nYou can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets"
+  },
+  {
+    "objectID": "cache.html",
+    "href": "cache.html",
+    "title": "5  Cache",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\n\ntidymodels_prefer()"
+  },
+  {
+    "objectID": "parallel_processing.html#tune_grid-in-tidymodels",
+    "href": "parallel_processing.html#tune_grid-in-tidymodels",
+    "title": "4  Parallel Processing",
+    "section": "4.1 tune_grid() in tidymodels",
+    "text": "4.1 tune_grid() in tidymodels\nSet up data, resamples, recipe, tuning grid. Will do 3x 10-fold CV to tune an elasticnet glm with a sample size of 1000 and 30 features\n\n# set up data\nn_obs <- 1000\nn_x <- 30\nirr_err <- 5\nd <- MASS::mvrnorm(n = n_obs, mu = rep(0,n_x), Sigma = diag(n_x)) %>% \n    magrittr::set_colnames(str_c(\"x\", 1:n_x)) %>% \n    as_tibble() %>% \n    mutate(error = rnorm(n_obs, 0, irr_err),\n           y = rowSums(across(everything()))) %>% \n    select(-error)\n\n# recipe\nrec <- recipe(y ~ ., data = d)\n\n# 3x 10-fold CV\nset.seed(19690127)\nsplits <- d %>% \n  vfold_cv(v = 10, repeats = 3, strata = \"y\")\n\n# tuning grid\ntune_grid <- expand_grid(penalty = exp(seq(0, 6, length.out = 200)),\n                           mixture = seq(0, 1, length.out = 11))\n\nFirst, let’s benchmark without parallel processing. tune_grid() (and fit_resamples()) default is to allow parallel processing so have to explicitly turn it off using control_grid(). You will NOT do this. It is only to show the benefits of parallel processing.\n\ntic()\nlinear_reg(penalty = tune(), mixture = tune()) %>% \n  set_engine(\"glmnet\") %>% \n  tune_grid(preprocessor = rec, \n            resamples = splits, grid = tune_grid, \n            metrics = metric_set(rmse),\n            control = control_grid(allow_par = FALSE)) # turn off pp\n\n# Tuning results\n# 10-fold cross-validation repeated 3 times using stratification \n# A tibble: 30 × 5\n   splits            id      id2    .metrics             .notes          \n   <list>            <chr>   <chr>  <list>               <list>          \n 1 <split [900/100]> Repeat1 Fold01 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 2 <split [900/100]> Repeat1 Fold02 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 3 <split [900/100]> Repeat1 Fold03 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 4 <split [900/100]> Repeat1 Fold04 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 5 <split [900/100]> Repeat1 Fold05 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 6 <split [900/100]> Repeat1 Fold06 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 7 <split [900/100]> Repeat1 Fold07 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 8 <split [900/100]> Repeat1 Fold08 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 9 <split [900/100]> Repeat1 Fold09 <tibble [2,200 × 6]> <tibble [0 × 3]>\n10 <split [900/100]> Repeat1 Fold10 <tibble [2,200 × 6]> <tibble [0 × 3]>\n# ℹ 20 more rows\n\ntoc()\n\n66.39 sec elapsed\n\n\nNow allow use of parallel processing (the default). No plan is needed here (consistent with findings for foreach()). Yay!\n\ntic()\nlinear_reg(penalty = tune(), mixture = tune()) %>% \n  set_engine(\"glmnet\") %>% \n  tune_grid(preprocessor = rec, \n            resamples = splits, grid = tune_grid, \n            metrics = metric_set(rmse))\n\n# Tuning results\n# 10-fold cross-validation repeated 3 times using stratification \n# A tibble: 30 × 5\n   splits            id      id2    .metrics             .notes          \n   <list>            <chr>   <chr>  <list>               <list>          \n 1 <split [900/100]> Repeat1 Fold01 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 2 <split [900/100]> Repeat1 Fold02 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 3 <split [900/100]> Repeat1 Fold03 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 4 <split [900/100]> Repeat1 Fold04 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 5 <split [900/100]> Repeat1 Fold05 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 6 <split [900/100]> Repeat1 Fold06 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 7 <split [900/100]> Repeat1 Fold07 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 8 <split [900/100]> Repeat1 Fold08 <tibble [2,200 × 6]> <tibble [0 × 3]>\n 9 <split [900/100]> Repeat1 Fold09 <tibble [2,200 × 6]> <tibble [0 × 3]>\n10 <split [900/100]> Repeat1 Fold10 <tibble [2,200 × 6]> <tibble [0 × 3]>\n# ℹ 20 more rows\n\ntoc()\n\n26.58 sec elapsed"
+  },
+  {
+    "objectID": "parallel_processing.html#final-notes",
+    "href": "parallel_processing.html#final-notes",
+    "title": "4  Parallel Processing",
+    "section": "4.2 Final notes",
+    "text": "4.2 Final notes\nThe following is often found as an alternative setup for a back-end for parallel processing. It works for future_map() (when conbined with plan) and for foreach() but not in the tidymodels implementations of resampling. Not clear why since those use foreach() but this should not be used if you plan to use tidymodels resampling.\n\nlibrary(doFuture)\nregisterDoFuture()\n\nI tried this with both directly and with various options of plan()\n\n# plan(multisession, workers = parallel::detectCores(logical = FALSE))\n\nand with\n\n# cl <- makeCluster(parallel::detectCores(logical = FALSE))\n# plan(cluster, workers = cl)"
+  },
+  {
+    "objectID": "simulations.html",
+    "href": "simulations.html",
+    "title": "6  Simulations",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(tidymodels)\n\ntidymodels_prefer()"
   }
 ]
