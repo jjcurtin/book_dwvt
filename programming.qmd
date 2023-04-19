@@ -1,3 +1,109 @@
-# Unit 2 example {#unit_002}
+# Programming Notes 
 
-Hello Quarto World!
+```{r a102-setup, include = FALSE} 
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(here)
+
+tidymodels_prefer()
+```
+
+## Reading csv files
+
+We typically save our data as csv files.  There are many benefits to this format (e.g., easy to share, easy to view outside of R) but one downside is that the don't store information about variable/column class.  We need to establish the appropriate class for each column when we read the data.
+
+### Using `col_types()`
+
+If possible, it is best to set the class for each column/variable specifically using
+the `col_types()` parameter in `read_csv()`  This forces you to specifically examine and consider each column to decide its class (e.g., is a column with numbers best set as numeric or ordered factor) and the levels if its class is nominal.  Of course, this is part of cleaning EDA so you should have done this when you first started working with the data.
+
+Re-classing is typically needed to convert raw character columns to factor (ordered or unordered) and sometimes to convert raw numeric columns to factor (likely ordered, e.g., a likert scale). 
+
+Here is an example using the cars dataset
+
+```{r}
+path_data <- "./data"
+df <- read_csv(here(path_data, "auto_trn.csv"),
+               col_type = list(mpg = col_factor(levels = c("low", "high")),
+                               # here we handle cylinders as an ordered factor
+                               cylinders = col_factor(levels = 
+                                                        as.character(c(3,4,5,6,8)), 
+                                                      ordered = TRUE),   
+                               displacement = col_double(),
+                               horsepower = col_double(),
+                               weight = col_double(),
+                               acceleration = col_double(),
+                               year = col_double(),
+                               origin = col_factor(levels = 
+                                                     c("american", 
+                                                       "japanese", 
+                                                       "european")))) %>% 
+  glimpse()
+```
+
+### Using a separate `mutate()`
+
+In some instances (e.g., data file with very large number of variables, very consistently organized data character data is well-behaved), you may want to read the data in first and then use `mutate()` to change classes as needed.  
+
+In these instances, we prefer to set the `col_types()` parameter to `cols()` to prevent the verbose message about column classes.
+
+Here is an example using the ames dataset with all predictors.  To start, we only re-class all character columns to unordered factor and one numeric column to an ordered factor.  As we work with the data (during cleaning EDA), we may decide that there are other columns that need to be re-classed. If so, we could add additional lines to the `mutuate()`
+
+```{r}
+path_unit6 <- "homework/unit_6"
+df <- read_csv(here(path_unit6, "ames_full_cln.csv"),
+               col_types = cols()) %>% 
+  # convert all character to unordered factors
+  mutate(across(where(is.character), as_factor),
+         overall_qual = ordered(overall_qual, levels = as.character(1:10))) %>% 
+  glimpse()
+```
+
+## Iteration
+
+
+### `across()`
+
+
+### `map()` and `future_map()`
+
+
+
+### `for` loops
+
+
+### `foreach` loops
+
+
+### Nesting
+
+Some useful tutorials
+
+* https://r4ds.had.co.nz/many-models.html
+* https://bookdown.org/Maxine/r4ds/nesting.html
+* https://tidyr.tidyverse.org/reference/nest.html
+
+
+## Advanced data wrangling
+See this [article](https://dplyr.tidyverse.org/dev/articles/rowwise.html) for details on the use of dplry for row-wise operations
+
+See this [article](https://dplyr.tidyverse.org/dev/articles/colwise.html) for details on the use of dplry for column-wise operations
+
+The tidy folks have also written many more [articles](https://dplyr.tidyverse.org/dev/articles/index.html) on dplyr that are worth a look
+
+
+## Tidy programming
+
+Programming with dplyr can be complicated because of tidy evaluation.   This [programming vignette](https://dplyr.tidyverse.org/articles/programming.html) provides useful documentation on data masking and tidy selection
+
+If you plan to do a lot of R programming, I highly recommend reading chapters 17-21 on [meta-programming](https://adv-r.hadley.nz/metaprogramming.html) in R
+
+
+
+
+
+
+

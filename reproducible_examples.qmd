@@ -1,3 +1,88 @@
-# Unit 2 example {#unit_002}
+# How to Create a Reproducible Example (Reprex) 
 
-Hello Quarto World!
+```{r a103-setup, include = FALSE} 
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Why create a reprex?
+Careful use of a reproducible example (a reprex) is critical for...
+
+* Debugging your code 
+* Asking for help on listservs (e.g., Posit/Rstudio community, StackOverflow, and [others](https://www.tidymodels.org/help/)) 
+* Posting bug reports for `tidymodels` or `tidyverse` packages on GitHub 
+
+A reproducible example should be the simplest snippet of code that can reproduce the error that you are encountering.  By creating this simple example, it will focus everyone on the nature of your problem(s), reproduce the error message (or incorrect output), and not distract by including code that is irrelevant to your problem.
+
+## Key Featrures of a Good Reprex
+There are a few key features of a good reprex.
+
+* **The reprex should run completely on its own with just copy/paste**.  It should only require the snippet of shared code to run without any additional scripts, data, etc.  This makes it easy for everyone to copy your code into their IDE and run it themselves.  This is critical if you want someone else to use their time to help you solve YOUR problem.
+* **It should NOT require anyone to source other scripts** If you used sourced functions, copy them into the reprex. Or better yet, don't require those functions at all unless they are the source of the error.
+* **It should (almost) never require the person to load data**.  You should either use fake data (i.e., simulated data) that you create at the start of the reprex or data that you load from the `modeldata` package (i.e., include `library(modeldata)` at the top of the reprex).
+* **Remove all extra lines of code from the reprex** that are not necessary to either set up the data or produce the error. Your goal is to use the minimum lines of code needed to reproduce the error.
+* **Include only necessary packages**. Unfortunately, package conflicts are common in R.  By stripping out unnecessary packages from your reprex, you may find the source of a package conflict.
+  
+## Debugging with your Reprex
+You will find that in the process of simplifying your code, you will find the source of your error yourself in many, many instances.  This process of cutting extraneous code and simplifying it is the recommended process for debugging your code systematically.
+
+Once you have your simple reprex, you can now experiment with it to find the boundary conditions for the error.  
+* Read help on the function that seems to generate the error.  
+* Check the name of your variables, the function, and the function parameters.  
+* Make sure you are assigning the correct argument to each function parameter.  You may want to name the parameters formally rather than relying on the order they are listed in the function).  
+* Use R [debugging tools](https://rstudio-education.github.io/hopr/debug.html) like `traceback` and others.  
+* Look carefully at your tibble.  Consider the class of all the variables.  Are missing values causing an issue?  
+
+## Using `reprex` Package to Post your Reprex
+
+If you cannot solve the problem after doing substantial testing and debugging within your reprex on your own, it is time to ask for help.  In the course, you will ask for help from us (John and the TAs).  In the future, you will ask for help from the R community (see options described above).  In either instance, be respectful and only ask after you have tried hard to solve the problem on your own and after you've truly hit a wall.
+
+If you are asking for help, you will need to describe your problem and post your reprex.   Try to describe the nature of the issue clearly (though in some instances all that takes is reporting the error message).  It might take more description if the problem is not a formal error in the code but incorrect output.  The post the reprex.   A provides a package (`reprex`) to help you create markdown code to post your reprex.   Here are the steps to use it.  
+
+1.  Make sure you have installed the reprex package (`install.packages("reprex")`; you do not need to load it, only install it). 
+2. Copy our reprex code to your clipboard. 
+3. type `reprex::reprex(venue = "slack")` (substitute "gh" for slack if you are posting to github, the rstudio/posit community, or StackOverflow). 
+4. After the `reprex` function runs, it will put markdown code onto your clipboard.  You can now go back to your post and paste it in.  Its that simple!  
+
+## Using Data in your Reprex
+
+You should (almost) never need to provide a separate data file with your reprex (and it just makes things more complicated for those trying to help you if you do).
+
+Instead, you can often simulate a simple data set.  Here is a dataset with variables for different classes including numeric, character and factor.
+
+```{r}
+library(dplyr)
+set.seed(12345) # to make data reproducible if that matters
+d <- tibble (x = rnorm(24), 
+             y = rep(c("group_1", "group_2"), 12), 
+             z = factor(rep(c("level_1", "level_2", "level_3"), 8))) %>% 
+  glimpse()
+
+
+d %>% print()
+```
+
+This should get you started with some edits to fit your scenario.  For other situations, the functions [`caret::twoClassSim()`](https://www.rdocumentation.org/packages/caret/versions/6.0-84/topics/SLC14_1) or [`caret::SLC14_1()`](https://www.rdocumentation.org/packages/caret/versions/6.0-84/topics/SLC14_1) might be good tools to simulate data for you. 
+
+
+Alternatively, you can include `library(modeldata)` at the top of your reprex and then have access to all the datasets in that package.  You can see a list of the dataset names for the repo on [Github](https://github.com/tidymodels/modeldata).
+
+`ames` might be a good starting point for you for fake data because it has lots of options for variables.  I find the variable names a bit annoying (because they are not snake_case) but that shouldn't be an issue for a simple reprex.  You should probably `select` down to just the variables you need and `slice` out a random sample of fewer cases for use in your reprex.  For example...
+
+```{r}
+library(modeldata)
+ames_1 <- ames %>% 
+  select(Sale_Price, Lot_Config, Lot_Frontage) %>% 
+  slice_sample(n = 50) %>% 
+  glimpse()
+```
+
+
+## More Help
+
+For more help see:  
+
+* [How to use a Reprex](https://reprex.tidyverse.org/articles/learn-reprex.html) from tidyverse folks
+* [What is a reprex] (https://github.com/tidyverse/reprex#what-is-a-reprex) from tidyverse folks. 
+* [How to make a great R reproducible example](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) from Stack Overflow
+*[How to create a reprex](https://stackoverflow.com/help/minimal-reproducible-example) from Stack Overflow
+* A good example bug report from tidymodels on Github: [#46](https://github.com/tidymodels/tune/issues/46)

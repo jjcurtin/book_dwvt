@@ -1,3 +1,196 @@
-# Unit 2 example {#unit_002}
+# Parallel Processing
 
-Hello Quarto World!
+```{r a107-setup, include = FALSE} 
+knitr::opts_chunk$set(cache = FALSE, message = FALSE, warning = FALSE)
+```
+
+The [furrr](https://cran.r-project.org/web/packages/furrr/index.html) package provides a parallel version of the map functions for iteration.   The developers provide useful [documentation and deep dives](https://furrr.futureverse.org/) that are worth reading when you start using `future_map()` and its variants.
+
+[foreach](https://cran.r-project.org/web/packages/foreach/vignettes/foreach.html) provides an alternative for loop that can run sequentially or in parallel as requested.  `foreach` is used under the hood to do resampling by `fit_resamples()` and `tune_grid()` in tidymodels
+
+Michael Hallquist has provided a useful and detailed [overview](https://psu-psychology.github.io/r-bootcamp-2018/talks/parallel_r.html) of parallel processing.   It is a good first read to orient to terms and concepts.  However, it does not describe either the `future` package or the `furrr` pacakge.  It does provide brief introduction to `foreach`
+
+[Info on future ecosystem](https://dcgerard.github.io/advancedr/09_future.html) and [more](https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html)
+
+[Parallel processing and other optimizations](https://tune.tidymodels.org/articles/extras/optimizations.html) in tidymodels
+
+```{r}
+library(tictoc)  # for crude timing to evaluate benefits
+library(furrr)
+library(purrr)
+library(foreach)
+library(tidyverse)
+library(tidymodels)
+
+tidymodels_prefer()
+```
+
+Here are the number of physical (not logical) cores on this machine.  You may have more or less
+```{r}
+parallel::detectCores(logical = FALSE)
+```
+
+Lets use them by setting up a parallel backend.  This works on my Windows PC.  Would be nice to test this on other machines and OSs
+```{r}
+library(doParallel)
+cl <- makePSOCKcluster(parallel::detectCores(logical = FALSE))
+registerDoParallel(cl)
+```
+
+
+### future_map()
+
+Here is the use of map (that uses sequential processing)
+```{r}
+tic()
+x <- map(c(2, 2, 2), \(time) Sys.sleep(time))
+toc()
+```
+
+Using `future_map()` without a plan (Don't do this!)
+```{r}
+tic()
+x <- future_map(c(2, 2, 2), \(time) Sys.sleep(time))
+toc()
+```
+
+Using `future_map()` with a plan (Do this!)
+```{r}
+plan(multisession, workers = parallel::detectCores(logical = FALSE))
+```
+
+```{r}
+tic()
+x <- future_map(c(2, 2, 2), \(time) Sys.sleep(time))
+toc()
+```
+
+```{r}
+plan(sequential)
+```
+
+
+### foreach()
+
+`foreach()` in sequential mode using `%do%`
+```{r}
+tic()
+x <- foreach(time = c(2, 2, 2), .combine = "c") %do% {
+  Sys.sleep(time)
+  time
+}
+toc()
+```
+
+`foreach()` in parallel mode using `%dopar%` but without a plan.  in contrast to `future_map()`, no plan is needed for `foreach()`.  You should use it without a plan!
+```{r}
+tic()
+x <- foreach(time = c(2, 2, 2), .combine = "c") %dopar% {
+  Sys.sleep(time)
+  time
+}
+toc()
+```
+
+But a plan doesn't break anything either  Still, don't use it because not needed.
+```{r}
+plan(multisession, workers = parallel::detectCores(logical = FALSE))
+```
+
+```{r}
+tic()
+x <- foreach(time = c(2, 2, 2), .combine = "c") %dopar% {
+  Sys.sleep(time)
+  time
+}
+toc()
+```
+
+```{r}
+plan(sequential)
+```
+
+Need a demo for how to handle random numbers. No error or warning here but `%dorng%` is recommended I think?
+```{r}
+tic()
+x <- foreach(time = c(2, 2, 2), .combine = "c") %dopar% {
+  Sys.sleep(time)
+  rnorm(1)
+}
+toc()
+```
+
+## tune_grid() in tidymodels
+
+Set up data, resamples, recipe, tuning grid. Will do 3x 10-fold CV to tune an elasticnet glm with a sample size of 1000 and 30 features
+```{r}
+# set up data
+n_obs <- 1000
+n_x <- 30
+irr_err <- 5
+d <- MASS::mvrnorm(n = n_obs, mu = rep(0,n_x), Sigma = diag(n_x)) %>% 
+    magrittr::set_colnames(str_c("x", 1:n_x)) %>% 
+    as_tibble() %>% 
+    mutate(error = rnorm(n_obs, 0, irr_err),
+           y = rowSums(across(everything()))) %>% 
+    select(-error)
+
+# recipe
+rec <- recipe(y ~ ., data = d)
+
+# 3x 10-fold CV
+set.seed(19690127)
+splits <- d %>% 
+  vfold_cv(v = 10, repeats = 3, strata = "y")
+
+# tuning grid
+tune_grid <- expand_grid(penalty = exp(seq(0, 6, length.out = 200)),
+                           mixture = seq(0, 1, length.out = 11))
+```
+
+First, let's benchmark without parallel processing.  `tune_grid()` (and `fit_resamples()`) default is to allow parallel processing so have to explicitly turn it off using `control_grid()`.  You will NOT do this.  It is only to show the benefits of parallel processing.
+
+
+```{r}
+tic()
+linear_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glmnet") %>% 
+  tune_grid(preprocessor = rec, 
+            resamples = splits, grid = tune_grid, 
+            metrics = metric_set(rmse),
+            control = control_grid(allow_par = FALSE)) # turn off pp
+toc()
+```
+
+Now allow use of parallel processing (the default).  No plan is needed here (consistent with findings for `foreach()`).  Yay!
+```{r}
+tic()
+linear_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glmnet") %>% 
+  tune_grid(preprocessor = rec, 
+            resamples = splits, grid = tune_grid, 
+            metrics = metric_set(rmse))
+toc()
+```
+
+
+## Final notes
+
+The following is often found as an alternative setup for a back-end for parallel processing.  It works for `future_map()` (when conbined with plan) and for `foreach()` but not in the tidymodels implementations of resampling.  Not clear why since those use `foreach()` but this should  not be used if you plan to use tidymodels resampling.
+
+```{r}
+library(doFuture)
+registerDoFuture()
+```
+
+I tried this with both directly and with various options of `plan()` 
+```{r}
+# plan(multisession, workers = parallel::detectCores(logical = FALSE))
+```
+
+and with 
+```{r}
+# cl <- makeCluster(parallel::detectCores(logical = FALSE))
+# plan(cluster, workers = cl)
+```
+

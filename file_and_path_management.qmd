@@ -1,3 +1,59 @@
-# The Hello World Example {#unit_001}
+# Best Practices for File and Path Management 
 
-Hello Quarto World!
+```{r a104-setup, include = FALSE} 
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Use of RStudio Projects
+The use of RStudio Projects is critical to good managament of your paths and files.  When you work within a project, you will have a working directory set within that project (based on where the project files is saved.  This working directory can then be combined with relative paths for reading and writing data and other files.   It also means that if you share the folders that contain your project (e.g., scripts, data), the paths will continue to work for that colleague as well, regardless of where they situate the folders on their computer.
+
+Wickham et al., describe the [rationale and benefits](https://r4ds.hadley.nz/workflow-scripts.html#projects) for using projects.  Please read this!   They also [clearly describe](https://r4ds.hadley.nz/workflow-scripts.html#rstudio-projects) the steps to set up a new project so I won't repeat them here. 
+
+For our course, we strongly recommend that you set up a project called "iaml".  Inside that root project folder, you can establish a folder for "homework", and inside that folder you can have sub-folders for each unit (e.g., "unit_2", "unit_3"). In addition to the homework folder, you might have folders for exams (e.g., "midterm") and other material that you save (e.g., "pdfs").
+
+## Relative Paths       
+You should also get in the habit of setting relative paths (relative to your project root) near the start of your script so that you can call those paths easily throughout.  Added bonus, if you move those folders within your project, you just need to change one line of code.  For example if your raw data and processed data live in separate folders you might have two paths set:
+
+`path_raw <- "data/raw"`
+
+`path_processed <- "data/processed"`
+
+You can use these path objects with the `here()` function, which is described next.
+
+
+## Use of `here()`
+`here()` in the package `here` is a replacement for `file.path()` that we find to work comparable (and better in a few specific circumstances; e.g., when knitting Rmd files).  It is very easy to use if you are using Projects as recommended above.  That said, it can also be used with the use of Projects, but we dont review that here because you WILL use projects!  To use `here()`, you should load the `here` package at the top of your script (i.e., `library(here)`).
+
+You can then use `here()` as a replacement anywhere you would have used `file.path()`
+
+For example, if you want to load a csv file in the folder that you indicated above by `path_raw`, you could use this line of code:
+
+`d <- read_csv(here(path_raw, "raw_data.csv"))`
+
+alternatively, you could supply the relative path directly (though this is not preferred because it can be cumbersome if you move the folder later)
+
+`d <- read_csv(here("data/processed", "raw_data.csv"))`
+
+
+## Sourcing from Github
+Scripts in public repositories on GithHub can be sourced directly from the remote repository on GitHub using `source_url()` from the `devtools' package.  To do this, follow these steps:
+
+1. Find the url to the specific file/script you would like to source.  This can be done by simply clinical on the file through GitHub in your browser.  For example, the url to `fun_modeling.R` in my lab_support repo is: 
+
+`https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R`
+
+2.  Add `?raw=true` to the end of that url.  For example:
+
+`https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R?raw=true`
+
+3.  Pass this url as a string into devtools::source_url()` in your R script.  For example:
+
+`devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R?raw=true")`
+
+Its that easy.  Using this method will allow you to continue to use the most up-to-date version of that script even as the repo owner improves it over time.  It also doesnt require you to worry about where a local clone of that repo might live on your computer or the computers of anyone with which you share your code.
+
+
+## Additional Resources
+* [Blog](https://malco.io/2018/11/05/why-should-i-use-the-here-package-when-i-m-already-using-projects/) with links on the use of projects and `here()` package
+* [Good advice](https://bookdown.org/daniel_dauber_io/r4np_book/starting-your-r-projects.html#organising-your-projects) for folder management in projects.
+* [More good advice](https://www.r-bloggers.com/2020/01/rstudio-projects-and-working-directories-a-beginners-guide/) on projects and file management
