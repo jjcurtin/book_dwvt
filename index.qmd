@@ -1,0 +1,14 @@
+## Welcome {.unnumbered}
+
+Data Wrangling in the Tidyverse v 2
+
+Splash page provides an overview of the book
+
+
+
+#### R
+
+```r
+my_list = list(1, 2, 3)
+typeof(my_list)
+```

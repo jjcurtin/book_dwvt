@@ -1,0 +1,32 @@
+project:
+  type: book
+  output-dir: docs
+
+toc: true 
+bibliography: references.bib   
+  
+book:
+  title: "Data Wrangling in the Tidyverse"
+  author: "John J. Curtin, PhD"
+  description: | 
+    TBA
+  #cover-image: images/cover.png
+  site-url: https://github.io/jjcurtin/dwt
+  repo-url: https://github.com/jjcurtin/dwt
+  repo-branch: main
+  repo-actions: [edit]
+  sharing: [facebook, linkedin]  
+  page-navigation: true
+  chapters:
+    - index.qmd
+    - file_and_path_management.qmd
+    - iteration.qmd
+    - reproducible_examples.qmd
+    - parallel_processing.qmd
+    - cache.qmd
+    - simulations.qmd
+    - programming.qmd
+  appendices:
+    - appendix_quarto_notes.qmd
+    
+ 
