@@ -1,0 +1,7 @@
+# Resources
+
+How to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html)
+
+[Markdown basics](https://quarto.org/docs/authoring/markdown-basics.html)
+
+Divs (:::) and spans([]) are used extensively in slidesets.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
