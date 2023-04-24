@@ -16,13 +16,108 @@ Divs (:::) and spans([]) are used extensively in slidesets.  An introduction to 
 
 You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places
 
+### Tables
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+library(knitr)
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(10) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kable(.,
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears"))
+
+
+```
+
+Plain kable() renders as nicely striped in HTML. It does not allow grouping in the way kable_extra does. However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!
+
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(kableExtra)
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(10) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kable(.,
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) 
+
+
+```
+
+Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra
+
+```{r}
+#| echo: false
+#| warning: false
+
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(10) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kbl(.,format = "html",
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) %>%
+  collapse_rows(columns = 1) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE,
+                position = "float_right") %>%
+  footnote(general = "Here is a general comments of the table. ",
+           number = c("Footnote 1; ", "Footnote 2; "),
+           alphabet = c("Footnote A; ", "Footnote B; "),
+           symbol = c("Footnote Symbol 1; ", "Footnote Symbol 2")
+           )
+
+
+```
+
+kable_styling has now allowed kableExtra to reproduce the original kable.
+
+A useful kableExtra function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
+
+
 ### Rendering
 
 Hitting the Render button renders the single active chapter.
 
-Call quarto::quarto_render() to render all documents in the active project directory
+Call quarto::quarto_render() to render all documents in the active project directory. NB, you must re-render the entire directory if anything changes in the .yml file (such as addition or deletion of a chapter)
 
 You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
+
+#### PDF
+
+You can specify rendering to PDF format by adding the following to your .yml file:
+
+format:
+  pdf: 
+    documentclass: book
+
+You can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:
+
+quarto::quarto_render(output_format = "pdf",output_file = "dwt.pdf")
+
+HOWEVER, as of 2023_0424 [rendering to PDF in the stable release fails](https://github.com/quarto-dev/quarto-cli/issues/4951); I'll attempt to install the dev version and test next
 
 ## Documents
 
