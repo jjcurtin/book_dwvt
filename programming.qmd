@@ -9,6 +9,8 @@ library(tidyverse)
 library(here)
 
 tidymodels::tidymodels_prefer()
+
+path_data <- "./data"
 ```
 
 ## Reading csv files
@@ -25,7 +27,6 @@ Re-classing is typically needed to convert raw character columns to factor (orde
 Here is an example using the cars dataset
 
 ```{r}
-path_data <- "./data"
 df <- read_csv(here(path_data, "auto_trn.csv"),
                col_type = list(mpg = col_factor(levels = c("low", "high")),
                                # here we handle cylinders as an ordered factor
@@ -54,7 +55,7 @@ Here is an example using the ames dataset with all predictors.  To start, we onl
 
 ```{r}
 path_unit6 <- "homework/unit_6"
-df <- read_csv(here(path_unit6, "ames_full_cln.csv"),
+df <- read_csv(here(path_data, "ames_full_cln.csv"),
                col_types = cols()) %>% 
   # convert all character to unordered factors
   mutate(across(where(is.character), as_factor),
