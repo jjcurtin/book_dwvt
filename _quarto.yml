@@ -27,7 +27,5 @@ book:
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
-  appendices:
-    - appendix_quarto_notes.qmd
     
  
