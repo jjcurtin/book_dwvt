@@ -166,5 +166,33 @@
     "title": "Appendix A — Quarto Notes",
     "section": "A.2 Rendering",
     "text": "A.2 Rendering\nHitting the Render button renders the single active chapter.\nCall quarto::quarto_render() to render all documents in the active project directory\nYou can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets"
+  },
+  {
+    "objectID": "quarto.html#general",
+    "href": "quarto.html#general",
+    "title": "8  Quarto",
+    "section": "8.1 General",
+    "text": "8.1 General\nComprehensive guide to Quarto\nBasics on creating pdf and html\nHow to work with citations and footnotes\nMarkdown basics\nDivs (:::) and spans([]) are used extensively in slidesets. An introduction to their use is provided in the markdown basics chapter. The Pandoc manual provides more detail.\nYou can publish documents, books, and presentations to a variety of places\n\n8.1.1 Rendering\nHitting the Render button renders the single active chapter.\nCall quarto::quarto_render() to render all documents in the active project directory\nYou can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets"
+  },
+  {
+    "objectID": "quarto.html#documents",
+    "href": "quarto.html#documents",
+    "title": "8  Quarto",
+    "section": "8.2 Documents",
+    "text": "8.2 Documents"
+  },
+  {
+    "objectID": "quarto.html#presentations",
+    "href": "quarto.html#presentations",
+    "title": "8  Quarto",
+    "section": "8.3 Presentations",
+    "text": "8.3 Presentations\nOverview of presentations and details on the use of revealjs, which has become my preferred format. The revealjs reference chapter and a chapter on presenter tools are also useful."
+  },
+  {
+    "objectID": "quarto.html#books",
+    "href": "quarto.html#books",
+    "title": "8  Quarto",
+    "section": "8.4 Books",
+    "text": "8.4 Books\nInformation on setting up a book: https://quarto.org/docs/books/\nInformation on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs"
   }
 ]

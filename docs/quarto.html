@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="description" content="TBA">
 
-<title>Data Wrangling in the Tidyverse - 8&nbsp; Resources</title>
+<title>Data Wrangling in the Tidyverse - 8&nbsp; Quarto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Resources</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -154,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Resources</span></a>
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -177,14 +177,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#general" id="toc-general" class="nav-link active" data-scroll-target="#general"><span class="toc-section-number">8.1</span>  General</a>
+  <ul class="collapse">
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering"><span class="toc-section-number">8.1.1</span>  Rendering</a></li>
+  </ul></li>
+  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents"><span class="toc-section-number">8.2</span>  Documents</a></li>
+  <li><a href="#presentations" id="toc-presentations" class="nav-link" data-scroll-target="#presentations"><span class="toc-section-number">8.3</span>  Presentations</a></li>
+  <li><a href="#books" id="toc-books" class="nav-link" data-scroll-target="#books"><span class="toc-section-number">8.4</span>  Books</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/quarto.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Resources</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></h1>
 </div>
 
 
@@ -199,15 +211,35 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="general" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="general"><span class="header-section-number">8.1</span> General</h2>
 <p><a href="https://quarto.org/docs/guide/">Comprehensive guide</a> to Quarto</p>
 <p>Basics on creating <a href="https://quarto.org/docs/output-formats/pdf-basics.html">pdf</a> and <a href="https://quarto.org/docs/output-formats/html-basics.html">html</a></p>
 <p>How to work with <a href="https://quarto.org/docs/authoring/footnotes-and-citations.html">citations and footnotes</a></p>
 <p><a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown basics</a></p>
 <p>Divs (:::) and spans([]) are used extensively in slidesets. An introduction to their use is provided in the <a href="https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans">markdown basics chapter</a>. The Pandoc manual provides <a href="https://pandoc.org/MANUAL.html#divs-and-spans">more detail</a>.</p>
-<p><a href="https://quarto.org/docs/presentations">Overview</a> of presentations and details on the use of <a href="https://quarto.org/docs/presentations/revealjs/">revealjs</a>, which has become my presferred format. The revealjs <a href="https://quarto.org/docs/reference/formats/presentations/revealjs.html">reference chapter</a> and a <a href="https://quarto.org/docs/presentations/revealjs/presenting.html">chapter on presenter tools</a> are also useful.</p>
 <p>You can <a href="https://quarto.org/docs/publishing">publish</a> documents, books, and presentations to a variety of places</p>
+<section id="rendering" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="rendering"><span class="header-section-number">8.1.1</span> Rendering</h3>
+<p>Hitting the Render button renders the single active chapter.</p>
+<p>Call quarto::quarto_render() to render all documents in the active project directory</p>
+<p>You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets</p>
+</section>
+</section>
+<section id="documents" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="documents"><span class="header-section-number">8.2</span> Documents</h2>
+</section>
+<section id="presentations" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="presentations"><span class="header-section-number">8.3</span> Presentations</h2>
+<p><a href="https://quarto.org/docs/presentations">Overview</a> of presentations and details on the use of <a href="https://quarto.org/docs/presentations/revealjs/">revealjs</a>, which has become my preferred format. The revealjs <a href="https://quarto.org/docs/reference/formats/presentations/revealjs.html">reference chapter</a> and a <a href="https://quarto.org/docs/presentations/revealjs/presenting.html">chapter on presenter tools</a> are also useful.</p>
+</section>
+<section id="books" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="books"><span class="header-section-number">8.4</span> Books</h2>
+<p>Information on setting up a book: https://quarto.org/docs/books/</p>
+<p>Information on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

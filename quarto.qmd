@@ -1,8 +1,11 @@
-# Resources
+# Quarto
+
+## General
 
 [Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
 
 Basics on creating [pdf](https://quarto.org/docs/output-formats/pdf-basics.html) and [html](https://quarto.org/docs/output-formats/html-basics.html)
+
 
 How to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html)
 
@@ -11,7 +14,25 @@ How to work with [citations and footnotes](https://quarto.org/docs/authoring/foo
 Divs (:::) and spans([]) are used extensively in slidesets.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
 
 
-
-[Overview](https://quarto.org/docs/presentations) of presentations and details on the use of [revealjs](https://quarto.org/docs/presentations/revealjs/), which has become my presferred format.  The revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) and a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html) are also useful.
-
 You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places
+
+### Rendering
+
+Hitting the Render button renders the single active chapter.
+
+Call quarto::quarto_render() to render all documents in the active project directory
+
+You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
+
+## Documents
+
+## Presentations
+
+[Overview](https://quarto.org/docs/presentations) of presentations and details on the use of [revealjs](https://quarto.org/docs/presentations/revealjs/), which has become my preferred format.  The revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) and a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html) are also useful.
+
+
+## Books
+
+Information on setting up a book: https://quarto.org/docs/books/
+
+Information on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs
