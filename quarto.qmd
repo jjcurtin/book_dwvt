@@ -1,7 +1,17 @@
 # Resources
 
+[Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
+
+Basics on creating [pdf](https://quarto.org/docs/output-formats/pdf-basics.html) and [html](https://quarto.org/docs/output-formats/html-basics.html)
+
 How to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html)
 
 [Markdown basics](https://quarto.org/docs/authoring/markdown-basics.html)
 
 Divs (:::) and spans([]) are used extensively in slidesets.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
+
+
+
+[Overview](https://quarto.org/docs/presentations) of presentations and details on the use of [revealjs](https://quarto.org/docs/presentations/revealjs/), which has become my presferred format.  The revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) and a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html) are also useful.
+
+You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places
