@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="TBA">
+
+<title>Data Wrangling in the Tidyverse - 8&nbsp; Quarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./quarto_figures_tables.html" rel="next">
+<link href="./programming.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Wrangling in the Tidyverse</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/jjcurtin/dwt" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+            <i class="bi bi-bi-linkedin pe-1"></i>
+          LinkedIn
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Iteration</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cache</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simulations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./programming.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Programming Notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto_figures_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tables &amp; Figures in Quarto</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#general" id="toc-general" class="nav-link active" data-scroll-target="#general"><span class="toc-section-number">8.1</span>  General</a>
+  <ul class="collapse">
+  <li><a href="#chunk-options" id="toc-chunk-options" class="nav-link" data-scroll-target="#chunk-options"><span class="toc-section-number">8.1.1</span>  Chunk options</a></li>
+  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables"><span class="toc-section-number">8.1.2</span>  Tables</a></li>
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering"><span class="toc-section-number">8.1.3</span>  Rendering</a></li>
+  </ul></li>
+  <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents"><span class="toc-section-number">8.2</span>  Documents</a></li>
+  <li><a href="#papers" id="toc-papers" class="nav-link" data-scroll-target="#papers"><span class="toc-section-number">8.3</span>  Papers</a></li>
+  <li><a href="#reproducible-analyses" id="toc-reproducible-analyses" class="nav-link" data-scroll-target="#reproducible-analyses"><span class="toc-section-number">8.4</span>  Reproducible Analyses</a></li>
+  <li><a href="#presentations" id="toc-presentations" class="nav-link" data-scroll-target="#presentations"><span class="toc-section-number">8.5</span>  Presentations</a></li>
+  <li><a href="#books" id="toc-books" class="nav-link" data-scroll-target="#books"><span class="toc-section-number">8.6</span>  Books</a></li>
+  <li><a href="#publishing" id="toc-publishing" class="nav-link" data-scroll-target="#publishing"><span class="toc-section-number">8.7</span>  Publishing</a>
+  <ul class="collapse">
+  <li><a href="#presentations-and-documents" id="toc-presentations-and-documents" class="nav-link" data-scroll-target="#presentations-and-documents"><span class="toc-section-number">8.7.1</span>  Presentations and Documents</a></li>
+  <li><a href="#books-1" id="toc-books-1" class="nav-link" data-scroll-target="#books-1"><span class="toc-section-number">8.7.2</span>  Books</a></li>
+  </ul></li>
+  <li><a href="#terminal-commands" id="toc-terminal-commands" class="nav-link" data-scroll-target="#terminal-commands"><span class="toc-section-number">8.8</span>  Terminal Commands</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/quarto.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="general" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="general"><span class="header-section-number">8.1</span> General</h2>
+<p><a href="https://quarto.org/docs/guide/">Comprehensive guide</a> to Quarto</p>
+<section id="chunk-options" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="chunk-options"><span class="header-section-number">8.1.1</span> Chunk options</h3>
+<p>Chunk options are now specified inside the r backtics, with the following syntax:</p>
+<p><code>#| echo: false</code><br>
+<code>#| warning: false</code></p>
+<p>To specify these options globally, they need to be added to the _quarto.yml file, with these lines:</p>
+<p><code>execute:</code><br>
+&nbsp;&nbsp;&nbsp;<code>echo: false</code><br>
+&nbsp;&nbsp;&nbsp;<code>warning: false</code></p>
+</section>
+<section id="tables" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="tables"><span class="header-section-number">8.1.2</span> Tables</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Make</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: center;">Miles Per Gallon</th>
+<th style="text-align: center;">Cylinders</th>
+<th style="text-align: center;">Gears</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mazda</td>
+<td style="text-align: left;">RX4</td>
+<td style="text-align: center;">21.0</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mazda</td>
+<td style="text-align: left;">RX4</td>
+<td style="text-align: center;">21.0</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Datsun</td>
+<td style="text-align: left;">710</td>
+<td style="text-align: center;">22.8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hornet</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: center;">21.4</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hornet</td>
+<td style="text-align: left;">Sportabout</td>
+<td style="text-align: center;">18.7</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Plain kable() renders a nicely striped in HTML. It does not allow grouping in the way kable_extra does. However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Make </th>
+   <th style="text-align:left;"> Model </th>
+   <th style="text-align:center;"> Miles Per Gallon </th>
+   <th style="text-align:center;"> Cylinders </th>
+   <th style="text-align:center;"> Gears </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Mazda </td>
+   <td style="text-align:left;"> RX4 </td>
+   <td style="text-align:center;"> 21.0 </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mazda </td>
+   <td style="text-align:left;"> RX4 </td>
+   <td style="text-align:center;"> 21.0 </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Datsun </td>
+   <td style="text-align:left;"> 710 </td>
+   <td style="text-align:center;"> 22.8 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hornet </td>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:center;"> 21.4 </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hornet </td>
+   <td style="text-align:left;"> Sportabout </td>
+   <td style="text-align:center;"> 18.7 </td>
+   <td style="text-align:center;"> 8 </td>
+   <td style="text-align:center;"> 3 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra. The table below re-produces that via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn’t actually work!).</p>
+<p>For more advanced tables &amp; figures see <a href="quarto_figures_tables.html"><span>Appendix&nbsp;A</span></a> which reproduces the tables &amp; figures from the 2023 EMA paper.</p>
+<p>To be sure tables display with NA cells as blanks (instead of “NA”) include this before your first table:</p>
+<p><code>options(knitr.kable.NA = "")</code></p>
+<p>Side note, a useful kableExtra function is collapse_rows, yet that seems to be <a href="https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows">persistently</a> <a href="https://github.com/haozhu233/kableExtra/issues/624">broken</a></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table table-striped" style="width: auto !important; float: right; margin-left: 10px;border-bottom: 0;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Make </th>
+   <th style="text-align:left;"> Model </th>
+   <th style="text-align:center;"> Miles Per Gallon </th>
+   <th style="text-align:center;"> Cylinders </th>
+   <th style="text-align:center;"> Gears </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Mazda </td>
+   <td style="text-align:left;"> RX4 </td>
+   <td style="text-align:center;"> 21.0 </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mazda </td>
+   <td style="text-align:left;"> RX4 </td>
+   <td style="text-align:center;"> 21.0 </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Datsun </td>
+   <td style="text-align:left;"> 710 </td>
+   <td style="text-align:center;"> 22.8 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hornet </td>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:center;"> 21.4 </td>
+   <td style="text-align:center;"> 6 </td>
+   <td style="text-align:center;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Hornet </td>
+   <td style="text-align:left;"> Sportabout </td>
+   <td style="text-align:center;"> 18.7 </td>
+   <td style="text-align:center;"> 8 </td>
+   <td style="text-align:center;"> 3 </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Here is a general comments of the table. </td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>1</sup> Footnote 1; </td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>2</sup> Footnote 2; </td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>a</sup> Footnote A; </td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>b</sup> Footnote B; </td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>*</sup> Footnote Symbol 1; </td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup>†</sup> Footnote Symbol 2</td></tr>
+</tfoot>
+</table>
+
+</div>
+</div>
+</section>
+<section id="rendering" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="rendering"><span class="header-section-number">8.1.3</span> Rendering</h3>
+<p>Hitting the Render button renders the single active document.</p>
+<p>Call quarto::quarto_render() to render all documents in the active project directory. NB, you must re-render the entire directory if anything changes in the .yml file (such as addition or deletion of a chapter)</p>
+<p>You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets</p>
+<section id="pdf" class="level4" data-number="8.1.3.1">
+<h4 data-number="8.1.3.1" class="anchored" data-anchor-id="pdf"><span class="header-section-number">8.1.3.1</span> PDF</h4>
+<p>You can specify rendering to PDF format by adding the following to your .yml file:</p>
+<p>format: pdf: documentclass: book</p>
+<p>You can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:</p>
+<p>quarto::quarto_render(output_format = “pdf”,output_file = “dwt.pdf”)</p>
+<p>HOWEVER, as of 2023_0424 <a href="https://github.com/quarto-dev/quarto-cli/issues/4951">rendering to PDF in the stable release fails</a>; I’ll attempt to install the dev version and test next</p>
+</section>
+</section>
+</section>
+<section id="documents" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="documents"><span class="header-section-number">8.2</span> Documents</h2>
+<p>We use Quarto documents for two purposes - reproducible analyses and submitted papers. We will generally render analysis doc to html and papers to pdf. The Quarto Guide provides more detail on on creating <a href="https://quarto.org/docs/output-formats/pdf-basics.html">pdf</a> and <a href="https://quarto.org/docs/output-formats/html-basics.html">html</a></p>
+<p>These documents are styled primarily using Markdown. The Quarto Guide provides more detail on <a href="https://quarto.org/docs/authoring/markdown-basics.html">markdown basics</a></p>
+</section>
+<section id="papers" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="papers"><span class="header-section-number">8.3</span> Papers</h2>
+<p>To add a bibliography with a citation style, add the following lines to the _quarto.yml file:</p>
+<p><code>bibliography: references.bib</code><br>
+<code>csl: name_of_csl_file.csl</code></p>
+<p>Note, we will typically call our csl files from our central lab_support repo; which simply requires the URL of the raw file from github:</p>
+<p><code>csl: https://raw.githubusercontent.com/jjcurtin/lab_support/main/rmd_templates/csl/national-library-of-medicine-grant-proposals.csl</code></p>
+<p>The Quarto Guide provides more detail about how to work with <a href="https://quarto.org/docs/authoring/footnotes-and-citations.html">citations and footnotes</a>. As with markdown, the format is <code>[@citekey1; @citekey2]</code> — citations go inside square brackets and are separated by semicolons</p>
+</section>
+<section id="reproducible-analyses" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="reproducible-analyses"><span class="header-section-number">8.4</span> Reproducible Analyses</h2>
+</section>
+<section id="presentations" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="presentations"><span class="header-section-number">8.5</span> Presentations</h2>
+<p>We use Quarto to make revealjs slide decks for presentations. The Quarto Guide provides extensive documentation and sample slides. You can begin with the <a href="https://quarto.org/docs/presentations">overview</a> of presentations across formats (Quarto can also render powerpoint and other formats). Follow this with a <a href="https://quarto.org/docs/presentations/revealjs/">revealjs overview</a> and then the revealjs <a href="https://quarto.org/docs/reference/formats/presentations/revealjs.html">reference chapter</a>. The Quarto Guide also provides a <a href="https://quarto.org/docs/presentations/revealjs/presenting.html">chapter on presenter tools</a>.</p>
+<p>Divs (:::) and spans([]) are used extensively in presentations. An introduction to their use is provided in the <a href="https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans">markdown basics chapter</a>. The Pandoc manual provides <a href="https://pandoc.org/MANUAL.html#divs-and-spans">more detail</a>.</p>
+</section>
+<section id="books" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="books"><span class="header-section-number">8.6</span> Books</h2>
+<p>Information on setting up a book: https://quarto.org/docs/books/</p>
+<p>Information on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs</p>
+</section>
+<section id="publishing" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="publishing"><span class="header-section-number">8.7</span> Publishing</h2>
+<p>You can <a href="https://quarto.org/docs/publishing">publish</a> documents, books, and presentations to a variety of places</p>
+<section id="presentations-and-documents" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="presentations-and-documents"><span class="header-section-number">8.7.1</span> Presentations and Documents</h3>
+<p>Our preferred location for presentations (and Quarto Docs) is <a href="https://quartopub.com/">Quarto Pub</a>. This site is public and free. To use it, you need to set up an account first.</p>
+<p>To publish a presentation (or other Quarto doc) to Quarto Pub, you should first log in on your default browsers. You should next go to the Terminal tab in the RStudio IDE. Navigate to the folder that contains your presentation. Then type <code>quarto publish quarto-pub</code>. If this is the first time you are publishing at Quarto Pub on that computer, you will need to authorize it. Follow the prompts in the web browser and then in the terminal to complete the publication process. This authorization is saved in a file called _publish.yml, which will be accessed for future updates to the presentation.</p>
+<p>See <a href="https://quarto.org/docs/publishing/quarto-pub.html">additional instructions</a> in the Quarto guide if necessary.</p>
+</section>
+<section id="books-1" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="books-1"><span class="header-section-number">8.7.2</span> Books</h3>
+</section>
+</section>
+<section id="terminal-commands" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="terminal-commands"><span class="header-section-number">8.8</span> Terminal Commands</h2>
+<ul>
+<li><p><code>quarto publish quarto-pub</code> to publish a presentation or document to Quarto Pub</p></li>
+<li></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./programming.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Programming Notes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./quarto_figures_tables.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tables &amp; Figures in Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
