@@ -7,7 +7,7 @@
 
 
 
-## Tables
+### Tables
 
 ```{r}
 #| echo: false
@@ -88,7 +88,7 @@ kable_styling has now allowed kableExtra to reproduce the original kable.
 A useful kableExtra function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
 
 
-## Rendering
+### Rendering
 
 Hitting the Render button renders the single active document.
 
@@ -96,7 +96,7 @@ Call quarto::quarto_render() to render all documents in the active project direc
 
 You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
 
-### PDF
+#### PDF
 
 You can specify rendering to PDF format by adding the following to your .yml file:
 
