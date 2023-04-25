@@ -1,6 +1,6 @@
 ## Welcome {.unnumbered}
 
-Data Wrangling in the Tidyverse v 2
+Data Wrangling in the Tidyverse
 
 Splash page provides an overview of the book
 
