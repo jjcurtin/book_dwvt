@@ -12,6 +12,21 @@ Divs (:::) and spans([]) are used extensively in slidesets.  An introduction to 
 
 
 
+
 [Overview](https://quarto.org/docs/presentations) of presentations and details on the use of [revealjs](https://quarto.org/docs/presentations/revealjs/), which has become my presferred format.  The revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) and a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html) are also useful.
 
+
+
+# Publishing
+
 You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places
+
+## Presentations and Documents 
+Our preferred location for presentations (and Quarto Docs) is [Quarto Pub](https://quartopub.com/).  This site is public and free.  To use it, you need to set up an account first.
+
+To publish a presentation (or other Quarto doc) to Quarto Pub, you should first log in on your default browsers.  You should next go to the Terminal tab in the RStudio IDE.  Navigate to the folder that contains your presentation.  Then type `quarto publish quarto-pub`.  If this is the first time you are publishing at Quarto Pub on that computer, you will need to authorize it.  Follow the prompts in the web browser and then in the terminal to complete the publication process.  This authorization is saved in a file called _publish.yml, which will be accessed for future updates to the presentation.
+
+See [additional instructions](https://quarto.org/docs/publishing/quarto-pub.html) in the Quarto guide if necessary.
+
+## Books
+
