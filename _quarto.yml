@@ -28,5 +28,7 @@ book:
     - programming.qmd
     - quarto.qmd
     
-
-
+execute:
+  echo: false
+  warning: false
+  message: false
