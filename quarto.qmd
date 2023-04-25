@@ -1,4 +1,6 @@
-# Resources
+# Quarto
+
+## General
 
 [Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
 
@@ -11,22 +13,136 @@ How to work with [citations and footnotes](https://quarto.org/docs/authoring/foo
 Divs (:::) and spans([]) are used extensively in slidesets.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
 
 
+## Tables
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+library(knitr)
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(10) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kable(.,
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears"))
 
 
-[Overview](https://quarto.org/docs/presentations) of presentations and details on the use of [revealjs](https://quarto.org/docs/presentations/revealjs/), which has become my presferred format.  The revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) and a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html) are also useful.
+```
+
+Plain kable() renders a nicely striped in HTML. It does not allow grouping in the way kable_extra does. However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!
 
 
+```{r}
+#| echo: false
+#| warning: false
 
-# Publishing
+library(kableExtra)
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(10) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kable(.,
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) 
+
+
+```
+
+Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra
+
+```{r}
+#| echo: false
+#| warning: false
+
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(10) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kbl(.,format = "html",
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) %>%
+  collapse_rows(columns = 1) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = FALSE,
+                position = "float_right") %>%
+  footnote(general = "Here is a general comments of the table. ",
+           number = c("Footnote 1; ", "Footnote 2; "),
+           alphabet = c("Footnote A; ", "Footnote B; "),
+           symbol = c("Footnote Symbol 1; ", "Footnote Symbol 2")
+           )
+
+
+```
+
+kable_styling has now allowed kableExtra to reproduce the original kable.
+
+A useful kableExtra function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
+
+
+## Rendering
+
+Hitting the Render button renders the single active chapter.
+
+Call quarto::quarto_render() to render all documents in the active project directory. NB, you must re-render the entire directory if anything changes in the .yml file (such as addition or deletion of a chapter)
+
+You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
+
+### PDF
+
+You can specify rendering to PDF format by adding the following to your .yml file:
+
+format:
+  pdf: 
+    documentclass: book
+
+You can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:
+
+quarto::quarto_render(output_format = "pdf",output_file = "dwt.pdf")
+
+HOWEVER, as of 2023_0424 [rendering to PDF in the stable release fails](https://github.com/quarto-dev/quarto-cli/issues/4951); I'll attempt to install the dev version and test next
+
+## Documents
+
+## Presentations
+
+[Overview](https://quarto.org/docs/presentations) of presentations and details on the use of [revealjs](https://quarto.org/docs/presentations/revealjs/), which has become my preferred format.  The revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) and a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html) are also useful.
+
+
+## Books
+
+Information on setting up a book: https://quarto.org/docs/books/
+
+Information on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs
+
+
+## Publishing
 
 You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places
 
-## Presentations and Documents 
+### Presentations and Documents 
 Our preferred location for presentations (and Quarto Docs) is [Quarto Pub](https://quartopub.com/).  This site is public and free.  To use it, you need to set up an account first.
 
 To publish a presentation (or other Quarto doc) to Quarto Pub, you should first log in on your default browsers.  You should next go to the Terminal tab in the RStudio IDE.  Navigate to the folder that contains your presentation.  Then type `quarto publish quarto-pub`.  If this is the first time you are publishing at Quarto Pub on that computer, you will need to authorize it.  Follow the prompts in the web browser and then in the terminal to complete the publication process.  This authorization is saved in a file called _publish.yml, which will be accessed for future updates to the presentation.
 
 See [additional instructions](https://quarto.org/docs/publishing/quarto-pub.html) in the Quarto guide if necessary.
 
-## Books
+### Books
+
+
+
 
