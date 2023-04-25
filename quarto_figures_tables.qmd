@@ -1,4 +1,4 @@
-# Tables & Figures in Quarto
+# Tables & Figures in Quarto {#sec-appendix}
 
 Appendix for demonstrating complex tables & figures
 

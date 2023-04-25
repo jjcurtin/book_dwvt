@@ -232,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Here is the use of map (that uses sequential processing)</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>6.14 sec elapsed</code></pre>
+<pre><code>6.06 sec elapsed</code></pre>
 </div>
 </div>
 <p>Using <code>future_map()</code> without a plan (Don’t do this!)</p>
@@ -247,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>3.61 sec elapsed</code></pre>
+<pre><code>3.39 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -259,13 +259,13 @@ ul.task-list li input[type="checkbox"] {
 <p><code>foreach()</code> in sequential mode using <code>%do%</code></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>6.11 sec elapsed</code></pre>
+<pre><code>6.06 sec elapsed</code></pre>
 </div>
 </div>
 <p><code>foreach()</code> in parallel mode using <code>%dopar%</code> but without a plan. in contrast to <code>future_map()</code>, no plan is needed for <code>foreach()</code>. You should use it without a plan!</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>2.07 sec elapsed</code></pre>
+<pre><code>2.06 sec elapsed</code></pre>
 </div>
 </div>
 <p>But a plan doesn’t break anything either Still, don’t use it because not needed.</p>
@@ -274,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>2.05 sec elapsed</code></pre>
+<pre><code>2.04 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -283,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Need a demo for how to handle random numbers. No error or warning here but <code>%dorng%</code> is recommended I think?</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>2.08 sec elapsed</code></pre>
+<pre><code>2.05 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -314,7 +314,7 @@ ul.task-list li input[type="checkbox"] {
 # ℹ 20 more rows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>43.74 sec elapsed</code></pre>
+<pre><code>44.61 sec elapsed</code></pre>
 </div>
 </div>
 <p>Now allow use of parallel processing (the default). No plan is needed here (consistent with findings for <code>foreach()</code>). Yay!</p>
@@ -338,7 +338,7 @@ ul.task-list li input[type="checkbox"] {
 # ℹ 20 more rows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>28.04 sec elapsed</code></pre>
+<pre><code>28.53 sec elapsed</code></pre>
 </div>
 </div>
 </section>
