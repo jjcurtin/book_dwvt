@@ -1,13 +1,43 @@
 # Cache
 
-```{r a108-setup, include = FALSE} 
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-```
 
 ```{r}
 library(tidyverse)
 library(tidymodels)
 
 tidymodels_prefer()
+```
+
+[Introduction to cache in RMarkdown](https://bookdown.org/yihui/rmarkdown-cookbook/cache.html) and some [more detail](https://yihui.org/knitr/demo/cache/)
+
+[Detail on cache invalidation](https://yihui.org/en/2018/06/cache-invalidation/)
+
+More detail on [paths](https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html) and [lazy loading](https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html)
+
+
+Better solutions
+
+* [manual caching by saving objects]()
+* [xfun::cache_rds()](https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds) - The sweet spot?
+
+   * `rerun = TRUE`
+   * file is determined by the chunk option cache.path and the chunk label
+
+
+res <- xfun::cache_rds({
+  x <- read.csv("data.csv")
+  x[[1]] + y
+}, hash = list(y, file.mtime("data.csv")))
+
+
+`hash = "auto"`
+
+
+
+
+
+
+```{r}
+
 ```
 
