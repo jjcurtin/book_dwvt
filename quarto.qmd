@@ -4,6 +4,18 @@
 
 [Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
 
+### Chunk options
+
+Chunk options are now specified inside the r backtics, with the following syntax:
+
+`#| echo: false`  
+`#| warning: false`  
+
+To specify these options globally, they need to be added to the _quarto.yml file, with these lines:
+
+`execute: `  
+`  echo: false`  
+`  warning: false`  
 
 
 
@@ -18,7 +30,7 @@ library(knitr)
 
 mtcars %>% 
   select(mpg, cyl, gear) %>%
-  head(10) %>%
+  head(5) %>%
   rownames_to_column("make") %>%
   mutate(model = word(make, start = 2),
     make = word(make)) %>% 
@@ -41,7 +53,7 @@ library(kableExtra)
 
 mtcars %>% 
   select(mpg, cyl, gear) %>%
-  head(10) %>%
+  head(5) %>%
   rownames_to_column("make") %>%
   mutate(model = word(make, start = 2),
     make = word(make)) %>% 
@@ -53,7 +65,15 @@ mtcars %>%
 
 ```
 
-Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra
+Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra. The table below re-produces that via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn't actually work!). 
+
+For more advanced tables & figures see the appendix which reproduces the tables & figures from the 2023 EMA paper.
+
+To be sure tables display with NA cells as blanks (instead of "NA") include this before your first table:
+
+`options(knitr.kable.NA = "")`
+
+Side note, a useful kableExtra function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
 
 ```{r}
 #| echo: false
@@ -62,7 +82,7 @@ Note the table above, although the code is identical to the first table, has los
 
 mtcars %>% 
   select(mpg, cyl, gear) %>%
-  head(10) %>%
+  head(5) %>%
   rownames_to_column("make") %>%
   mutate(model = word(make, start = 2),
     make = word(make)) %>% 
@@ -70,9 +90,8 @@ mtcars %>%
   kbl(.,format = "html",
         align = c("l", "l", "c", "c", "c"),
         col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) %>%
-  collapse_rows(columns = 1) %>%
   kable_styling(bootstrap_options = "striped",
-                full_width = FALSE,
+                full_width = F,
                 position = "float_right") %>%
   footnote(general = "Here is a general comments of the table. ",
            number = c("Footnote 1; ", "Footnote 2; "),
@@ -83,9 +102,6 @@ mtcars %>%
 
 ```
 
-kable_styling has now allowed kableExtra to reproduce the original kable.
-
-A useful kableExtra function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
 
 
 ### Rendering

@@ -2,6 +2,10 @@ project:
   type: book
   output-dir: docs
 
+execute: 
+  echo: false
+  warning: false
+
 toc: true 
 bibliography: references.bib   
   
@@ -27,6 +31,7 @@ book:
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
-    
+  appendices:
+    - quarto_figures_tables.qmd
 
 
