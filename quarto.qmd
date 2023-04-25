@@ -14,8 +14,8 @@ Chunk options are now specified inside the r backtics, with the following syntax
 To specify these options globally, they need to be added to the _quarto.yml file, with these lines:
 
 `execute: `  
-`  echo: false`  
-`  warning: false`  
+&nbsp;&nbsp;&nbsp;`  echo: false`  
+&nbsp;&nbsp;&nbsp;`  warning: false`  
 
 
 
@@ -135,9 +135,17 @@ These documents are styled primarily using Markdown.  The Quarto Guide provides 
 
 ## Papers
 
-SUSAN - add info about bib and csl fields in YAML
+To add a bibliography with a citation style, add the following lines to the _quarto.yml file:
 
-The Quarto Guide provides more detail about how to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html).
+`bibliography: references.bib`  
+`csl: name_of_csl_file.csl`  
+
+Note, we will typically call our csl files from our central lab_support repo; which simply requires the URL of the raw file from github:
+
+`csl: https://raw.githubusercontent.com/jjcurtin/lab_support/main/rmd_templates/csl/national-library-of-medicine-grant-proposals.csl`
+
+
+The Quarto Guide provides more detail about how to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html). As with markdown, the format is `[@citekey1; @citekey2]` — citations go inside square brackets and are separated by semicolons
 
 ## Reproducible Analyses
 
