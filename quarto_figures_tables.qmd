@@ -216,6 +216,8 @@ dem %>%
   row_spec(nrow(dem),hline_after = TRUE)
 ```
 
+TODO: Why is ignoring hline in row_spec(to get the hline after the header and before the footnote?)
+
 <!-- Alcohol Use History table-->
 ```{r}
 footnote_table_auh_a <- "N = 151"
