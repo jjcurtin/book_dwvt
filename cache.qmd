@@ -23,21 +23,27 @@ Better solutions
    * `rerun = TRUE`
    * file is determined by the chunk option cache.path and the chunk label
 
+```{r}
+#| echo: true
 
-res <- xfun::cache_rds({
-  x <- read.csv("data.csv")
-  x[[1]] + y
-}, hash = list(y, file.mtime("data.csv")))
+y <- 2
+z <- 3
 
+x <- xfun::cache_rds({
+  Sys.sleep(5) # pretend that computations take a while
+  y + z
+}, hash = list(y, z),
+dir = "cache/",
+file = "cache_demo.rds")
+```
 
-`hash = "auto"`
-
-
-
-
-
+Now we can use x without recalculating each time when executing the previous chunk in either console or when knit
 
 ```{r}
+#| echo: true
 
+x
 ```
+
+
 
