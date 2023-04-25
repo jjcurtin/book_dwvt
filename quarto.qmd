@@ -67,7 +67,7 @@ mtcars %>%
 
 Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra. The table below re-produces that via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn't actually work!). 
 
-For more advanced tables & figures see the [appendix](@sec-appendix) which reproduces the tables & figures from the 2023 EMA paper.
+For more advanced tables & figures see @sec-appendix which reproduces the tables & figures from the 2023 EMA paper.
 
 To be sure tables display with NA cells as blanks (instead of "NA") include this before your first table:
 
