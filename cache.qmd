@@ -1,57 +1,57 @@
 # Cache
 
+We use cache to avoid having to repeat time-consuming calculations when they will return the same result each time.   To understand how, you should start with an [introduction to cache in RMarkdown](https://bookdown.org/yihui/rmarkdown-cookbook/cache.html) that provides an overview of the rationale for caching objects.  However, be aware that the discussion is anchored in the context of using knitr's built in caching abilities, which we don't recommend.   
+
+To use caching effectively, you need to understand when and how to [invalidate the cache](https://yihui.org/en/2018/06/cache-invalidation/).
+
+
+## Solutions
+
+### `cache = TRUE` (not recommended)
+
+You can set `cache = TRUE` in any specific code chunk to have knitr cache those calculations for your later reuse.  However, we don.t recommend this because it makes the process and instances where the cache is invalidated more opaque.   And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.  
+
+Nonetheless, this approach is [well documented](https://yihui.org/knitr/demo/cache/) including more advanced topics like [paths](https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html) and [lazy loading](https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html).
+
+### Explicit `write_rds()` (not recommended
+
+You could instead manually save objects that you want to avoid recalculating.  This is a legitimate method that gives you full and transparent control over caching.  It will also work both interactively in the console and when you knit your document.  However, its got a bit more overhead RE the code.  You need to write code to check if the file exists and load it if it does vs. calculate the object if it doesn't.   This is not too hard but it turns out that a function has already been written to handle this overhead for you.  We describe that next.
+
+### `xfun::cache_rds()` (our preferred method)
+
+We believe that the `xfun::cache_rds()` function provides the sweet spot for the balance of control and transparency vs. code overhead.  It also works for both interactive/console and knit workflows.  
+
+Lets demonstrate its use.   We start by setting up some objects that will be used in later time-consuming calculations.
+You need to be careful with these objects.  If they ever change, you will need to explicitly invalidate your cached object and re-calculate it.  More on that below.
 
 ```{r}
-library(tidyverse)
-library(tidymodels)
-
-tidymodels_prefer()
-```
-
-[Introduction to cache in RMarkdown](https://bookdown.org/yihui/rmarkdown-cookbook/cache.html) and some [more detail](https://yihui.org/knitr/demo/cache/)
-
-[Detail on cache invalidation](https://yihui.org/en/2018/06/cache-invalidation/)
-
-More detail on [paths](https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html) and [lazy loading](https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html)
-
-
-Better solutions
-
-* [manual caching by saving objects]()
-* [xfun::cache_rds()](https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds) - The sweet spot?
-
-   * `rerun = TRUE`
-   * file is determined by the chunk option cache.path and the chunk label
-
-```{r}
-#| echo: true
-
-# some globals that will be used to calculate x below in cached code
-# if these globals change, you will need to re-run the cached code with 
-# rerun = TRUE or delete the cached object directly so that it is 
-# re-calculated
 y <- 2
 z <- 3
 ```
 
-```{r}
-#| echo: true
+Now lets use `y` and `z` in some time consuming set of calculations
+
+* The first argument parameter in `cache_rds()` is the code to execute the time-consuming calculation.  This code is provided to the function inside of curly brackets, `{}`
+* Results from `cache_rds()` are assigned to your object (e.g., `x`) as if they came straight from the coded calculations (e.g., instead of `x <- y + z`, we now have `x <- cache_rds({y + z})`).
+* We recommend explicitly setting the values for the `dir` and `file` for the cached object.  This way, you control where it is saved and are assured it will be the same location regardless of whether you run this code chunk in the console or knit it.  Initial testing suggested the filename and location will differ for interactive/console vs. knit workflows if you use defaults.  The `/` at the end of the directory name is required to designate this as a folder.  The filename will have the string assigned to `file` as the prefix but will have an additional hash and a `.rds` appended to it as well.
+* We recommend explicitly including `rerun = FALSE` as a third parameter.  This provides you an easy way to invalidate the cached object (and a memory aid to consider invalidation when needed).  To invalidate, just set it to `TRUE` and run the chunk again again if any of your globals (e.g., `y`, `z`) have changed (and then set back to FALSE after!).   Alternatively, you can invalidate the cached object by deleting it from the `cache/` folder.
+```{r cache_demo}
 
 x <- xfun::cache_rds({
   Sys.sleep(5) # pretend that computations take a while
   y + z
 },
+rerun = FALSE,
 dir = "cache/",
-file = "cache_demo.rds")
+file = "cache_demo")
 ```
 
-Now we can use x without recalculating each time when executing the previous chunk in either console or when knit
+Now we can use x without recalculating it each time when executing the previous chunk in either console or when knit. Yay!
 
 ```{r}
-#| echo: true
-
 x
 ```
 
+`cache_rds()` has one additional parameter worth mentioning, `hash`.   You can pass a list of global objects to hash (e.g. `hash = list(y, z)`) that the function will monitor for change.  If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it.  This seems great except that our testing suggests that it invalidates the cache in some instances when you switch between the console and a subsequent knit and/or if those globals are re-calculated, even if their values don't change (e.g., re-running all code in console from the top of script). We have opted to just pay attention to our globals and invalidate them manually (through `rerun = TRUE`), when necessary.
 
-
+You can (and should) read the full documentation on [xfun::cache_rds()](https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds) prior to using it in your own code.
