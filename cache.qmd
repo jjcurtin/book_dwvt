@@ -26,13 +26,21 @@ Better solutions
 ```{r}
 #| echo: true
 
+# some globals that will be used to calculate x below in cached code
+# if these globals change, you will need to re-run the cached code with 
+# rerun = TRUE or delete the cached object directly so that it is 
+# re-calculated
 y <- 2
 z <- 3
+```
+
+```{r}
+#| echo: true
 
 x <- xfun::cache_rds({
   Sys.sleep(5) # pretend that computations take a while
   y + z
-}, hash = list(y, z),
+},
 dir = "cache/",
 file = "cache_demo.rds")
 ```
