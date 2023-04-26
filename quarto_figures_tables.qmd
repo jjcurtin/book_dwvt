@@ -199,24 +199,23 @@ dem %>%
       align = c("l", "c", "c", "c", "c", "c"),
       digits = 1,
       caption = "Demographics") %>%
-  kable_styling(bootstrap_options = "none",
+  kable_styling(bootstrap_options = "none", #remove all horizontal lines
                 font_size = 12,
                 full_width = TRUE) %>% 
   row_spec(row = 0, align = "c", italic = TRUE) %>% 
-  pack_rows("Sex", 2, 3, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
+  pack_rows("Sex", 2, 3, bold = FALSE, label_row_css = "border-bottom: none;") %>%  #remove horizontal line below packed rows
   pack_rows("Race", 4, 8, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
   pack_rows("Hispanic, Latino, or Spanish Origin", 9, 10, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
   pack_rows("Education", 11, 16, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
   pack_rows("Employment", 17, 25, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
   pack_rows("Marital Status", 27, 31, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
   footnote(general=footnote_table_dem, threeparttable = TRUE) %>%
-  column_spec(1, width = "4in") %>%
-  column_spec(2:6, width = "1in") %>%
-  row_spec(0,hline_after = TRUE) %>% 
-  row_spec(nrow(dem),hline_after = TRUE)
+  column_spec(1, width = "4in") %>% #specify column width
+  column_spec(2:6, width = "1in") %>% #specify column width
+  row_spec(0, extra_css = "border-bottom: 1px solid; border-top: 1px solid") %>% #add borders on the header row
+  row_spec(nrow(dem), extra_css = "border-bottom: 1px solid") #add a border after the last row, before the footnote
 ```
 
-TODO: Why is ignoring hline in row_spec(to get the hline after the header and before the footnote?)
 
 <!-- Alcohol Use History table-->
 ```{r}
@@ -429,12 +428,14 @@ auh %>%
                 font_size = 12,
                 full_width = TRUE) %>% 
   row_spec(row = 0, align = "c", italic = TRUE) %>% 
-  pack_rows("Alcohol Use Disorder Milestones", 1, 4, bold = FALSE) %>% 
-  pack_rows("Lifetime History of Treatment (Can choose more than 1)", 6, 12, bold = FALSE) %>% 
-  pack_rows("Received Medication for Alcohol Use Disorder", 13, 14, bold = FALSE) %>% 
-  pack_rows("Current (Past 3 Month) Drug Use", 16, 23, bold = FALSE) %>% 
+  pack_rows("Alcohol Use Disorder Milestones", 1, 4, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
+  pack_rows("Lifetime History of Treatment (Can choose more than 1)", 6, 12, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
+  pack_rows("Received Medication for Alcohol Use Disorder", 13, 14, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
+  pack_rows("Current (Past 3 Month) Drug Use", 16, 23, bold = FALSE, label_row_css = "border-bottom: none;") %>% 
   footnote(general=footnote_table_auh_a, symbol = c(footnote_table_auh_b), 
-           threeparttable = TRUE)
+           threeparttable = TRUE) %>%
+  row_spec(0, extra_css = "border-bottom: 1px solid; border-top: 1px solid") %>% #add borders on the header row
+  row_spec(nrow(auh), extra_css = "border-bottom: 1px solid") #add a border after the last row, before the footnote
 ```
 
 \newpage
@@ -495,7 +496,10 @@ metrics %>%
   row_spec(row = 0, align = "c") %>% 
   kable_styling(position = "left",
                 bootstrap_options = "none") %>% 
-  footnote(general=footnote_table_perf_metrics)
+  footnote(general=footnote_table_perf_metrics) %>%
+  column_spec(1:4, width = "1in") %>% #specify column width
+  row_spec(0, extra_css = "border-bottom: 1px solid; border-top: 1px solid") %>% #add borders on the header row
+  row_spec(nrow(metrics), extra_css = "border-bottom: 1px solid") #add a border after the last row, before the footnote
 ```
 
 \clearpage
