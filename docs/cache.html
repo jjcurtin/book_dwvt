@@ -241,7 +241,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link active" data-scroll-target="#solutions"><span class="toc-section-number">5.1</span>  Solutions</a>
+  <ul class="collapse">
+  <li><a href="#cache-true-not-recommended" id="toc-cache-true-not-recommended" class="nav-link" data-scroll-target="#cache-true-not-recommended"><span class="toc-section-number">5.1.1</span>  <code>cache = TRUE</code> (not recommended)</a></li>
+  <li><a href="#explicit-write_rds-not-recommended" id="toc-explicit-write_rds-not-recommended" class="nav-link" data-scroll-target="#explicit-write_rds-not-recommended"><span class="toc-section-number">5.1.2</span>  Explicit <code>write_rds()</code> (not recommended</a></li>
+  <li><a href="#xfuncache_rds-our-preferred-method" id="toc-xfuncache_rds-our-preferred-method" class="nav-link" data-scroll-target="#xfuncache_rds-our-preferred-method"><span class="toc-section-number">5.1.3</span>  <code>xfun::cache_rds()</code> (our preferred method)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/cache.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -263,41 +274,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell">
-
-</div>
-<p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache.html">Introduction to cache in RMarkdown</a> and some <a href="https://yihui.org/knitr/demo/cache/">more detail</a></p>
-<p><a href="https://yihui.org/en/2018/06/cache-invalidation/">Detail on cache invalidation</a></p>
-<p>More detail on <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html">paths</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html">lazy loading</a></p>
-<p>Better solutions</p>
-<ul>
-<li><p><a href="">manual caching by saving objects</a></p></li>
-<li><p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds">xfun::cache_rds()</a> - The sweet spot?</p>
-<ul>
-<li><code>rerun = TRUE</code></li>
-<li>file is determined by the chunk option cache.path and the chunk label</li>
-</ul></li>
-</ul>
+<p>We use cache to avoid having to repeat time-consuming calculations when they will return the same result each time. To understand how, you should start with an <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache.html">introduction to cache in RMarkdown</a> that provides an overview of the rationale for caching objects. However, be aware that the discussion is anchored in the context of using knitr’s built in caching abilities, which we don’t recommend.</p>
+<p>To use caching effectively, you need to understand when and how to <a href="https://yihui.org/en/2018/06/cache-invalidation/">invalidate the cache</a>.</p>
+<section id="solutions" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="solutions"><span class="header-section-number">5.1</span> Solutions</h2>
+<section id="cache-true-not-recommended" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="cache-true-not-recommended"><span class="header-section-number">5.1.1</span> <code>cache = TRUE</code> (not recommended)</h3>
+<p>You can set <code>cache = TRUE</code> in any specific code chunk to have knitr cache those calculations for your later reuse. However, we don.t recommend this because it makes the process and instances where the cache is invalidated more opaque. And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.</p>
+<p>Nonetheless, this approach is <a href="https://yihui.org/knitr/demo/cache/">well documented</a> including more advanced topics like <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html">paths</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html">lazy loading</a>.</p>
+</section>
+<section id="explicit-write_rds-not-recommended" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="explicit-write_rds-not-recommended"><span class="header-section-number">5.1.2</span> Explicit <code>write_rds()</code> (not recommended</h3>
+<p>You could instead manually save objects that you want to avoid recalculating. This is a legitimate method that gives you full and transparent control over caching. It will also work both interactively in the console and when you knit your document. However, its got a bit more overhead RE the code. You need to write code to check if the file exists and load it if it does vs.&nbsp;calculate the object if it doesn’t. This is not too hard but it turns out that a function has already been written to handle this overhead for you. We describe that next.</p>
+</section>
+<section id="xfuncache_rds-our-preferred-method" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="xfuncache_rds-our-preferred-method"><span class="header-section-number">5.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</h3>
+<p>We believe that the <code>xfun::cache_rds()</code> function provides the sweet spot for the balance of control and transparency vs.&nbsp;code overhead. It also works for both interactive/console and knit workflows.</p>
+<p>Lets demonstrate its use. We start by setting up some objects that will be used in later time-consuming calculations. You need to be careful with these objects. If they ever change, you will need to explicitly invalidate your cached object and re-calculate it. More on that below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> xfun<span class="sc">::</span><span class="fu">cache_rds</span>({</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># pretend that computations take a while</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">+</span> z</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}, <span class="at">hash =</span> <span class="fu">list</span>(y, z),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we can use x without recalculating each time when executing the previous chunk in either console or when knit</p>
+<p>Now lets use <code>y</code> and <code>z</code> in some time consuming set of calculations</p>
+<ul>
+<li>The first argument parameter in <code>cache_rds()</code> is the code to execute the time-consuming calculation. This code is provided to the function inside of curly brackets, <code>{}</code></li>
+<li>Results from <code>cache_rds()</code> are assigned to your object (e.g., <code>x</code>) as if they came straight from the coded calculations (e.g., instead of <code>x &lt;- y + z</code>, we now have <code>x &lt;- cache_rds({y + z})</code>).</li>
+<li>We recommend explicitly setting the values for the <code>dir</code> and <code>file</code> for the cached object. This way, you control where it is saved and are assured it will be the same location regardless of whether you run this code chunk in the console or knit it. Initial testing suggested the filename and location will differ for interactive/console vs.&nbsp;knit workflows if you use defaults. The <code>/</code> at the end of the directory name is required to designate this as a folder. The filename will have the string assigned to <code>file</code> as the prefix but will have an additional hash and a <code>.rds</code> appended to it as well.</li>
+<li>We recommend explicitly including <code>rerun = FALSE</code> as a third parameter. This provides you an easy way to invalidate the cached object (and a memory aid to consider invalidation when needed). To invalidate, just set it to <code>TRUE</code> and run the chunk again again if any of your globals (e.g., <code>y</code>, <code>z</code>) have changed (and then set back to FALSE after!). Alternatively, you can invalidate the cached object by deleting it from the <code>cache/</code> folder.</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> xfun<span class="sc">::</span><span class="fu">cache_rds</span>({</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># pretend that computations take a while</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">+</span> z</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>},</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">rerun =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can use x without recalculating it each time when executing the previous chunk in either console or when knit. Yay!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
+<p><code>cache_rds()</code> has one additional parameter worth mentioning, <code>hash</code>. You can pass a list of global objects to hash (e.g.&nbsp;<code>hash = list(y, z)</code>) that the function will monitor for change. If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it. This seems great except that our testing suggests that it invalidates the cache in some instances when you switch between the console and a subsequent knit and/or if those globals are re-calculated, even if their values don’t change (e.g., re-running all code in console from the top of script). We have opted to just pay attention to our globals and invalidate them manually (through <code>rerun = TRUE</code>), when necessary.</p>
+<p>You can (and should) read the full documentation on <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds">xfun::cache_rds()</a> prior to using it in your own code.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
