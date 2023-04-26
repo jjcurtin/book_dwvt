@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -352,6 +352,8 @@ ul.task-list li input[type="checkbox"] {
 <p>To be sure tables display with NA cells as blanks (instead of “NA”) include this before your first table:</p>
 <p><code>options(knitr.kable.NA = "")</code></p>
 <p>Side note, a useful kableExtra function is collapse_rows, yet that seems to be <a href="https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows">persistently</a> <a href="https://github.com/haozhu233/kableExtra/issues/624">broken</a></p>
+<p><code>row_spec()</code> has a parameter, <code>hline_after</code>, which, ostensibly, should create a horizontal line under that row, right? Apparently it <a href="https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou">only works on latex</a> although this is undocumented. Apparently the solution is to add <code>row_spec(X, extra_css = "border-bottom: 1px solid"))</code> (where x is the rownum; 0 for the header, <code>nrow(df)</code> for the last row)</p>
+<p>Similarly, to supress hlines on headers created by <code>pack_rows()</code>, you need to add <code>extra_css = "border-bottom: none"</code> into the <code>pack_rows()</code> command</p>
 <div class="cell">
 <div class="cell-output-display">
 

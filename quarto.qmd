@@ -75,6 +75,10 @@ To be sure tables display with NA cells as blanks (instead of "NA") include this
 
 Side note, a useful kableExtra function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
 
+`row_spec()` has a parameter, `hline_after`, which, ostensibly, should create a horizontal line under that row, right? Apparently it [only works on latex](https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou) although this is undocumented. Apparently the solution is to add `row_spec(X, extra_css = "border-bottom: 1px solid"))` (where x is the rownum; 0 for the header, `nrow(df)` for the last row)
+
+Similarly, to supress hlines on headers created by `pack_rows()`, you need to add `extra_css = "border-bottom: none"` into the `pack_rows()` command
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -98,8 +102,7 @@ mtcars %>%
            alphabet = c("Footnote A; ", "Footnote B; "),
            symbol = c("Footnote Symbol 1; ", "Footnote Symbol 2")
            )
-
-
+           
 ```
 
 
