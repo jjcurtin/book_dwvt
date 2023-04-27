@@ -4,7 +4,6 @@ We use cache to avoid having to repeat time-consuming calculations when they wil
 
 To use caching effectively, you need to understand when and how to [invalidate the cache](https://yihui.org/en/2018/06/cache-invalidation/).
 
-
 ## Solutions
 
 ### `cache = TRUE` (not recommended)
@@ -42,6 +41,7 @@ x <- xfun::cache_rds({
   y + z
 },
 rerun = FALSE,
+hash = list(y, z),
 dir = "cache/",
 file = "cache_demo")
 ```
