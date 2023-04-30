@@ -1,0 +1,15 @@
+# Function conflicts
+
+## Minmize loading of full packages
+
+## Base R conflict managemnt
+
+
+## conflicted pacakge
+
+Not recommended
+
+
+https://developer.r-project.org/Blog/public/2019/03/19/managing-search-path-conflicts/
+implement this!!
+Also stop loading full packages when we only need one function (e.g., janitor for clean_names)

@@ -14,7 +14,7 @@ book:
   title: "Data Wrangling in the Tidyverse"
   author: "John J. Curtin, PhD"
   description: | 
-    TBA
+    John Curtin and his lab are developing this book to document what we believe to be best practices for data wrangling and related tasks using the Tidyverse and Tidymodels ecosystem.
   #cover-image: images/cover.png
   site-url: https://github.io/jjcurtin/dwt
   repo-url: https://github.com/jjcurtin/dwt
