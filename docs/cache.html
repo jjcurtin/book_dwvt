@@ -250,6 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#cache-true-not-recommended" id="toc-cache-true-not-recommended" class="nav-link" data-scroll-target="#cache-true-not-recommended"><span class="toc-section-number">5.1.1</span>  <code>cache = TRUE</code> (not recommended)</a></li>
   <li><a href="#explicit-write_rds-not-recommended" id="toc-explicit-write_rds-not-recommended" class="nav-link" data-scroll-target="#explicit-write_rds-not-recommended"><span class="toc-section-number">5.1.2</span>  Explicit <code>write_rds()</code> (not recommended</a></li>
   <li><a href="#xfuncache_rds-our-preferred-method" id="toc-xfuncache_rds-our-preferred-method" class="nav-link" data-scroll-target="#xfuncache_rds-our-preferred-method"><span class="toc-section-number">5.1.3</span>  <code>xfun::cache_rds()</code> (our preferred method)</a></li>
+  <li><a href="#final-notes" id="toc-final-notes" class="nav-link" data-scroll-target="#final-notes"><span class="toc-section-number">5.1.4</span>  Final notes</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/cache.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
@@ -280,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="5.1" class="anchored" data-anchor-id="solutions"><span class="header-section-number">5.1</span> Solutions</h2>
 <section id="cache-true-not-recommended" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="cache-true-not-recommended"><span class="header-section-number">5.1.1</span> <code>cache = TRUE</code> (not recommended)</h3>
-<p>You can set <code>cache = TRUE</code> in any specific code chunk to have knitr cache those calculations for your later reuse. However, we don.t recommend this because it makes the process and instances where the cache is invalidated more opaque. And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.</p>
+<p>You can set <code>cache = TRUE</code> in any specific code chunk to have knitr cache those calculations for your later reuse. However, we don’t recommend this because it makes the process and instances where the cache is invalidated more opaque. And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.</p>
 <p>Nonetheless, this approach is <a href="https://yihui.org/knitr/demo/cache/">well documented</a> including more advanced topics like <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html">paths</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html">lazy loading</a>.</p>
 </section>
 <section id="explicit-write_rds-not-recommended" class="level3" data-number="5.1.2">
@@ -301,6 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Results from <code>cache_rds()</code> are assigned to your object (e.g., <code>x</code>) as if they came straight from the coded calculations (e.g., instead of <code>x &lt;- y + z</code>, we now have <code>x &lt;- cache_rds({y + z})</code>).</li>
 <li>We recommend explicitly setting the values for the <code>dir</code> and <code>file</code> for the cached object. This way, you control where it is saved and are assured it will be the same location regardless of whether you run this code chunk in the console or knit it. Initial testing suggested the filename and location will differ for interactive/console vs.&nbsp;knit workflows if you use defaults. The <code>/</code> at the end of the directory name is required to designate this as a folder. The filename will have the string assigned to <code>file</code> as the prefix but will have an additional hash and a <code>.rds</code> appended to it as well.</li>
 <li>We recommend explicitly including <code>rerun = FALSE</code> as a third parameter. This provides you an easy way to invalidate the cached object (and a memory aid to consider invalidation when needed). To invalidate, just set it to <code>TRUE</code> and run the chunk again again if any of your globals (e.g., <code>y</code>, <code>z</code>) have changed (and then set back to FALSE after!). Alternatively, you can invalidate the cached object by deleting it from the <code>cache/</code> folder.</li>
+<li><code>cache_rds()</code> has one additional parameter worth mentioning, <code>hash</code>. You can pass a list of global objects to hash (e.g.&nbsp;<code>hash = list(y, z)</code>) that the function will monitor for change. If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it. This can be very useful and we should start using it too. However, our testing suggests that it <em>may</em> invalidate the cache in some instances when it shouldn’t. We havent been able to fully document this issue yet. For now, we recommend using this and paying attention to when the cache is incorrectly invalidated (if ever). Some testing has also suggested that you may need to use &gt;= R version 4.3 to avoid the problem with cache invalidation (but that isn’t definite either :-( We will update this page as we better understand if this is a persistent issue.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> xfun<span class="sc">::</span><span class="fu">cache_rds</span>({</span>
@@ -308,8 +310,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">+</span> z</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>},</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">rerun =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">hash =</span> <span class="fu">list</span>(y, z),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can use x without recalculating it each time when executing the previous chunk in either console or when knit. Yay!</p>
 <div class="cell">
@@ -318,8 +321,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
-<p><code>cache_rds()</code> has one additional parameter worth mentioning, <code>hash</code>. You can pass a list of global objects to hash (e.g.&nbsp;<code>hash = list(y, z)</code>) that the function will monitor for change. If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it. This seems great except that our testing suggests that it invalidates the cache in some instances when you switch between the console and a subsequent knit and/or if those globals are re-calculated, even if their values don’t change (e.g., re-running all code in console from the top of script). We have opted to just pay attention to our globals and invalidate them manually (through <code>rerun = TRUE</code>), when necessary.</p>
 <p>You can (and should) read the full documentation on <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds">xfun::cache_rds()</a> prior to using it in your own code.</p>
+</section>
+<section id="final-notes" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="final-notes"><span class="header-section-number">5.1.4</span> Final notes</h3>
+<p>We have also learned that caching that involves saving an rds file (all of these methods) may encounter problems if you try to cache a keras model object (e.g., via <code>mlp()</code> in tidymodels). To be clear, there is no problem saving resampling statistics from <code>fit_resamples()</code> or <code>tune_grid()</code>. The problem is specific to the actual model object returned from <code>fit()</code>. This <a href="https://www.tidyverse.org/blog/2022/09/bundle-0-1-0/">issue</a> with keras (and perhaps some other types) models is documented and the <code>bundles</code> package is designed to solve it. If you plan to cache (or even just directly save) these model objects, read these docs carefully. We will eventually work out a piped solution that works to either manually save or use <code>cache_rds()</code> with these objects if needed. Not a high priority for us right now because we dont use keras much yet in our lab.</p>
 
 
 </section>
