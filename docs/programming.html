@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="John Curtin and his lab are developing this book to document what we believe to be best practices for data wrangling and related tasks using the Tidyverse and Tidy models ecosystem.">
 
-<title>Data Wrangling in the Tidyverse - 7&nbsp; Programming Notes</title>
+<title>Data Wrangling in the Tidyverse - 8&nbsp; Programming Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -188,37 +187,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Iteration</span></a>
+  <a href="./conflicts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Function conflicts</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
+  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Cache</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Iteration</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cache</span></a>
+  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simulations</span></a>
+  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./programming.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Programming Notes</span></a>
+  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></a>
+  <a href="./programming.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Programming Notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Quarto</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -245,21 +249,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reading-csv-files" id="toc-reading-csv-files" class="nav-link active" data-scroll-target="#reading-csv-files"><span class="toc-section-number">7.1</span>  Reading csv files</a>
+  <li><a href="#reading-csv-files" id="toc-reading-csv-files" class="nav-link active" data-scroll-target="#reading-csv-files"><span class="toc-section-number">8.1</span>  Reading csv files</a>
   <ul class="collapse">
-  <li><a href="#using-col_types" id="toc-using-col_types" class="nav-link" data-scroll-target="#using-col_types"><span class="toc-section-number">7.1.1</span>  Using <code>col_types()</code></a></li>
-  <li><a href="#using-a-separate-mutate" id="toc-using-a-separate-mutate" class="nav-link" data-scroll-target="#using-a-separate-mutate"><span class="toc-section-number">7.1.2</span>  Using a separate <code>mutate()</code></a></li>
+  <li><a href="#using-col_types" id="toc-using-col_types" class="nav-link" data-scroll-target="#using-col_types"><span class="toc-section-number">8.1.1</span>  Using <code>col_types()</code></a></li>
+  <li><a href="#using-a-separate-mutate" id="toc-using-a-separate-mutate" class="nav-link" data-scroll-target="#using-a-separate-mutate"><span class="toc-section-number">8.1.2</span>  Using a separate <code>mutate()</code></a></li>
   </ul></li>
-  <li><a href="#iteration" id="toc-iteration" class="nav-link" data-scroll-target="#iteration"><span class="toc-section-number">7.2</span>  Iteration</a>
+  <li><a href="#iteration" id="toc-iteration" class="nav-link" data-scroll-target="#iteration"><span class="toc-section-number">8.2</span>  Iteration</a>
   <ul class="collapse">
-  <li><a href="#across" id="toc-across" class="nav-link" data-scroll-target="#across"><span class="toc-section-number">7.2.1</span>  <code>across()</code></a></li>
-  <li><a href="#map-and-future_map" id="toc-map-and-future_map" class="nav-link" data-scroll-target="#map-and-future_map"><span class="toc-section-number">7.2.2</span>  <code>map()</code> and <code>future_map()</code></a></li>
-  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="toc-section-number">7.2.3</span>  <code>for</code> loops</a></li>
-  <li><a href="#foreach-loops" id="toc-foreach-loops" class="nav-link" data-scroll-target="#foreach-loops"><span class="toc-section-number">7.2.4</span>  <code>foreach</code> loops</a></li>
-  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting"><span class="toc-section-number">7.2.5</span>  Nesting</a></li>
+  <li><a href="#across" id="toc-across" class="nav-link" data-scroll-target="#across"><span class="toc-section-number">8.2.1</span>  <code>across()</code></a></li>
+  <li><a href="#map-and-future_map" id="toc-map-and-future_map" class="nav-link" data-scroll-target="#map-and-future_map"><span class="toc-section-number">8.2.2</span>  <code>map()</code> and <code>future_map()</code></a></li>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="toc-section-number">8.2.3</span>  <code>for</code> loops</a></li>
+  <li><a href="#foreach-loops" id="toc-foreach-loops" class="nav-link" data-scroll-target="#foreach-loops"><span class="toc-section-number">8.2.4</span>  <code>foreach</code> loops</a></li>
+  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting"><span class="toc-section-number">8.2.5</span>  Nesting</a></li>
   </ul></li>
-  <li><a href="#advanced-data-wrangling" id="toc-advanced-data-wrangling" class="nav-link" data-scroll-target="#advanced-data-wrangling"><span class="toc-section-number">7.3</span>  Advanced data wrangling</a></li>
-  <li><a href="#tidy-programming" id="toc-tidy-programming" class="nav-link" data-scroll-target="#tidy-programming"><span class="toc-section-number">7.4</span>  Tidy programming</a></li>
+  <li><a href="#advanced-data-wrangling" id="toc-advanced-data-wrangling" class="nav-link" data-scroll-target="#advanced-data-wrangling"><span class="toc-section-number">8.3</span>  Advanced data wrangling</a></li>
+  <li><a href="#tidy-programming" id="toc-tidy-programming" class="nav-link" data-scroll-target="#tidy-programming"><span class="toc-section-number">8.4</span>  Tidy programming</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/programming.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -268,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
 </div>
 
 
@@ -291,11 +295,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>path_data <span class="ot">&lt;-</span> <span class="st">"./data"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="reading-csv-files" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="reading-csv-files"><span class="header-section-number">7.1</span> Reading csv files</h2>
+<section id="reading-csv-files" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="reading-csv-files"><span class="header-section-number">8.1</span> Reading csv files</h2>
 <p>We typically save our data as csv files. There are many benefits to this format (e.g., easy to share, easy to view outside of R) but one downside is that the don’t store information about variable/column class. We need to establish the appropriate class for each column when we read the data.</p>
-<section id="using-col_types" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="using-col_types"><span class="header-section-number">7.1.1</span> Using <code>col_types()</code></h3>
+<section id="using-col_types" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="using-col_types"><span class="header-section-number">8.1.1</span> Using <code>col_types()</code></h3>
 <p>If possible, it is best to set the class for each column/variable specifically using the <code>col_types()</code> parameter in <code>read_csv()</code> This forces you to specifically examine and consider each column to decide its class (e.g., is a column with numbers best set as numeric or ordered factor) and the levels if its class is nominal. Of course, this is part of cleaning EDA so you should have done this when you first started working with the data.</p>
 <p>Re-classing is typically needed to convert raw character columns to factor (ordered or unordered) and sometimes to convert raw numeric columns to factor (likely ordered, e.g., a likert scale).</p>
 <p>Here is an example using the cars dataset</p>
@@ -330,8 +334,8 @@ $ origin       &lt;fct&gt; japanese, japanese, european, european, european, eur
 </div>
 </div>
 </section>
-<section id="using-a-separate-mutate" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="using-a-separate-mutate"><span class="header-section-number">7.1.2</span> Using a separate <code>mutate()</code></h3>
+<section id="using-a-separate-mutate" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="using-a-separate-mutate"><span class="header-section-number">8.1.2</span> Using a separate <code>mutate()</code></h3>
 <p>In some instances (e.g., data file with very large number of variables, very consistently organized data character data is well-behaved), you may want to read the data in first and then use <code>mutate()</code> to change classes as needed.</p>
 <p>In these instances, we prefer to set the <code>col_types()</code> parameter to <code>cols()</code> to prevent the verbose message about column classes.</p>
 <p>Here is an example using the ames dataset with all predictors. To start, we only re-class all character columns to unordered factor and one numeric column to an ordered factor. As we work with the data (during cleaning EDA), we may decide that there are other columns that need to be re-classed. If so, we could add additional lines to the <code>mutuate()</code></p>
@@ -431,22 +435,22 @@ $ sale_price      &lt;dbl&gt; 215000, 105000, 172000, 189900, 213500, 191500, 23
 </div>
 </section>
 </section>
-<section id="iteration" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="iteration"><span class="header-section-number">7.2</span> Iteration</h2>
-<section id="across" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="across"><span class="header-section-number">7.2.1</span> <code>across()</code></h3>
+<section id="iteration" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="iteration"><span class="header-section-number">8.2</span> Iteration</h2>
+<section id="across" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="across"><span class="header-section-number">8.2.1</span> <code>across()</code></h3>
 </section>
-<section id="map-and-future_map" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="map-and-future_map"><span class="header-section-number">7.2.2</span> <code>map()</code> and <code>future_map()</code></h3>
+<section id="map-and-future_map" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="map-and-future_map"><span class="header-section-number">8.2.2</span> <code>map()</code> and <code>future_map()</code></h3>
 </section>
-<section id="for-loops" class="level3" data-number="7.2.3">
-<h3 data-number="7.2.3" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">7.2.3</span> <code>for</code> loops</h3>
+<section id="for-loops" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">8.2.3</span> <code>for</code> loops</h3>
 </section>
-<section id="foreach-loops" class="level3" data-number="7.2.4">
-<h3 data-number="7.2.4" class="anchored" data-anchor-id="foreach-loops"><span class="header-section-number">7.2.4</span> <code>foreach</code> loops</h3>
+<section id="foreach-loops" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="foreach-loops"><span class="header-section-number">8.2.4</span> <code>foreach</code> loops</h3>
 </section>
-<section id="nesting" class="level3" data-number="7.2.5">
-<h3 data-number="7.2.5" class="anchored" data-anchor-id="nesting"><span class="header-section-number">7.2.5</span> Nesting</h3>
+<section id="nesting" class="level3" data-number="8.2.5">
+<h3 data-number="8.2.5" class="anchored" data-anchor-id="nesting"><span class="header-section-number">8.2.5</span> Nesting</h3>
 <p>Some useful tutorials</p>
 <ul>
 <li>https://r4ds.had.co.nz/many-models.html</li>
@@ -455,14 +459,14 @@ $ sale_price      &lt;dbl&gt; 215000, 105000, 172000, 189900, 213500, 191500, 23
 </ul>
 </section>
 </section>
-<section id="advanced-data-wrangling" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="advanced-data-wrangling"><span class="header-section-number">7.3</span> Advanced data wrangling</h2>
+<section id="advanced-data-wrangling" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="advanced-data-wrangling"><span class="header-section-number">8.3</span> Advanced data wrangling</h2>
 <p>See this <a href="https://dplyr.tidyverse.org/dev/articles/rowwise.html">article</a> for details on the use of dplry for row-wise operations</p>
 <p>See this <a href="https://dplyr.tidyverse.org/dev/articles/colwise.html">article</a> for details on the use of dplry for column-wise operations</p>
 <p>The tidy folks have also written many more <a href="https://dplyr.tidyverse.org/dev/articles/index.html">articles</a> on dplyr that are worth a look</p>
 </section>
-<section id="tidy-programming" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="tidy-programming"><span class="header-section-number">7.4</span> Tidy programming</h2>
+<section id="tidy-programming" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="tidy-programming"><span class="header-section-number">8.4</span> Tidy programming</h2>
 <p>Programming with dplyr can be complicated because of tidy evaluation. This <a href="https://dplyr.tidyverse.org/articles/programming.html">programming vignette</a> provides useful documentation on data masking and tidy selection</p>
 <p>If you plan to do a lot of R programming, I highly recommend reading chapters 17-21 on <a href="https://adv-r.hadley.nz/metaprogramming.html">meta-programming</a> in R</p>
 
@@ -606,12 +610,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./simulations.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Simulations</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./quarto.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

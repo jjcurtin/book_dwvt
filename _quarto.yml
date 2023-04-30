@@ -12,10 +12,9 @@ bibliography: references.bib
   
 book:
   title: "Data Wrangling in the Tidyverse"
-  author: "John J. Curtin, PhD"
-  description: | 
-    John Curtin and his lab are developing this book to document what we believe to be best practices for data wrangling and related tasks using the Tidyverse and Tidymodels ecosystem.
-  #cover-image: images/cover.png
+  author: 
+  - John J. Curtin, PhD
+  - Susan Wanta, MS
   site-url: https://github.io/jjcurtin/dwt
   repo-url: https://github.com/jjcurtin/dwt
   repo-branch: main
@@ -25,10 +24,11 @@ book:
   chapters:
     - index.qmd
     - file_and_path_management.qmd
+    - conflicts.qmd
+    - cache.qmd
     - iteration.qmd
     - reproducible_examples.qmd
     - parallel_processing.qmd
-    - cache.qmd
     - simulations.qmd
     - programming.qmd
     - quarto.qmd

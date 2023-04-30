@@ -1,14 +1,5 @@
 ## Welcome {.unnumbered}
 
-Data Wrangling in the Tidyverse
+[John Curtin](https://psych.wisc.edu/staff/curtin-john/) and his students and staff at the [Addiction Research Center](https://arc.psych.wisc.edu/) are developing this book to document what we believe to be best practices (or at least our practices) for data wrangling and related tasks using the [Tidyverse](https://www.tidyverse.org/) and [Tidymodels](https://www.tidymodels.org/) ecosystems and [Quarto publishing system](https://quarto.org/).
 
-Splash page provides an overview of the book
-
-
-
-#### R
-
-```r
-my_list = list(1, 2, 3)
-typeof(my_list)
-```
+This book is under active development with its most recent edits on `r lubridate::today()`.  We hope that this resource will continue to evolve to serve both our lab and the R community more generally.

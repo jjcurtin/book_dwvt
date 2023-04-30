@@ -5,7 +5,7 @@
 ## Base R conflict managemnt
 
 
-## conflicted pacakge
+## `conflicted` pacakge
 
 Not recommended
 
