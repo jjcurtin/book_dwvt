@@ -58,5 +58,12 @@ You can (and should) read the full documentation on [xfun::cache_rds()](https://
 
 
 ### Final notes
+#### Cache and Github
 
+We obviously don't want our cached objects getting added to our repos.  This could make the repos become too large and/or add sensitive data to them.  It is easy to avoid this though. Assuming you are calling the folder that you will save the cached files to `cache/` as recommended above, just add the following line to your `.gitignore` file
+
+`*_cache/`
+
+
+#### Saving model objects
 We have also learned that caching that involves saving an rds file (all of these methods) may encounter problems if you try to cache a keras model object (e.g., via `mlp()` in tidymodels).   To be clear, there is no problem saving resampling statistics from `fit_resamples()` or `tune_grid()`.  The problem is specific to the actual model object returned from `fit()`.   This [issue](https://www.tidyverse.org/blog/2022/09/bundle-0-1-0/) with keras (and perhaps some other types) models is documented and the `bundles` package is designed to solve it.  If you plan to cache (or even just directly save) these model objects, read these docs carefully.   We will eventually work out a piped solution that works to either manually save or use `cache_rds()` with these objects if needed.  Not a high priority for us right now because we dont use keras much yet in our lab.
