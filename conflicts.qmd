@@ -52,7 +52,7 @@ conflictRules("recipes", mask.ok = c("fixed"))
 conflictRules("yardstick", mask.ok = c("spec"))
 ```
 
-However, given how often we do this, we have wrapped these rules into a simple function.  This function is reproduced here, but also shared in our fun_ml.R script on github.  If you source that script, you can call this function directly along with setting the depends.ok policy.
+However, given how often we do this, we have wrapped these rules into a simple function.  This function is reproduced here, but also shared in our [fun_ml.R](https://raw.githubusercontent.com/jjcurtin/lab_support/main/fun_ml.R) script in lab_support on github.  If you source that script, you can call this function directly along with setting the depends.ok policy.
 
 ```{r}
 tidymodels_conflictRules <- function(){
