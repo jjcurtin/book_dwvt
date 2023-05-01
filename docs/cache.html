@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling in the Tidyverse - 3&nbsp; Cache</title>
+<title>Data Wrangling in the Tidyverse - 2&nbsp; Cache</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,7 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./iteration.html" rel="next">
+<link href="./parallel_processing.html" rel="next">
 <link href="./conflicts.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Cache</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -182,32 +182,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
+  <a href="./conflicts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Function conflicts</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conflicts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Function conflicts</span></a>
+  <a href="./cache.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cache.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Cache</span></a>
+  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Iteration</span></a>
+  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
+  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -249,12 +249,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#solutions" id="toc-solutions" class="nav-link active" data-scroll-target="#solutions"><span class="toc-section-number">3.1</span>  Solutions</a>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link active" data-scroll-target="#solutions"><span class="toc-section-number">2.1</span>  Solutions</a>
   <ul class="collapse">
-  <li><a href="#cache-true-not-recommended" id="toc-cache-true-not-recommended" class="nav-link" data-scroll-target="#cache-true-not-recommended"><span class="toc-section-number">3.1.1</span>  <code>cache = TRUE</code> (not recommended)</a></li>
-  <li><a href="#explicit-write_rds-not-recommended" id="toc-explicit-write_rds-not-recommended" class="nav-link" data-scroll-target="#explicit-write_rds-not-recommended"><span class="toc-section-number">3.1.2</span>  Explicit <code>write_rds()</code> (not recommended</a></li>
-  <li><a href="#xfuncache_rds-our-preferred-method" id="toc-xfuncache_rds-our-preferred-method" class="nav-link" data-scroll-target="#xfuncache_rds-our-preferred-method"><span class="toc-section-number">3.1.3</span>  <code>xfun::cache_rds()</code> (our preferred method)</a></li>
-  <li><a href="#final-notes" id="toc-final-notes" class="nav-link" data-scroll-target="#final-notes"><span class="toc-section-number">3.1.4</span>  Final notes</a></li>
+  <li><a href="#cache-true-not-recommended" id="toc-cache-true-not-recommended" class="nav-link" data-scroll-target="#cache-true-not-recommended"><span class="toc-section-number">2.1.1</span>  <code>cache = TRUE</code> (not recommended)</a></li>
+  <li><a href="#explicit-write_rds-not-recommended" id="toc-explicit-write_rds-not-recommended" class="nav-link" data-scroll-target="#explicit-write_rds-not-recommended"><span class="toc-section-number">2.1.2</span>  Explicit <code>write_rds()</code> (not recommended</a></li>
+  <li><a href="#xfuncache_rds-our-preferred-method" id="toc-xfuncache_rds-our-preferred-method" class="nav-link" data-scroll-target="#xfuncache_rds-our-preferred-method"><span class="toc-section-number">2.1.3</span>  <code>xfun::cache_rds()</code> (our preferred method)</a></li>
+  <li><a href="#final-notes" id="toc-final-notes" class="nav-link" data-scroll-target="#final-notes"><span class="toc-section-number">2.1.4</span>  Final notes</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/cache.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Cache</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></h1>
 </div>
 
 
@@ -281,19 +281,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <p>We use cache to avoid having to repeat time-consuming calculations when they will return the same result each time. To understand how, you should start with an <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache.html">introduction to cache in RMarkdown</a> that provides an overview of the rationale for caching objects. However, be aware that the discussion is anchored in the context of using knitr’s built in caching abilities, which we don’t recommend.</p>
 <p>To use caching effectively, you need to understand when and how to <a href="https://yihui.org/en/2018/06/cache-invalidation/">invalidate the cache</a>.</p>
-<section id="solutions" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="solutions"><span class="header-section-number">3.1</span> Solutions</h2>
-<section id="cache-true-not-recommended" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="cache-true-not-recommended"><span class="header-section-number">3.1.1</span> <code>cache = TRUE</code> (not recommended)</h3>
+<section id="solutions" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="solutions"><span class="header-section-number">2.1</span> Solutions</h2>
+<section id="cache-true-not-recommended" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="cache-true-not-recommended"><span class="header-section-number">2.1.1</span> <code>cache = TRUE</code> (not recommended)</h3>
 <p>You can set <code>cache = TRUE</code> in any specific code chunk to have knitr cache those calculations for your later reuse. However, we don’t recommend this because it makes the process and instances where the cache is invalidated more opaque. And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.</p>
 <p>Nonetheless, this approach is <a href="https://yihui.org/knitr/demo/cache/">well documented</a> including more advanced topics like <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html">paths</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html">lazy loading</a>.</p>
 </section>
-<section id="explicit-write_rds-not-recommended" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="explicit-write_rds-not-recommended"><span class="header-section-number">3.1.2</span> Explicit <code>write_rds()</code> (not recommended</h3>
+<section id="explicit-write_rds-not-recommended" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="explicit-write_rds-not-recommended"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (not recommended</h3>
 <p>You could instead manually save objects that you want to avoid recalculating. This is a legitimate method that gives you full and transparent control over caching. It will also work both interactively in the console and when you knit your document. However, its got a bit more overhead RE the code. You need to write code to check if the file exists and load it if it does vs.&nbsp;calculate the object if it doesn’t. This is not too hard but it turns out that a function has already been written to handle this overhead for you. We describe that next.</p>
 </section>
-<section id="xfuncache_rds-our-preferred-method" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="xfuncache_rds-our-preferred-method"><span class="header-section-number">3.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</h3>
+<section id="xfuncache_rds-our-preferred-method" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="xfuncache_rds-our-preferred-method"><span class="header-section-number">2.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</h3>
 <p>We believe that the <code>xfun::cache_rds()</code> function provides the sweet spot for the balance of control and transparency vs.&nbsp;code overhead. It also works for both interactive/console and knit workflows.</p>
 <p>Lets demonstrate its use. We start by setting up some objects that will be used in later time-consuming calculations. You need to be careful with these objects. If they ever change, you will need to explicitly invalidate your cached object and re-calculate it. More on that below.</p>
 <div class="cell">
@@ -327,15 +327,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>You can (and should) read the full documentation on <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds">xfun::cache_rds()</a> prior to using it in your own code.</p>
 </section>
-<section id="final-notes" class="level3" data-number="3.1.4">
-<h3 data-number="3.1.4" class="anchored" data-anchor-id="final-notes"><span class="header-section-number">3.1.4</span> Final notes</h3>
-<section id="cache-and-github" class="level4" data-number="3.1.4.1">
-<h4 data-number="3.1.4.1" class="anchored" data-anchor-id="cache-and-github"><span class="header-section-number">3.1.4.1</span> Cache and Github</h4>
+<section id="final-notes" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="final-notes"><span class="header-section-number">2.1.4</span> Final notes</h3>
+<section id="cache-and-github" class="level4" data-number="2.1.4.1">
+<h4 data-number="2.1.4.1" class="anchored" data-anchor-id="cache-and-github"><span class="header-section-number">2.1.4.1</span> Cache and Github</h4>
 <p>We obviously don’t want our cached objects getting added to our repos. This could make the repos become too large and/or add sensitive data to them. It is easy to avoid this though. Assuming you are calling the folder that you will save the cached files to <code>cache/</code> as recommended above, just add the following line to your <code>.gitignore</code> file</p>
 <p><code>*_cache/</code></p>
 </section>
-<section id="saving-model-objects" class="level4" data-number="3.1.4.2">
-<h4 data-number="3.1.4.2" class="anchored" data-anchor-id="saving-model-objects"><span class="header-section-number">3.1.4.2</span> Saving model objects</h4>
+<section id="saving-model-objects" class="level4" data-number="2.1.4.2">
+<h4 data-number="2.1.4.2" class="anchored" data-anchor-id="saving-model-objects"><span class="header-section-number">2.1.4.2</span> Saving model objects</h4>
 <p>We have also learned that caching that involves saving an rds file (all of these methods) may encounter problems if you try to cache a keras model object (e.g., via <code>mlp()</code> in tidymodels). To be clear, there is no problem saving resampling statistics from <code>fit_resamples()</code> or <code>tune_grid()</code>. The problem is specific to the actual model object returned from <code>fit()</code>. This <a href="https://www.tidyverse.org/blog/2022/09/bundle-0-1-0/">issue</a> with keras (and perhaps some other types) models is documented and the <code>bundles</code> package is designed to solve it. If you plan to cache (or even just directly save) these model objects, read these docs carefully. We will eventually work out a piped solution that works to either manually save or use <code>cache_rds()</code> with these objects if needed. Not a high priority for us right now because we dont use keras much yet in our lab.</p>
 
 
@@ -480,12 +480,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./conflicts.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Function conflicts</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Function conflicts</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./iteration.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Iteration</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./parallel_processing.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parallel Processing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -2,46 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.io/jjcurtin/dwt/index.html</loc>
-    <lastmod>2023-04-30T17:24:43.164Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.io/jjcurtin/dwt/file_and_path_management.html</loc>
-    <lastmod>2023-04-30T17:24:43.165Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.856Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/conflicts.html</loc>
-    <lastmod>2023-04-30T17:24:43.166Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.858Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/cache.html</loc>
-    <lastmod>2023-04-30T17:24:43.168Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.io/jjcurtin/dwt/iteration.html</loc>
-    <lastmod>2023-04-30T17:24:43.169Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.io/jjcurtin/dwt/reproducible_examples.html</loc>
-    <lastmod>2023-04-30T17:24:43.170Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.859Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/parallel_processing.html</loc>
-    <lastmod>2023-04-30T17:24:43.173Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.862Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.io/jjcurtin/dwt/file_and_path_management.html</loc>
+    <lastmod>2023-05-01T17:07:30.863Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.io/jjcurtin/dwt/iteration.html</loc>
+    <lastmod>2023-05-01T17:07:30.864Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.io/jjcurtin/dwt/reproducible_examples.html</loc>
+    <lastmod>2023-05-01T17:07:30.865Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/simulations.html</loc>
-    <lastmod>2023-04-30T17:24:43.174Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.866Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/programming.html</loc>
-    <lastmod>2023-04-30T17:24:43.176Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.868Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/quarto.html</loc>
-    <lastmod>2023-04-30T17:24:43.178Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.870Z</lastmod>
   </url>
   <url>
     <loc>https://github.io/jjcurtin/dwt/quarto_figures_tables.html</loc>
-    <lastmod>2023-04-30T17:24:43.192Z</lastmod>
+    <lastmod>2023-05-01T17:07:30.883Z</lastmod>
   </url>
 </urlset>

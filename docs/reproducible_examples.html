@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling in the Tidyverse - 5&nbsp; How to Create a Reproducible Example (Reprex)</title>
+<title>Data Wrangling in the Tidyverse - 6&nbsp; How to Create a Reproducible Example (Reprex)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,7 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./parallel_processing.html" rel="next">
+<link href="./simulations.html" rel="next">
 <link href="./iteration.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -182,32 +182,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
+  <a href="./conflicts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Function conflicts</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conflicts.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Function conflicts</span></a>
+  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cache.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Cache</span></a>
+  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Iteration</span></a>
+  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./parallel_processing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parallel Processing</span></a>
+  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -249,12 +249,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-create-a-reprex" id="toc-why-create-a-reprex" class="nav-link active" data-scroll-target="#why-create-a-reprex"><span class="toc-section-number">5.1</span>  Why create a reprex?</a></li>
-  <li><a href="#key-featrures-of-a-good-reprex" id="toc-key-featrures-of-a-good-reprex" class="nav-link" data-scroll-target="#key-featrures-of-a-good-reprex"><span class="toc-section-number">5.2</span>  Key Featrures of a Good Reprex</a></li>
-  <li><a href="#debugging-with-your-reprex" id="toc-debugging-with-your-reprex" class="nav-link" data-scroll-target="#debugging-with-your-reprex"><span class="toc-section-number">5.3</span>  Debugging with your Reprex</a></li>
-  <li><a href="#using-reprex-package-to-post-your-reprex" id="toc-using-reprex-package-to-post-your-reprex" class="nav-link" data-scroll-target="#using-reprex-package-to-post-your-reprex"><span class="toc-section-number">5.4</span>  Using <code>reprex</code> Package to Post your Reprex</a></li>
-  <li><a href="#using-data-in-your-reprex" id="toc-using-data-in-your-reprex" class="nav-link" data-scroll-target="#using-data-in-your-reprex"><span class="toc-section-number">5.5</span>  Using Data in your Reprex</a></li>
-  <li><a href="#more-help" id="toc-more-help" class="nav-link" data-scroll-target="#more-help"><span class="toc-section-number">5.6</span>  More Help</a></li>
+  <li><a href="#why-create-a-reprex" id="toc-why-create-a-reprex" class="nav-link active" data-scroll-target="#why-create-a-reprex"><span class="toc-section-number">6.1</span>  Why create a reprex?</a></li>
+  <li><a href="#key-featrures-of-a-good-reprex" id="toc-key-featrures-of-a-good-reprex" class="nav-link" data-scroll-target="#key-featrures-of-a-good-reprex"><span class="toc-section-number">6.2</span>  Key Featrures of a Good Reprex</a></li>
+  <li><a href="#debugging-with-your-reprex" id="toc-debugging-with-your-reprex" class="nav-link" data-scroll-target="#debugging-with-your-reprex"><span class="toc-section-number">6.3</span>  Debugging with your Reprex</a></li>
+  <li><a href="#using-reprex-package-to-post-your-reprex" id="toc-using-reprex-package-to-post-your-reprex" class="nav-link" data-scroll-target="#using-reprex-package-to-post-your-reprex"><span class="toc-section-number">6.4</span>  Using <code>reprex</code> Package to Post your Reprex</a></li>
+  <li><a href="#using-data-in-your-reprex" id="toc-using-data-in-your-reprex" class="nav-link" data-scroll-target="#using-data-in-your-reprex"><span class="toc-section-number">6.5</span>  Using Data in your Reprex</a></li>
+  <li><a href="#more-help" id="toc-more-help" class="nav-link" data-scroll-target="#more-help"><span class="toc-section-number">6.6</span>  More Help</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/reproducible_examples.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -263,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></h1>
 </div>
 
 
@@ -278,8 +278,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="why-create-a-reprex" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="why-create-a-reprex"><span class="header-section-number">5.1</span> Why create a reprex?</h2>
+<section id="why-create-a-reprex" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="why-create-a-reprex"><span class="header-section-number">6.1</span> Why create a reprex?</h2>
 <p>Careful use of a reproducible example (a reprex) is critical for…</p>
 <ul>
 <li>Debugging your code</li>
@@ -288,8 +288,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>A reproducible example should be the simplest snippet of code that can reproduce the error that you are encountering. By creating this simple example, it will focus everyone on the nature of your problem(s), reproduce the error message (or incorrect output), and not distract by including code that is irrelevant to your problem.</p>
 </section>
-<section id="key-featrures-of-a-good-reprex" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="key-featrures-of-a-good-reprex"><span class="header-section-number">5.2</span> Key Featrures of a Good Reprex</h2>
+<section id="key-featrures-of-a-good-reprex" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="key-featrures-of-a-good-reprex"><span class="header-section-number">6.2</span> Key Featrures of a Good Reprex</h2>
 <p>There are a few key features of a good reprex.</p>
 <ul>
 <li><strong>The reprex should run completely on its own with just copy/paste</strong>. It should only require the snippet of shared code to run without any additional scripts, data, etc. This makes it easy for everyone to copy your code into their IDE and run it themselves. This is critical if you want someone else to use their time to help you solve YOUR problem.</li>
@@ -299,8 +299,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Include only necessary packages</strong>. Unfortunately, package conflicts are common in R. By stripping out unnecessary packages from your reprex, you may find the source of a package conflict.</li>
 </ul>
 </section>
-<section id="debugging-with-your-reprex" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="debugging-with-your-reprex"><span class="header-section-number">5.3</span> Debugging with your Reprex</h2>
+<section id="debugging-with-your-reprex" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="debugging-with-your-reprex"><span class="header-section-number">6.3</span> Debugging with your Reprex</h2>
 <p>You will find that in the process of simplifying your code, you will find the source of your error yourself in many, many instances. This process of cutting extraneous code and simplifying it is the recommended process for debugging your code systematically.</p>
 <p>Once you have your simple reprex, you can now experiment with it to find the boundary conditions for the error.<br>
 * Read help on the function that seems to generate the error.<br>
@@ -309,8 +309,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 * Use R <a href="https://rstudio-education.github.io/hopr/debug.html">debugging tools</a> like <code>traceback</code> and others.<br>
 * Look carefully at your tibble. Consider the class of all the variables. Are missing values causing an issue?</p>
 </section>
-<section id="using-reprex-package-to-post-your-reprex" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="using-reprex-package-to-post-your-reprex"><span class="header-section-number">5.4</span> Using <code>reprex</code> Package to Post your Reprex</h2>
+<section id="using-reprex-package-to-post-your-reprex" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="using-reprex-package-to-post-your-reprex"><span class="header-section-number">6.4</span> Using <code>reprex</code> Package to Post your Reprex</h2>
 <p>If you cannot solve the problem after doing substantial testing and debugging within your reprex on your own, it is time to ask for help. In the course, you will ask for help from us (John and the TAs). In the future, you will ask for help from the R community (see options described above). In either instance, be respectful and only ask after you have tried hard to solve the problem on your own and after you’ve truly hit a wall.</p>
 <p>If you are asking for help, you will need to describe your problem and post your reprex. Try to describe the nature of the issue clearly (though in some instances all that takes is reporting the error message). It might take more description if the problem is not a formal error in the code but incorrect output. The post the reprex. A provides a package (<code>reprex</code>) to help you create markdown code to post your reprex. Here are the steps to use it.</p>
 <ol type="1">
@@ -320,8 +320,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>After the <code>reprex</code> function runs, it will put markdown code onto your clipboard. You can now go back to your post and paste it in. Its that simple!</li>
 </ol>
 </section>
-<section id="using-data-in-your-reprex" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="using-data-in-your-reprex"><span class="header-section-number">5.5</span> Using Data in your Reprex</h2>
+<section id="using-data-in-your-reprex" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="using-data-in-your-reprex"><span class="header-section-number">6.5</span> Using Data in your Reprex</h2>
 <p>You should (almost) never need to provide a separate data file with your reprex (and it just makes things more complicated for those trying to help you if you do).</p>
 <p>Instead, you can often simulate a simple data set. Here is a dataset with variables for different classes including numeric, character and factor.</p>
 <div class="cell">
@@ -374,8 +374,8 @@ $ Lot_Frontage &lt;dbl&gt; 24, 104, 100, 87, 34, 65, 0, 0, 0, 70, 160, 66, 50, 5
 </div>
 </div>
 </section>
-<section id="more-help" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="more-help"><span class="header-section-number">5.6</span> More Help</h2>
+<section id="more-help" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="more-help"><span class="header-section-number">6.6</span> More Help</h2>
 <p>For more help see:</p>
 <ul>
 <li><a href="https://reprex.tidyverse.org/articles/learn-reprex.html">How to use a Reprex</a> from tidyverse folks</li>
@@ -524,12 +524,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./iteration.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Iteration</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./parallel_processing.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parallel Processing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./simulations.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

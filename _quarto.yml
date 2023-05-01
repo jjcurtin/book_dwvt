@@ -23,12 +23,12 @@ book:
   page-navigation: true
   chapters:
     - index.qmd
-    - file_and_path_management.qmd
     - conflicts.qmd
     - cache.qmd
+    - parallel_processing.qmd
+    - file_and_path_management.qmd
     - iteration.qmd
     - reproducible_examples.qmd
-    - parallel_processing.qmd
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
