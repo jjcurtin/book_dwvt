@@ -2,14 +2,38 @@
 
 ## Minmize loading of full packages
 
+Function conflicts can be minimized by limiting the number of packages that you attach (i.e., using `library()`) in your scripts.  For our work, we will almost always use `library(tidyverse)` and frequently use library(`tidymodels)`   You should carefully consider if you need to attach any other packages. You very well may not!
+
+You should only attach packages if you intend to use multiple functions from that package. If instead, you only need a single function (or several), there are two alternatives that are preferred over attaching the full package with `library()`.
+
+Option 1:  Use the namespace of the function when calling it.  For example, if I need to simulate multivariate normal data, I might want to use the `mvrnorm()` function from the MASS package.   I do NOT need to use `library(MASS)` to use this function.  Instead, I can simply call the function with its namespace `MASS::mvrnorm()`.   This will avoid conflicts between other functions in MASS and your other attached packages (e.g., `select()` in MASS conflicts with `select()` in dplyr/tidyverse).
+
+Option 2: If you find using the namespace of the function cumbersome, you can attach a single function from a package rather than the full package.  For example, if we wanted to use only `mvrnorm()` from MASS, we could use this code: `library(MASS, include.only = "mvrnorm)`.  Now you can call `mvrnorm()` without pre-pending its namespace (MASS::).  You can pass a character vector of function names rather than a single function to `include.only` if you intend to use several functions from the package (e.g., `library(MASS, include.only = c("mvrnorm", "lda"))`).
+
+
 ## Base R conflict managemnt
+
+As of version 3.6, R now includes all the necessary tools (in our opinion) to handle function conflicts.   These tools are [well-documented](https://developer.r-project.org/Blog/public/2019/03/19/managing-search-path-conflicts/) and should be reviewed to better understand how to use them.
+
+For our purposes, it is generally sufficient to use one of the two named conflict policies that are included (`depends.ok` or `strict`).  We prefer the use of the `depends.ok` policy.
+
+To implement the `depends.ok` policy, simply set this option at the top of your script using `options(conflicts.policy = "depends.ok")`.  You can now combine this option with limited use of `library()` for important packages and the use of either namespace or `include.only` methods described above and you should be good to go.  
+
+To get a better sense of what will happen, the `depends.ok` policy is a shortcut to implement the following conflict options.
+
+```{r, eval = FALSE}
+options(conflicts.policy =
+            list(error = TRUE,
+                 generics.ok = TRUE,
+                 can.mask = c("base", "methods", "utils",
+                              "grDevices", "graphics",
+                              "stats"),
+                 depends.ok = TRUE))
+```
+
+This means that packages that you attach with library produce an error if their functions conflict with previously loaded packages.  However, errors will not occur if the functions conflict with functions in base R (i.e., base R packages are listed in `can.mask =`) or S4 generic versions.  This makes sense because package functions are often explicitly intended to mask or extend these functions.  An error will also not be produced if a function conflicts exist within a single package because typically the package creator intended this as well.  Thse errors will happen immediately when you try to load the new package so you can address these conflicts immediately (by either including only a subset of functions from the library or using the function's namespace instead).   There are more advanced tools to handle conflicts in special cases that are also described in the [documentation](https://developer.r-project.org/Blog/public/2019/03/19/managing-search-path-conflicts/) but they should rarely be necessary.
 
 
 ## `conflicted` pacakge
 
-Not recommended
-
-
-https://developer.r-project.org/Blog/public/2019/03/19/managing-search-path-conflicts/
-implement this!!
-Also stop loading full packages when we only need one function (e.g., janitor for clean_names)
+You should be aware that a parallel solution to handling function conflicts is provided in the conflicted package.  However, this is not our preferred solution as the base R conflict policies are sufficient (so why load another package!).  We also prefer to have conflicts detected immediately (when packages are attached) rather than at some later point when we call the function.  The conflicted package is also less customizable that the base R polices.
