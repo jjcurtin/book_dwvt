@@ -1,9 +1,5 @@
 # How to Create a Reproducible Example (Reprex) 
 
-```{r a103-setup, include = FALSE} 
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-```
-
 ## Why create a reprex?
 Careful use of a reproducible example (a reprex) is critical for...
 
