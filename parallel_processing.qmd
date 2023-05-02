@@ -17,7 +17,6 @@ Michael Hallquist has provided a useful and detailed [overview](https://psu-psyc
 ```{r}
 library(tictoc)  # for crude timing to evaluate benefits
 library(furrr)
-library(purrr)
 library(foreach)
 library(tidyverse)
 library(tidymodels)
