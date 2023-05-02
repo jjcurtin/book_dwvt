@@ -32,5 +32,3 @@ book:
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
-  appendices:
-    - quarto_figures_tables.qmd
