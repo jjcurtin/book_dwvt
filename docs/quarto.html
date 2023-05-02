@@ -282,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-<p>It does not allow grouping in the way kable_extra does. However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!</p>
+<p>However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -413,7 +413,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="pdf" class="level4" data-number="9.1.2.2">
 <h4 data-number="9.1.2.2" class="anchored" data-anchor-id="pdf"><span class="header-section-number">9.1.2.2</span> PDF</h4>
-<p>The documentation for producing LaTex tables in kableExtra is <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf">here</a></p>
+<p>The documentation for producing LaTeX tables in kableExtra is <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf">here</a></p>
 <p>The following two tables demonstrate a complex table of the type used in the PDF ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting. It displays not unlike an HTML table:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -471,10 +471,10 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 </div>
-<p>In LaTex, this table displays quite differently. Below, the same code has been modified to reproduce <em>exactly</em> the look of the table as it appears in the PDF manuscript. That is, the code in the chunk above produces the output below when rendered with knitr to PDF; but rendering that output to HTML requires the additions in the chunk below:</p>
+<p>In LaTeX, this table displays quite differently. Below, the same code has been modified to reproduce <em>exactly</em> the look of the table as it appears in the PDF manuscript. That is, the code in the chunk above produces the output below when rendered with knitr to PDF; but rendering that output to HTML requires the additions in the chunk below:</p>
 <ul>
 <li><code>bootstrap_options = "none"</code> added to kable_styling removes the default horizontal lines, under each row, but then font size and table width must now be specified.</li>
-<li><code>pack_rows()</code> adds horizontal lines in HTML but not LaTex; those must be removed with the <code>label_row_css</code> option .</li>
+<li><code>pack_rows()</code> adds horizontal lines in HTML but not LaTeX; those must be removed with the <code>label_row_css</code> option .</li>
 <li>Finally, column width is specified, and horizontal lines around the column headers and before the footnote, are added with <code>row_spec()</code>’s <code>extra_css</code> option.</li>
 </ul>
 <div class="cell">
@@ -539,7 +539,7 @@ ul.task-list li input[type="checkbox"] {
 <p>To be sure tables display with NA cells as blanks (instead of “NA”) include this before your first table:</p>
 <p><code>options(knitr.kable.NA = "")</code></p>
 <p>kableExtra has a function is collapse_rows, yet that seems to be <a href="https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows">persistently</a> <a href="https://github.com/haozhu233/kableExtra/issues/624">broken</a></p>
-<p><code>row_spec()</code> has a parameter, <code>hline_after</code>, which, ostensibly, should create a horizontal line under that row, right? Apparently it <a href="https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou">only works on latex</a> although this is undocumented. Apparently the solution is to add <code>row_spec(X, extra_css = "border-bottom: 1px solid"))</code> (where x is the rownum; 0 for the header, <code>nrow(df)</code> for the last row)</p>
+<p><code>row_spec()</code> has a parameter, <code>hline_after</code>, which, ostensibly, should create a horizontal line under that row, right? Apparently it <a href="https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou">only works on LaTeX</a> although this is undocumented. Apparently the solution is to add <code>row_spec(X, extra_css = "border-bottom: 1px solid"))</code> (where x is the rownum; 0 for the header, <code>nrow(df)</code> for the last row)</p>
 <p>Similarly, to supress hlines on headers created by <code>pack_rows()</code>, you need to add <code>extra_css = "border-bottom: none"</code> into the <code>pack_rows()</code> command.</p>
 </section>
 </section>

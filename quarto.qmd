@@ -47,7 +47,7 @@ mtcars %>%
 ```
 
 
-It does not allow grouping in the way kable_extra does. However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!
+However, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!
 
 ```{r}
 #| echo: false
@@ -102,7 +102,7 @@ Additional HTML-only features of kableExtra are documented [here](https://cran.r
 
 
 #### PDF
-The documentation for producing LaTex tables in kableExtra is [here](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf)
+The documentation for producing LaTeX tables in kableExtra is [here](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf)
 
 The following two tables demonstrate a complex table of the type used in the PDF ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting. It displays not unlike an HTML table:
 
@@ -136,10 +136,10 @@ iris %>%
 
 ```
 
-In LaTex, this table displays quite differently. Below, the same code has been modified to reproduce *exactly* the look of the table as it appears in the PDF manuscript. That is, the code in the chunk above produces the output below when rendered with knitr to PDF; but rendering that output to HTML requires the additions in the chunk below:
+In LaTeX, this table displays quite differently. Below, the same code has been modified to reproduce *exactly* the look of the table as it appears in the PDF manuscript. That is, the code in the chunk above produces the output below when rendered with knitr to PDF; but rendering that output to HTML requires the additions in the chunk below:
 
 * `bootstrap_options = "none"` added to kable_styling removes the default horizontal lines, under each row, but then font size and table width must now be specified. 
-* `pack_rows()` adds horizontal lines in HTML but not LaTex; those must be removed with the `label_row_css` option . 
+* `pack_rows()` adds horizontal lines in HTML but not LaTeX; those must be removed with the `label_row_css` option . 
 * Finally, column width is specified, and horizontal lines around the column headers and before the footnote, are added with `row_spec()`'s `extra_css` option.
 
 ```{r}
@@ -188,7 +188,7 @@ To be sure tables display with NA cells as blanks (instead of "NA") include this
 
 kableExtra has a function is collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624)
 
-`row_spec()` has a parameter, `hline_after`, which, ostensibly, should create a horizontal line under that row, right? Apparently it [only works on latex](https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou) although this is undocumented. Apparently the solution is to add `row_spec(X, extra_css = "border-bottom: 1px solid"))` (where x is the rownum; 0 for the header, `nrow(df)` for the last row)
+`row_spec()` has a parameter, `hline_after`, which, ostensibly, should create a horizontal line under that row, right? Apparently it [only works on LaTeX](https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou) although this is undocumented. Apparently the solution is to add `row_spec(X, extra_css = "border-bottom: 1px solid"))` (where x is the rownum; 0 for the header, `nrow(df)` for the last row)
 
 Similarly, to supress hlines on headers created by `pack_rows()`, you need to add `extra_css = "border-bottom: none"` into the `pack_rows()` command.
 
