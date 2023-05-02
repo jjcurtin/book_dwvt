@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -30,7 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./quarto_figures_tables.html" rel="next">
 <link href="./programming.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -68,7 +67,6 @@ ul.task-list li input[type="checkbox"] {
 </head>
 
 <body class="nav-sidebar floating">
-
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -165,21 +163,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./quarto.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Quarto</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./quarto_figures_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tables &amp; Figures in Quarto</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
 </nav>
@@ -352,7 +335,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra. The table below re-produces that via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn’t actually work!).</p>
-<p>For more advanced tables &amp; figures see <a href="quarto_figures_tables.html"><span>Appendix&nbsp;A</span></a> which reproduces the tables &amp; figures from the 2023 EMA paper.</p>
 <p>To be sure tables display with NA cells as blanks (instead of “NA”) include this before your first table:</p>
 <p><code>options(knitr.kable.NA = "")</code></p>
 <p>Side note, a useful kableExtra function is collapse_rows, yet that seems to be <a href="https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows">persistently</a> <a href="https://github.com/haozhu233/kableExtra/issues/624">broken</a></p>
@@ -424,6 +406,120 @@ ul.task-list li input[type="checkbox"] {
 <sup>*</sup> Footnote Symbol 1; </td></tr>
 <tr><td style="padding: 0; " colspan="100%">
 <sup>†</sup> Footnote Symbol 2</td></tr>
+</tfoot>
+</table>
+
+</div>
+</div>
+<p>The following two tables demonstrate a complex table of the type used in the ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption>Iris</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;font-style: italic;text-align: center;">  </th>
+   <th style="text-align:center;font-style: italic;text-align: center;"> N </th>
+   <th style="text-align:center;font-style: italic;text-align: center;"> % </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: 1px solid;">Setosa</td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> large </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> small </td>
+   <td style="text-align:center;"> 50 </td>
+   <td style="text-align:center;"> 0.3 </td>
+  </tr>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: 1px solid;">Versicolor</td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> large </td>
+   <td style="text-align:center;"> 43 </td>
+   <td style="text-align:center;"> 0.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> small </td>
+   <td style="text-align:center;"> 7 </td>
+   <td style="text-align:center;"> 0.0 </td>
+  </tr>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: 1px solid;">Virginica</td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> large </td>
+   <td style="text-align:center;"> 50 </td>
+   <td style="text-align:center;"> 0.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> small </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup></sup> N = 75</td></tr>
+</tfoot>
+</table>
+
+</div>
+</div>
+<p>In this variant, the same code has been modified to reproduce <em>exactly</em> the look of the table in the PDF manuscript. <code>bootstrap_options = "none"</code> added to kable_styling removes the default horizontal lines, under each row, but then font size and table width must be specified. <code>pack_rows()</code> adds horizontal lines in HTML but not LaTex; those must be removed with the <code>label_row_css</code> option . Finally, column width is specified, and horizontal lines around the column headers and before the footnote, are added with <code>row_spec()</code>’s <code>extra_css</code> option.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table style="font-size: 12px; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption style="font-size: initial !important;">Iris</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;font-style: italic;text-align: center;border-bottom: 1px solid; border-top: 1px solid">  </th>
+   <th style="text-align:center;font-style: italic;text-align: center;border-bottom: 1px solid; border-top: 1px solid"> N </th>
+   <th style="text-align:center;font-style: italic;text-align: center;border-bottom: 1px solid; border-top: 1px solid"> % </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: none;">Setosa</td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;width: 4in; " indentlevel="1"> large </td>
+   <td style="text-align:center;width: 1in; ">  </td>
+   <td style="text-align:center;width: 1in; ">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;width: 4in; " indentlevel="1"> small </td>
+   <td style="text-align:center;width: 1in; "> 50 </td>
+   <td style="text-align:center;width: 1in; "> 0.3 </td>
+  </tr>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: none;">Versicolor</td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;width: 4in; " indentlevel="1"> large </td>
+   <td style="text-align:center;width: 1in; "> 43 </td>
+   <td style="text-align:center;width: 1in; "> 0.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;width: 4in; " indentlevel="1"> small </td>
+   <td style="text-align:center;width: 1in; "> 7 </td>
+   <td style="text-align:center;width: 1in; "> 0.0 </td>
+  </tr>
+  <tr grouplength="2"><td colspan="3" style="border-bottom: none;">Virginica</td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;width: 4in; " indentlevel="1"> large </td>
+   <td style="text-align:center;width: 1in; "> 50 </td>
+   <td style="text-align:center;width: 1in; "> 0.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;width: 4in; border-bottom: 1px solid" indentlevel="1"> small </td>
+   <td style="text-align:center;width: 1in; border-bottom: 1px solid">  </td>
+   <td style="text-align:center;width: 1in; border-bottom: 1px solid">  </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup></sup> N = 75</td></tr>
 </tfoot>
 </table>
 
@@ -629,7 +725,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./programming.html" class="pagination-link">
@@ -637,9 +732,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quarto_figures_tables.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tables &amp; Figures in Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

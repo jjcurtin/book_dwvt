@@ -67,8 +67,6 @@ mtcars %>%
 
 Note the table above, although the code is identical to the first table, has lost all formatting thanks to kableExtra. The table below re-produces that via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn't actually work!). 
 
-For more advanced tables & figures see @sec-appendix which reproduces the tables & figures from the 2023 EMA paper.
-
 To be sure tables display with NA cells as blanks (instead of "NA") include this before your first table:
 
 `options(knitr.kable.NA = "")`
@@ -105,6 +103,77 @@ mtcars %>%
            
 ```
 
+The following two tables demonstrate a complex table of the type used in the ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting:
+
+```{r}
+#| echo: false
+#| warning: false
+
+# display and format table
+iris %>% 
+  mutate(size = if_else(Petal.Width > 1, "large", "small")) %>%
+  group_by(Species, size) %>% 
+  tally() %>%
+  mutate(perc = n/nrow(iris)) %>% 
+  rbind(tibble(Species = "setosa", size = "large")) %>%
+  rbind(tibble(Species = "virginica", size = "small")) %>%
+  arrange(Species, size) %>% 
+  ungroup() %>% 
+  select(-Species) %>%    # TABLE CODE STARTS HERE vv 
+  kbl(longtable = TRUE,
+      booktabs = T,
+      col.names = c("", "N", "%"),
+      align = c("l", "c", "c"),
+      digits = 1,
+      caption = "Iris") %>%
+  kable_styling() %>% 
+  row_spec(row = 0, align = "c", italic = TRUE) %>% 
+  pack_rows("Setosa", 1, 2, bold = FALSE) %>% 
+  pack_rows("Versicolor", 3, 4, bold = FALSE) %>% 
+  pack_rows("Virginica", 5, 6, bold = FALSE)  %>% 
+  footnote(general="N = 75", threeparttable = TRUE) 
+
+```
+
+In this variant, the same code has been modified to reproduce *exactly* the look of the table in the PDF manuscript. `bootstrap_options = "none"` added to kable_styling removes the default horizontal lines, under each row, but then font size and table width must be specified. `pack_rows()` adds horizontal lines in HTML but not LaTex; those must be removed with the `label_row_css` option . Finally, column width is specified, and horizontal lines around the column headers and before the footnote, are added with `row_spec()`'s `extra_css` option.
+
+```{r}
+#| echo: false
+#| warning: false
+
+
+options(knitr.kable.NA = "")
+
+# display and format table
+iris %>% 
+  mutate(size = if_else(Petal.Width > 1, "large", "small")) %>%
+  group_by(Species, size) %>% 
+  tally() %>%
+  mutate(perc = n/nrow(iris)) %>% 
+  rbind(tibble(Species = "setosa", size = "large")) %>%
+  rbind(tibble(Species = "virginica", size = "small")) %>%
+  arrange(Species, size) %>% 
+  ungroup() %>% 
+  select(-Species) %>%  # TABLE CODE STARTS HERE vv 
+  kbl(longtable = TRUE,
+      booktabs = T,
+      col.names = c("", "N", "%"),
+      align = c("l", "c", "c"),
+      digits = 1,
+      caption = "Iris") %>%
+  kable_styling(bootstrap_options = "none", #remove all horizontal lines; must now specify font size and table width
+                font_size = 12,
+                full_width = TRUE) %>% 
+  row_spec(row = 0, align = "c", italic = TRUE) %>% 
+  pack_rows("Setosa", 1, 2, bold = FALSE, label_row_css = "border-bottom: none;") %>%  #remove horizontal line below packed rows
+  pack_rows("Versicolor", 3, 4, bold = FALSE, label_row_css = "border-bottom: none;") %>%  #remove horizontal line below packed rows
+  pack_rows("Virginica", 5, 6, bold = FALSE, label_row_css = "border-bottom: none;")  %>%  #remove horizontal line below packed rows
+  footnote(general="N = 75", threeparttable = TRUE) %>%
+  column_spec(1, width = "4in") %>% #specify column width
+  column_spec(2:3, width = "1in") %>% #specify column width
+  row_spec(0, extra_css = "border-bottom: 1px solid; border-top: 1px solid") %>% #add borders on the header row
+  row_spec(6, extra_css = "border-bottom: 1px solid") #add a border after the last row, before the footnote
+```
 
 
 ### Rendering
