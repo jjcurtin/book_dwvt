@@ -1,8 +1,4 @@
-# Best Practices for File and Path Management 
-
-```{r a104-setup, include = FALSE} 
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
-```
+# File and Path Management
 
 ## Use of RStudio Projects
 The use of RStudio Projects is critical to good managament of your paths and files.  When you work within a project, you will have a working directory set within that project (based on where the project files is saved.  This working directory can then be combined with relative paths for reading and writing data and other files.   It also means that if you share the folders that contain your project (e.g., scripts, data), the paths will continue to work for that colleague as well, regardless of where they situate the folders on their computer.
@@ -18,17 +14,11 @@ You should also get in the habit of setting relative paths (relative to your pro
 
 `path_processed <- "data/processed"`
 
-You can use these path objects with the `here()` function, which is described next.
-
-
-## Use of `here()`
-`here()` in the package `here` is a replacement for `file.path()` that we find to work comparable (and better in a few specific circumstances; e.g., when knitting Rmd files).  It is very easy to use if you are using Projects as recommended above.  That said, it can also be used with the use of Projects, but we dont review that here because you WILL use projects!  To use `here()`, you should load the `here` package at the top of your script (i.e., `library(here)`).
-
-You can then use `here()` as a replacement anywhere you would have used `file.path()`
+You can use these path objects with the base R function `file.path()`  
 
 For example, if you want to load a csv file in the folder that you indicated above by `path_raw`, you could use this line of code:
 
-`d <- read_csv(here(path_raw, "raw_data.csv"))`
+`d <- read_csv(file.path(path_raw, "raw_data.csv"))`
 
 alternatively, you could supply the relative path directly (though this is not preferred because it can be cumbersome if you move the folder later)
 
