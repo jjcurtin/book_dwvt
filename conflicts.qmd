@@ -59,6 +59,8 @@ conflictRules("yardstick", mask.ok = c("spec"))
 However, given how often we do this, we have wrapped these rules into a simple function.  This function is reproduced here, but also shared in our [fun_ml.R](https://raw.githubusercontent.com/jjcurtin/lab_support/main/fun_ml.R) script in lab_support on github.  If you source that script, you can call this function directly along with setting the depends.ok policy.
 
 ```{r}
+#| eval: false
+
 tidymodels_conflictRules <- function(){
   conflictRules("scales", mask.ok = c("discard", "col_factor"))
   conflictRules("recipes", mask.ok = c("fixed"))
@@ -70,13 +72,17 @@ tidymodels_conflictRules <- function(){
 
 To implement the depends.ok policy and the rules for tidymodels, put this code chunk at the top of your script, prior to attaching any packages
 ```{r conflict_policy}
+# source
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/fun_ml.R?raw=true")
+
+# handle conflicts
 options(conflicts.policy = "depends.ok")
 tidymodels_conflictRules()
 ```
 
 Now you can attach your packages and resolve any errors
 
-* Load tidyverse first and then load tidymodels, allowing it to make functions in packages within tidyverse as indicated below
+* Load tidyverse first and then load tidymodels, allowing it to mask functions in packages within tidyverse as indicated below
 * We demonstrate loading only `clean_names()` from the janitor package
 ```{r attach_packages}
 library(tidyverse)
@@ -93,6 +99,6 @@ d <- MASS::mvrnorm(n = 10, mu = c(0,0), Sigma = diag(2)) %>%
 ```
 
 
-## `conflicted` packakge
+## `conflicted` package
 
-You should be aware that an alternative solution to handling function conflicts is provided in the conflicted package.  However, this is not our preferred solution as the base R conflict policies are sufficient (so why load another package!).  We also prefer to have conflicts detected immediately (when packages are attached) rather than at some later point when we call the function.  The conflicted package is also less customizable that the base R polices.
+You should be aware that an alternative solution to handling function conflicts is provided in the conflicted package.  However, this is no longer our preferred solution as the base R conflict policies are sufficient (so why load another package!).  We also prefer to have conflicts detected immediately (when packages are attached) rather than at some later point when we call the function.  The conflicted package is also less customizable than the base R polices.

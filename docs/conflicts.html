@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#minmize-loading-of-full-packages" id="toc-minmize-loading-of-full-packages" class="nav-link active" data-scroll-target="#minmize-loading-of-full-packages"><span class="toc-section-number">1.1</span>  Minmize loading of full packages</a></li>
   <li><a href="#base-r-conflict-managemnt" id="toc-base-r-conflict-managemnt" class="nav-link" data-scroll-target="#base-r-conflict-managemnt"><span class="toc-section-number">1.2</span>  Base R conflict managemnt</a></li>
   <li><a href="#a-short-example" id="toc-a-short-example" class="nav-link" data-scroll-target="#a-short-example"><span class="toc-section-number">1.3</span>  A Short Example</a></li>
-  <li><a href="#conflicted-packakge" id="toc-conflicted-packakge" class="nav-link" data-scroll-target="#conflicted-packakge"><span class="toc-section-number">1.4</span>  <code>conflicted</code> packakge</a></li>
+  <li><a href="#conflicted-package" id="toc-conflicted-package" class="nav-link" data-scroll-target="#conflicted-package"><span class="toc-section-number">1.4</span>  <code>conflicted</code> package</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/conflicts.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -307,12 +307,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="1.3" class="anchored" data-anchor-id="a-short-example"><span class="header-section-number">1.3</span> A Short Example</h2>
 <p>To implement the depends.ok policy and the rules for tidymodels, put this code chunk at the top of your script, prior to attaching any packages</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">conflicts.policy =</span> <span class="st">"depends.ok"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_conflictRules</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># source</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">source_url</span>(<span class="st">"https://github.com/jjcurtin/lab_support/blob/main/fun_ml.R?raw=true"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># handle conflicts</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">conflicts.policy =</span> <span class="st">"depends.ok"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_conflictRules</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now you can attach your packages and resolve any errors</p>
 <ul>
-<li>Load tidyverse first and then load tidymodels, allowing it to make functions in packages within tidyverse as indicated below</li>
+<li>Load tidyverse first and then load tidymodels, allowing it to mask functions in packages within tidyverse as indicated below</li>
 <li>We demonstrate loading only <code>clean_names()</code> from the janitor package</li>
 </ul>
 <div class="cell">
@@ -327,9 +331,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>(<span class="st">"snake"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="conflicted-packakge" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="conflicted-packakge"><span class="header-section-number">1.4</span> <code>conflicted</code> packakge</h2>
-<p>You should be aware that an alternative solution to handling function conflicts is provided in the conflicted package. However, this is not our preferred solution as the base R conflict policies are sufficient (so why load another package!). We also prefer to have conflicts detected immediately (when packages are attached) rather than at some later point when we call the function. The conflicted package is also less customizable that the base R polices.</p>
+<section id="conflicted-package" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="conflicted-package"><span class="header-section-number">1.4</span> <code>conflicted</code> package</h2>
+<p>You should be aware that an alternative solution to handling function conflicts is provided in the conflicted package. However, this is no longer our preferred solution as the base R conflict policies are sufficient (so why load another package!). We also prefer to have conflicts detected immediately (when packages are attached) rather than at some later point when we call the function. The conflicted package is also less customizable than the base R polices.</p>
 
 
 </section>
