@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></a>
+  <a href="./file_and_path_management.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">File and Path Management</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -237,6 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#foreach" id="toc-foreach" class="nav-link" data-scroll-target="#foreach"><span class="toc-section-number">3.0.2</span>  foreach()</a></li>
   <li><a href="#tune_grid-in-tidymodels" id="toc-tune_grid-in-tidymodels" class="nav-link" data-scroll-target="#tune_grid-in-tidymodels"><span class="toc-section-number">3.1</span>  tune_grid() in tidymodels</a></li>
   <li><a href="#final-notes" id="toc-final-notes" class="nav-link" data-scroll-target="#final-notes"><span class="toc-section-number">3.2</span>  Final notes</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="toc-section-number">3.3</span>  Conclusions</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/parallel_processing.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -266,20 +267,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><a href="https://dcgerard.github.io/advancedr/09_future.html">Info on future ecosystem</a> and <a href="https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html">more</a></p>
 <p><a href="https://tune.tidymodels.org/articles/extras/optimizations.html">Parallel processing and other optimizations</a> in tidymodels</p>
 <div class="cell">
+
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)  <span class="co"># for crude timing to evaluate benefits</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here are the number of physical (not logical) cores on this machine. You may have more or less</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
+<pre><code>[1] 20</code></pre>
 </div>
 </div>
 <p>Lets use them by setting up a parallel backend. This works on my Windows PC. Would be nice to test this on other machines and OSs</p>
@@ -296,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), \(time) <span class="fu">Sys.sleep</span>(time))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>6.1 sec elapsed</code></pre>
+<pre><code>6.14 sec elapsed</code></pre>
 </div>
 </div>
 <p>Using <code>future_map()</code> without a plan (Don’t do this!)</p>
@@ -305,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">future_map</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), \(time) <span class="fu">Sys.sleep</span>(time))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>6.17 sec elapsed</code></pre>
+<pre><code>6.18 sec elapsed</code></pre>
 </div>
 </div>
 <p>Using <code>future_map()</code> with a plan (Do this!)</p>
@@ -317,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">future_map</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), \(time) <span class="fu">Sys.sleep</span>(time))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>3.44 sec elapsed</code></pre>
+<pre><code>3.14 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -335,7 +336,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>6.1 sec elapsed</code></pre>
+<pre><code>6.14 sec elapsed</code></pre>
 </div>
 </div>
 <p><code>foreach()</code> in parallel mode using <code>%dopar%</code> but without a plan. in contrast to <code>future_map()</code>, no plan is needed for <code>foreach()</code>. You should use it without a plan!</p>
@@ -347,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>2.08 sec elapsed</code></pre>
+<pre><code>2.09 sec elapsed</code></pre>
 </div>
 </div>
 <p>But a plan doesn’t break anything either Still, don’t use it because not needed.</p>
@@ -362,7 +363,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>2.05 sec elapsed</code></pre>
+<pre><code>2.04 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -377,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>2.04 sec elapsed</code></pre>
+<pre><code>2.05 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -399,10 +400,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># recipe</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> ., <span class="at">data =</span> d)</span>
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3x 10-fold CV</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold CV</span></span>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">19690127</span>)</span>
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>splits <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> </span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vfold_cv</span>(<span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">3</span>, <span class="at">strata =</span> <span class="st">"y"</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vfold_cv</span>(<span class="at">v =</span> <span class="dv">10</span>, <span class="at">strata =</span> <span class="st">"y"</span>)</span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co"># tuning grid</span></span>
 <span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>tune_grid <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">penalty =</span> <span class="fu">exp</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">200</span>)),</span>
@@ -419,25 +420,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">allow_par =</span> <span class="cn">FALSE</span>)) <span class="co"># turn off pp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Tuning results
-# 10-fold cross-validation repeated 3 times using stratification 
-# A tibble: 30 × 5
-   splits            id      id2    .metrics             .notes          
-   &lt;list&gt;            &lt;chr&gt;   &lt;chr&gt;  &lt;list&gt;               &lt;list&gt;          
- 1 &lt;split [900/100]&gt; Repeat1 Fold01 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 2 &lt;split [900/100]&gt; Repeat1 Fold02 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 3 &lt;split [900/100]&gt; Repeat1 Fold03 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 4 &lt;split [900/100]&gt; Repeat1 Fold04 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 5 &lt;split [900/100]&gt; Repeat1 Fold05 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 6 &lt;split [900/100]&gt; Repeat1 Fold06 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 7 &lt;split [900/100]&gt; Repeat1 Fold07 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 8 &lt;split [900/100]&gt; Repeat1 Fold08 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 9 &lt;split [900/100]&gt; Repeat1 Fold09 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
-10 &lt;split [900/100]&gt; Repeat1 Fold10 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
-# ℹ 20 more rows</code></pre>
+# 10-fold cross-validation using stratification 
+# A tibble: 10 × 4
+   splits            id     .metrics             .notes          
+   &lt;list&gt;            &lt;chr&gt;  &lt;list&gt;               &lt;list&gt;          
+ 1 &lt;split [900/100]&gt; Fold01 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 2 &lt;split [900/100]&gt; Fold02 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 3 &lt;split [900/100]&gt; Fold03 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 4 &lt;split [900/100]&gt; Fold04 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 5 &lt;split [900/100]&gt; Fold05 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 6 &lt;split [900/100]&gt; Fold06 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 7 &lt;split [900/100]&gt; Fold07 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 8 &lt;split [900/100]&gt; Fold08 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 9 &lt;split [900/100]&gt; Fold09 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+10 &lt;split [900/100]&gt; Fold10 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>48.08 sec elapsed</code></pre>
+<pre><code>15.59 sec elapsed</code></pre>
 </div>
 </div>
 <p>Now allow use of parallel processing (the default). No plan is needed here (consistent with findings for <code>foreach()</code>). Yay!</p>
@@ -450,43 +450,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Tuning results
-# 10-fold cross-validation repeated 3 times using stratification 
-# A tibble: 30 × 5
-   splits            id      id2    .metrics             .notes          
-   &lt;list&gt;            &lt;chr&gt;   &lt;chr&gt;  &lt;list&gt;               &lt;list&gt;          
- 1 &lt;split [900/100]&gt; Repeat1 Fold01 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 2 &lt;split [900/100]&gt; Repeat1 Fold02 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 3 &lt;split [900/100]&gt; Repeat1 Fold03 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 4 &lt;split [900/100]&gt; Repeat1 Fold04 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 5 &lt;split [900/100]&gt; Repeat1 Fold05 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 6 &lt;split [900/100]&gt; Repeat1 Fold06 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 7 &lt;split [900/100]&gt; Repeat1 Fold07 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 8 &lt;split [900/100]&gt; Repeat1 Fold08 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
- 9 &lt;split [900/100]&gt; Repeat1 Fold09 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
-10 &lt;split [900/100]&gt; Repeat1 Fold10 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
-# ℹ 20 more rows</code></pre>
+# 10-fold cross-validation using stratification 
+# A tibble: 10 × 4
+   splits            id     .metrics             .notes          
+   &lt;list&gt;            &lt;chr&gt;  &lt;list&gt;               &lt;list&gt;          
+ 1 &lt;split [900/100]&gt; Fold01 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 2 &lt;split [900/100]&gt; Fold02 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 3 &lt;split [900/100]&gt; Fold03 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 4 &lt;split [900/100]&gt; Fold04 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 5 &lt;split [900/100]&gt; Fold05 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 6 &lt;split [900/100]&gt; Fold06 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 7 &lt;split [900/100]&gt; Fold07 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 8 &lt;split [900/100]&gt; Fold08 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+ 9 &lt;split [900/100]&gt; Fold09 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;
+10 &lt;split [900/100]&gt; Fold10 &lt;tibble [2,200 × 6]&gt; &lt;tibble [0 × 3]&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>30.91 sec elapsed</code></pre>
+<pre><code>7.52 sec elapsed</code></pre>
 </div>
 </div>
 </section>
 <section id="final-notes" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="final-notes"><span class="header-section-number">3.2</span> Final notes</h2>
-<p>The following is often found as an alternative setup for a back-end for parallel processing. It works for <code>future_map()</code> (when conbined with plan) and for <code>foreach()</code> but not in the tidymodels implementations of resampling. Not clear why since those use <code>foreach()</code> but this should not be used if you plan to use tidymodels resampling.</p>
+<p>The following is often found as an alternative setup for a back-end for parallel processing. It works for <code>future_map()</code> (when combined with plan) and for <code>foreach()</code> but not in the tidymodels implementations of resampling. Not clear why since those use <code>foreach()</code> but this should not be used if you plan to use tidymodels resampling.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doFuture)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoFuture</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>I tried this with both directly and with various options of <code>plan()</code></p>
+<p>I tried this both directly and with various options of <code>plan()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plan(multisession, workers = parallel::detectCores(logical = FALSE))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and with</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cl &lt;- makeCluster(parallel::detectCores(logical = FALSE))</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plan(cluster, workers = cl)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conclusions" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">3.3</span> Conclusions</h2>
+<p>For <code>future_map()</code>, <code>foreach()</code>, and tidymodels functions in parallel, set up the parallel backend with this code chunk.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makePSOCKcluster</span>(parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nothing further is needed to use <code>foreach()</code> or tidymodels functions.</p>
+<p>For <code>future_map()</code>, you need to set up a multisession plan with this code chunk</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -634,7 +647,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./file_and_path_management.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Best Practices for File and Path Management</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">File and Path Management</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
