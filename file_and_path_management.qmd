@@ -1,5 +1,12 @@
 # File and Path Management
 
+```{r}
+#| echo: false
+
+options(conflicts.policy = "depends.ok")
+library(tidyverse)
+```
+
 ## Use of RStudio Projects
 The use of RStudio Projects is critical to good managament of your paths and files.  When you work within a project, you will have a working directory set within that project (based on where the project files is saved.  This working directory can then be combined with relative paths for reading and writing data and other files.   It also means that if you share the folders that contain your project (e.g., scripts, data), the paths will continue to work for that colleague as well, regardless of where they situate the folders on their computer.
 
@@ -23,6 +30,56 @@ For example, if you want to load a csv file in the folder that you indicated abo
 alternatively, you could supply the relative path directly (though this is not preferred because it can be cumbersome if you move the folder later)
 
 `d <- read_csv(here("data/processed", "raw_data.csv"))`
+
+## Reading csv files
+
+We typically save our data as csv files.  There are many benefits to this format (e.g., easy to share, easy to view outside of R) but one downside is that they don't store information about variable/column class.  We need to establish the appropriate class for each column when we read the data.
+
+### Using `col_types()`
+
+If possible, it is best to set the class for each column/variable specifically using
+the `col_types()` parameter in `dplyr::read_csv()`  This forces you to specifically examine and consider each column to decide its class (e.g., is a column with numbers best set as numeric or ordered factor) and the levels if its class is nominal.  Of course, this is part of cleaning EDA so you should have done this when you first started working with the data.
+
+Re-classing is typically needed to convert raw character columns to factor (ordered or unordered) and sometimes to convert raw numeric columns to factor (likely ordered, e.g., a likert scale). 
+
+Here is an example using the cars dataset
+
+```{r}
+path_data <- "data"
+df <- read_csv(file.path(path_data, "auto_trn.csv"),
+               col_type = list(mpg = col_factor(levels = c("low", "high")),
+                               # here we handle cylinders as an ordered factor
+                               cylinders = col_factor(levels = 
+                                                        as.character(c(3,4,5,6,8)), 
+                                                      ordered = TRUE),   
+                               displacement = col_double(),
+                               horsepower = col_double(),
+                               weight = col_double(),
+                               acceleration = col_double(),
+                               year = col_double(),
+                               origin = col_factor(levels = 
+                                                     c("american", 
+                                                       "japanese", 
+                                                       "european")))) %>% 
+  glimpse()
+```
+
+### Using a separate `mutate()`
+
+In some instances (e.g., data file with very large number of variables, very consistently organized data character data is well-behaved), you may want to read the data in first and then use `mutate()` to change classes as needed.  
+
+In these instances, we prefer to set the `col_types()` parameter to `cols()` to prevent the verbose message about column classes.
+
+Here is an example using the ames dataset with all predictors.  To start, we only re-class all character columns to unordered factor and one numeric column to an ordered factor.  As we work with the data (during cleaning EDA), we may decide that there are other columns that need to be re-classed. If so, we could add additional lines to the `mutuate()`
+
+```{r}
+df <- read_csv(file.path(path_data, "ames_full_cln.csv"),
+               col_types = cols()) %>% 
+  # convert all character to unordered factors
+  mutate(across(where(is.character), as_factor),
+         overall_qual = ordered(overall_qual, levels = as.character(1:10))) %>% 
+  glimpse()
+```
 
 
 ## Sourcing from Github

@@ -1,2 +1,27 @@
 # Iteration
 
+See this [article](https://dplyr.tidyverse.org/dev/articles/rowwise.html) for details on the use of dplyr for row-wise operations
+
+See this [article](https://dplyr.tidyverse.org/dev/articles/colwise.html) for details on the use of dplyr for column-wise operations
+
+
+## `across()`
+
+
+## `map()` and `future_map()`
+
+
+
+## `for` loops
+
+
+## `foreach` loops
+
+
+## Nesting
+
+Some useful tutorials
+
+* https://r4ds.had.co.nz/many-models.html
+* https://bookdown.org/Maxine/r4ds/nesting.html
+* https://tidyr.tidyverse.org/reference/nest.html

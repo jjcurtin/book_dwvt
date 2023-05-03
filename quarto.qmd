@@ -1,5 +1,12 @@
 # Quarto
 
+```{r}
+#| echo: false
+
+options(conflicts.policy = "depends.ok")
+library(tidyverse)
+```
+
 ## General
 
 [Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
@@ -23,14 +30,11 @@ To specify these options globally, they need to be added to the _quarto.yml file
 
 #### HTML
 
-Plain kable() renders a nicely striped table in HTML:
+Plain knitr::kable() renders a nicely striped table in HTML:
 
 ```{r}
 #| echo: false
 #| warning: false
-
-library(tidyverse)
-library(knitr)
 
 mtcars %>% 
   select(mpg, cyl, gear) %>%

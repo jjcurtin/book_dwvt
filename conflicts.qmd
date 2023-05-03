@@ -24,7 +24,9 @@ To implement the `depends.ok` policy, simply set this option at the top of your 
 
 To get a better sense of what the `depends.ok` policy does, it is a shortcut to implement the following set of conflict options.
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 options(conflicts.policy =
             list(error = TRUE,
                  generics.ok = TRUE,
@@ -46,7 +48,9 @@ There are more advanced tools to handle conflicts in special cases that are also
 
 There is one more detail that affects our common use of both tidyverse and tidymodels collections of packages.  The depends.ok policy allows for conflicts/masking within a package.   However, there are a couple of instances where some of the functions in tidymodels will conflict/mask functions in packages within tidyverse.   R doesn't recognize these as the same package so the conflicts need to be handled explicitly.  You can do this using `conflictRules()`  Here are the conflict rules you will need to attach tidymodels after tidyverse
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
+
 conflictRules("scales", mask.ok = c("discard", "col_factor"))
 conflictRules("recipes", mask.ok = c("fixed"))
 conflictRules("yardstick", mask.ok = c("spec"))
