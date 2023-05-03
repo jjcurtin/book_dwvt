@@ -51,7 +51,7 @@ There is one more detail that affects our common use of both tidyverse and tidym
 ```{r}
 #| eval: false
 
-conflictRules("scales", mask.ok = c("discard", "col_factor"))
+conflictRules("scales", mask.ok = c("discard"), exclude = c("col_factor"))
 conflictRules("recipes", mask.ok = c("fixed"))
 conflictRules("yardstick", mask.ok = c("spec"))
 ```
@@ -62,7 +62,7 @@ However, given how often we do this, we have wrapped these rules into a simple f
 #| eval: false
 
 tidymodels_conflictRules <- function(){
-  conflictRules("scales", mask.ok = c("discard", "col_factor"))
+  conflictRules("scales", mask.ok = c("discard"), exclude = c("col_factor"))
   conflictRules("recipes", mask.ok = c("fixed"))
   conflictRules("yardstick", mask.ok = c("spec"))
 }
