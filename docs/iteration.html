@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -170,11 +233,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#across" id="toc-across" class="nav-link active" data-scroll-target="#across"><span class="toc-section-number">5.1</span>  <code>across()</code></a></li>
-  <li><a href="#map-and-future_map" id="toc-map-and-future_map" class="nav-link" data-scroll-target="#map-and-future_map"><span class="toc-section-number">5.2</span>  <code>map()</code> and <code>future_map()</code></a></li>
-  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="toc-section-number">5.3</span>  <code>for</code> loops</a></li>
-  <li><a href="#foreach-loops" id="toc-foreach-loops" class="nav-link" data-scroll-target="#foreach-loops"><span class="toc-section-number">5.4</span>  <code>foreach</code> loops</a></li>
-  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting"><span class="toc-section-number">5.5</span>  Nesting</a></li>
+  <li><a href="#introduction-and-curated-resources" id="toc-introduction-and-curated-resources" class="nav-link active" data-scroll-target="#introduction-and-curated-resources"><span class="toc-section-number">5.1</span>  Introduction and curated resources</a></li>
+  <li><a href="#select-subset-of-columns" id="toc-select-subset-of-columns" class="nav-link" data-scroll-target="#select-subset-of-columns"><span class="toc-section-number">5.2</span>  select() subset of columns</a></li>
+  <li><a href="#get-summary-statistics-for-multiple-columns" id="toc-get-summary-statistics-for-multiple-columns" class="nav-link" data-scroll-target="#get-summary-statistics-for-multiple-columns"><span class="toc-section-number">5.3</span>  Get summary statistics for multiple columns</a></li>
+  <li><a href="#apply-mutate-to-multiple-columns" id="toc-apply-mutate-to-multiple-columns" class="nav-link" data-scroll-target="#apply-mutate-to-multiple-columns"><span class="toc-section-number">5.4</span>  Apply mutate() to multiple columns</a></li>
+  <li><a href="#map-and-future_map" id="toc-map-and-future_map" class="nav-link" data-scroll-target="#map-and-future_map"><span class="toc-section-number">5.5</span>  <code>map()</code> and <code>future_map()</code></a></li>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="toc-section-number">5.6</span>  <code>for</code> loops</a></li>
+  <li><a href="#foreach-loops" id="toc-foreach-loops" class="nav-link" data-scroll-target="#foreach-loops"><span class="toc-section-number">5.7</span>  <code>foreach</code> loops</a></li>
+  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting"><span class="toc-section-number">5.8</span>  Nesting</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/iteration.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -198,22 +264,129 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="introduction-and-curated-resources" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="introduction-and-curated-resources"><span class="header-section-number">5.1</span> Introduction and curated resources</h2>
+<div class="cell">
+
+</div>
 <p>See this <a href="https://dplyr.tidyverse.org/dev/articles/rowwise.html">article</a> for details on the use of dplyr for row-wise operations</p>
 <p>See this <a href="https://dplyr.tidyverse.org/dev/articles/colwise.html">article</a> for details on the use of dplyr for column-wise operations</p>
-<section id="across" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="across"><span class="header-section-number">5.1</span> <code>across()</code></h2>
+<p>See this <a href="https://dplyr.tidyverse.org/reference/across.html">article</a> for the uses of <code>across()</code> in <code>summarize()</code> and <code>mutate()</code></p>
+<p>In the sections that follow, we provide common examples of approaches to iteration using the <code>iris</code> dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 150
+Columns: 5
+$ Sepal.Length &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.…
+$ Sepal.Width  &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.…
+$ Petal.Length &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.…
+$ Petal.Width  &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.…
+$ Species      &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, setosa, s…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+</div>
 </section>
-<section id="map-and-future_map" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="map-and-future_map"><span class="header-section-number">5.2</span> <code>map()</code> and <code>future_map()</code></h2>
+<section id="select-subset-of-columns" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="select-subset-of-columns"><span class="header-section-number">5.2</span> select() subset of columns</h2>
+<p>There is <a href="https://dplyr.tidyverse.org/reference/select.html">a good tutorial</a> providing more detail on selecting subsets of columns. Here we illustrate a few common applications in our lab.</p>
+<p>It is easy to select a subset of columns based on their class. Common functions for selecting on column class are * <code>is.numeric</code> * <code>is.factor</code> * <code>is.ordered</code> * <code>is.character</code>.</p>
+<p>These class functions are used inside of the <code>where()</code> function. For example, here we select all numeric columns. Notice that the parentheses are left off of the <code>is.numeric</code> function when using <code>where()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 150
+Columns: 4
+$ Sepal.Length &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.…
+$ Sepal.Width  &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.…
+$ Petal.Length &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.…
+$ Petal.Width  &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.…</code></pre>
+</div>
+</div>
+<p>…and now all factor columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">where</span>(is.factor)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 150
+Columns: 1
+$ Species &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, setosa, setosa…</code></pre>
+</div>
+</div>
+<p>You can also select columns based on column name. Common helper functions for this include</p>
+<ul>
+<li><code>starts_with()</code>: Starts with a prefix.</li>
+<li><code>ends_with()</code>: Ends with a suffix.</li>
+<li><code>contains()</code>: Contains a literal string.</li>
+<li><code>matches()</code>: Matches a regular expression.</li>
+<li><code>num_range()</code>: Matches a numerical range like x01, x02, x03.</li>
+</ul>
+<p>For example…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"Width"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 150
+Columns: 2
+$ Sepal.Width &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4…
+$ Petal.Width &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2…</code></pre>
+</div>
+</div>
 </section>
-<section id="for-loops" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">5.3</span> <code>for</code> loops</h2>
+<section id="get-summary-statistics-for-multiple-columns" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="get-summary-statistics-for-multiple-columns"><span class="header-section-number">5.3</span> Get summary statistics for multiple columns</h2>
+<p>We use <code>across()</code> combined with <code>summarize()</code> to get summary statistics across sets of columns. This can also be combined with <code>group_by()</code> to do this within subsets/groups for rows Mean for all numeric columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1     5.843333    3.057333        3.758    1.199333</code></pre>
+</div>
+</div>
+<p>Mean for width columns grouped by Species</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="st">"Width"</span>), mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Species    Sepal.Width Petal.Width
+  &lt;fct&gt;            &lt;dbl&gt;       &lt;dbl&gt;
+1 setosa            3.43       0.246
+2 versicolor        2.77       1.33 
+3 virginica         2.97       2.03 </code></pre>
+</div>
+</div>
+<p>df %&gt;% summarise(across(c(col1, col2), list(mean=mean, sd=sd), na.rm=TRUE))</p>
 </section>
-<section id="foreach-loops" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="foreach-loops"><span class="header-section-number">5.4</span> <code>foreach</code> loops</h2>
+<section id="apply-mutate-to-multiple-columns" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="apply-mutate-to-multiple-columns"><span class="header-section-number">5.4</span> Apply mutate() to multiple columns</h2>
+<p>We use <code>across()</code> combined with <code>mutate()</code> to apply the same transformation or other function to multiple columns.</p>
+<p>multiply values in col1 and col2 by 2 df %&gt;% mutate(across(c(col1, col2), function(x) x*2))</p>
+<p>iris %&gt;% mutate(across(c(Sepal.Length, Sepal.Width), round))</p>
 </section>
-<section id="nesting" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="nesting"><span class="header-section-number">5.5</span> Nesting</h2>
+<section id="map-and-future_map" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="map-and-future_map"><span class="header-section-number">5.5</span> <code>map()</code> and <code>future_map()</code></h2>
+</section>
+<section id="for-loops" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">5.6</span> <code>for</code> loops</h2>
+</section>
+<section id="foreach-loops" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="foreach-loops"><span class="header-section-number">5.7</span> <code>foreach</code> loops</h2>
+</section>
+<section id="nesting" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="nesting"><span class="header-section-number">5.8</span> Nesting</h2>
 <p>Some useful tutorials</p>
 <ul>
 <li>https://r4ds.had.co.nz/many-models.html</li>

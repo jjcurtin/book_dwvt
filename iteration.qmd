@@ -1,12 +1,98 @@
 # Iteration
 
+## Introduction and curated resources
+```{r}
+#| echo: false
+
+options(conflicts.policy = "depends.ok")
+library(tidyverse)
+```
+
 See this [article](https://dplyr.tidyverse.org/dev/articles/rowwise.html) for details on the use of dplyr for row-wise operations
 
 See this [article](https://dplyr.tidyverse.org/dev/articles/colwise.html) for details on the use of dplyr for column-wise operations
 
+See this [article](https://dplyr.tidyverse.org/reference/across.html) for the uses of `across()` in `summarize()` and `mutate()`
 
-## `across()`
+In the sections that follow, we provide common examples of approaches to iteration using the `iris` dataset.
 
+```{r}
+iris |> glimpse()
+
+iris |> head()
+```
+
+## select() subset of columns
+
+There is [a good tutorial](https://dplyr.tidyverse.org/reference/select.html) providing more detail on selecting subsets of columns.  Here we illustrate a few common applications in our lab.
+
+It is easy to select a subset of columns based on their class.  Common functions for selecting on column class are 
+* `is.numeric`
+* `is.factor`
+* `is.ordered`
+* `is.character`.  
+
+These class functions are used inside of the `where()` function. For example, here we select all numeric columns.  Notice that the parentheses are left off of the `is.numeric` function when using `where()`
+```{r}
+iris |> select(where(is.numeric)) |> 
+  glimpse()
+```
+
+...and now all factor columns
+```{r}
+iris |> select(where(is.factor)) |> 
+  glimpse()
+```
+
+You can also select columns based on column name. Common helper functions for this include 
+
+* `starts_with()`: Starts with a prefix.
+* `ends_with()`: Ends with a suffix.
+* `contains()`: Contains a literal string.
+* `matches()`: Matches a regular expression.
+* `num_range()`: Matches a numerical range like x01, x02, x03.
+
+For example...
+```{r}
+iris |> select(contains("Width")) |> 
+  glimpse()
+```
+
+
+## Get summary statistics for multiple columns
+
+We use `across()` combined with `summarize()` to get summary statistics across sets of columns. This can also be combined with `group_by()` to do this within subsets/groups for rows
+Mean for all numeric columns
+
+```{r}
+iris |> 
+  summarize(across(where(is.numeric), mean))
+```
+
+Mean for width columns grouped by Species
+```{r}
+iris |> 
+  group_by(Species) |> 
+  summarize(across(contains("Width"), mean))
+```
+
+
+df %>%
+  summarise(across(c(col1, col2), list(mean=mean, sd=sd), na.rm=TRUE))
+  
+  
+## Apply mutate() to multiple columns
+
+We use `across()` combined with `mutate()` to apply the same transformation or other function to multiple columns.
+
+
+multiply values in col1 and col2 by 2
+df %>% 
+  mutate(across(c(col1, col2), function(x) x*2))
+
+iris %>%
+  mutate(across(c(Sepal.Length, Sepal.Width), round))
+  
 
 ## `map()` and `future_map()`
 

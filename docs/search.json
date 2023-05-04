@@ -242,35 +242,35 @@
     "href": "iteration.html#across",
     "title": "5  Iteration",
     "section": "5.1 across()",
-    "text": "5.1 across()"
+    "text": "5.1 across()\nWe use across to iterate over columns in a data frame. This is frequently done when applying some boolean logic to select relevant columns for subsequent steps in a pipeline, rename a set of columns, or to calculate summary statistics across columns. We provide common examples below using this toy dataset.\n\n# df <- \n\n\n5.1.1 Summary statistics across columns"
   },
   {
     "objectID": "iteration.html#map-and-future_map",
     "href": "iteration.html#map-and-future_map",
     "title": "5  Iteration",
-    "section": "5.2 map() and future_map()",
-    "text": "5.2 map() and future_map()"
+    "section": "5.5 map() and future_map()",
+    "text": "5.5 map() and future_map()"
   },
   {
     "objectID": "iteration.html#for-loops",
     "href": "iteration.html#for-loops",
     "title": "5  Iteration",
-    "section": "5.3 for loops",
-    "text": "5.3 for loops"
+    "section": "5.6 for loops",
+    "text": "5.6 for loops"
   },
   {
     "objectID": "iteration.html#foreach-loops",
     "href": "iteration.html#foreach-loops",
     "title": "5  Iteration",
-    "section": "5.4 foreach loops",
-    "text": "5.4 foreach loops"
+    "section": "5.7 foreach loops",
+    "text": "5.7 foreach loops"
   },
   {
     "objectID": "iteration.html#nesting",
     "href": "iteration.html#nesting",
     "title": "5  Iteration",
-    "section": "5.5 Nesting",
-    "text": "5.5 Nesting\nSome useful tutorials\n\nhttps://r4ds.had.co.nz/many-models.html\nhttps://bookdown.org/Maxine/r4ds/nesting.html\nhttps://tidyr.tidyverse.org/reference/nest.html"
+    "section": "5.8 Nesting",
+    "text": "5.8 Nesting\nSome useful tutorials\n\nhttps://r4ds.had.co.nz/many-models.html\nhttps://bookdown.org/Maxine/r4ds/nesting.html\nhttps://tidyr.tidyverse.org/reference/nest.html"
   },
   {
     "objectID": "file_and_path_management.html#reading-csv-files",
@@ -285,5 +285,40 @@
     "title": "1  Function conflicts",
     "section": "1.4 conflicted package",
     "text": "1.4 conflicted package\nYou should be aware that an alternative solution to handling function conflicts is provided in the conflicted package. However, this is no longer our preferred solution as the base R conflict policies are sufficient (so why load another package!). We also prefer to have conflicts detected immediately (when packages are attached) rather than at some later point when we call the function. The conflicted package is also less customizable than the base R polices."
+  },
+  {
+    "objectID": "iteration.html#select-subset-of-columns-based-on-class",
+    "href": "iteration.html#select-subset-of-columns-based-on-class",
+    "title": "5  Iteration",
+    "section": "5.1 Select subset of columns based on class",
+    "text": "5.1 Select subset of columns based on class\nThere is a good tutorial providing more detail on selecting subsets of columns. Here we illustrate a few common applications in our lab.\nIt is easy to select a subset of columns based on their class. Common functions for selecting on column class are * is.numeric * is.factor * is.ordered * is.character.\nThese class functions are used inside of the where() function. For example, here we select all numeric columns. Notice that the parentheses are left off of the is.numeric function when using where()\n\niris |> select(where(is.numeric)) |> \n  glimpse()\n\nRows: 150\nColumns: 4\n$ Sepal.Length <dbl> 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.…\n$ Sepal.Width  <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.…\n$ Petal.Length <dbl> 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.…\n$ Petal.Width  <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.…\n\n\n…and now all factor columns\n\niris |> select(where(is.factor)) |> \n  glimpse()\n\nRows: 150\nColumns: 1\n$ Species <fct> setosa, setosa, setosa, setosa, setosa, setosa, setosa, setosa…\n\n\nYou can also select columns based on column name. Common helper functions for this include\n\nstarts_with(): Starts with a prefix.\nends_with(): Ends with a suffix.\ncontains(): Contains a literal string.\nmatches(): Matches a regular expression.\nnum_range(): Matches a numerical range like x01, x02, x03.\n\nFor example…\n\niris |> select(contains(\"Width\")) |> \n  glimpse()\n\nRows: 150\nColumns: 2\n$ Sepal.Width <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4…\n$ Petal.Width <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2…"
+  },
+  {
+    "objectID": "iteration.html#get-summary-statistics-for-multiple-columns",
+    "href": "iteration.html#get-summary-statistics-for-multiple-columns",
+    "title": "5  Iteration",
+    "section": "5.3 Get summary statistics for multiple columns",
+    "text": "5.3 Get summary statistics for multiple columns\nWe use across() combined with summarize() to get summary statistics across sets of columns. This can also be combined with group_by() to do this within subsets/groups for rows Mean for all numeric columns\n\niris |> \n  summarize(across(where(is.numeric), mean))\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width\n1     5.843333    3.057333        3.758    1.199333\n\n\nMean for width columns grouped by Species\n\niris |> \n  group_by(Species) |> \n  summarize(across(contains(\"Width\"), mean))\n\n# A tibble: 3 × 3\n  Species    Sepal.Width Petal.Width\n  <fct>            <dbl>       <dbl>\n1 setosa            3.43       0.246\n2 versicolor        2.77       1.33 \n3 virginica         2.97       2.03 \n\n\ndf %>% summarise(across(c(col1, col2), list(mean=mean, sd=sd), na.rm=TRUE))"
+  },
+  {
+    "objectID": "iteration.html#introduction-and-curated-resources",
+    "href": "iteration.html#introduction-and-curated-resources",
+    "title": "5  Iteration",
+    "section": "5.1 Introduction and curated resources",
+    "text": "5.1 Introduction and curated resources\n\n\n\nSee this article for details on the use of dplyr for row-wise operations\nSee this article for details on the use of dplyr for column-wise operations\nSee this article for the uses of across() in summarize() and mutate()\nIn the sections that follow, we provide common examples of approaches to iteration using the iris dataset.\n\niris |> glimpse()\n\nRows: 150\nColumns: 5\n$ Sepal.Length <dbl> 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.…\n$ Sepal.Width  <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.…\n$ Petal.Length <dbl> 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.…\n$ Petal.Width  <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.…\n$ Species      <fct> setosa, setosa, setosa, setosa, setosa, setosa, setosa, s…\n\niris |> head()\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa\n4          4.6         3.1          1.5         0.2  setosa\n5          5.0         3.6          1.4         0.2  setosa\n6          5.4         3.9          1.7         0.4  setosa"
+  },
+  {
+    "objectID": "iteration.html#select-subset-of-columns",
+    "href": "iteration.html#select-subset-of-columns",
+    "title": "5  Iteration",
+    "section": "5.2 select() subset of columns",
+    "text": "5.2 select() subset of columns\nThere is a good tutorial providing more detail on selecting subsets of columns. Here we illustrate a few common applications in our lab.\nIt is easy to select a subset of columns based on their class. Common functions for selecting on column class are * is.numeric * is.factor * is.ordered * is.character.\nThese class functions are used inside of the where() function. For example, here we select all numeric columns. Notice that the parentheses are left off of the is.numeric function when using where()\n\niris |> select(where(is.numeric)) |> \n  glimpse()\n\nRows: 150\nColumns: 4\n$ Sepal.Length <dbl> 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.…\n$ Sepal.Width  <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.…\n$ Petal.Length <dbl> 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.…\n$ Petal.Width  <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.…\n\n\n…and now all factor columns\n\niris |> select(where(is.factor)) |> \n  glimpse()\n\nRows: 150\nColumns: 1\n$ Species <fct> setosa, setosa, setosa, setosa, setosa, setosa, setosa, setosa…\n\n\nYou can also select columns based on column name. Common helper functions for this include\n\nstarts_with(): Starts with a prefix.\nends_with(): Ends with a suffix.\ncontains(): Contains a literal string.\nmatches(): Matches a regular expression.\nnum_range(): Matches a numerical range like x01, x02, x03.\n\nFor example…\n\niris |> select(contains(\"Width\")) |> \n  glimpse()\n\nRows: 150\nColumns: 2\n$ Sepal.Width <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4…\n$ Petal.Width <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2…"
+  },
+  {
+    "objectID": "iteration.html#apply-mutate-to-multiple-columns",
+    "href": "iteration.html#apply-mutate-to-multiple-columns",
+    "title": "5  Iteration",
+    "section": "5.4 Apply mutate() to multiple columns",
+    "text": "5.4 Apply mutate() to multiple columns\nWe use across() combined with mutate() to apply the same transformation or other function to multiple columns.\nmultiply values in col1 and col2 by 2 df %>% mutate(across(c(col1, col2), function(x) x*2))\niris %>% mutate(across(c(Sepal.Length, Sepal.Width), round))"
   }
 ]
