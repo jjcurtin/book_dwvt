@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling in the Tidyverse - 8&nbsp; Programming Notes</title>
+<title>Data Wrangling in the Tidyverse - 9&nbsp; Programming Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -201,27 +201,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></a>
+  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reproducible_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Iteration</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></a>
+  <a href="./functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Functions</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./programming.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Programming Notes</span></a>
+  <a href="./simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Quarto</span></a>
+  <a href="./programming.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming Notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Quarto</span></a>
   </div>
 </li>
     </ul>
@@ -233,8 +238,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#advanced-data-wrangling" id="toc-advanced-data-wrangling" class="nav-link active" data-scroll-target="#advanced-data-wrangling"><span class="toc-section-number">8.1</span>  Advanced data wrangling</a></li>
-  <li><a href="#tidy-programming" id="toc-tidy-programming" class="nav-link" data-scroll-target="#tidy-programming"><span class="toc-section-number">8.2</span>  Tidy programming</a></li>
+  <li><a href="#advanced-data-wrangling" id="toc-advanced-data-wrangling" class="nav-link active" data-scroll-target="#advanced-data-wrangling"><span class="toc-section-number">9.1</span>  Advanced data wrangling</a></li>
+  <li><a href="#tidy-programming" id="toc-tidy-programming" class="nav-link" data-scroll-target="#tidy-programming"><span class="toc-section-number">9.2</span>  Tidy programming</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/programming.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -243,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Programming Notes</span></h1>
 </div>
 
 
@@ -263,12 +268,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">conflicts.policy =</span> <span class="st">"depends.ok"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="advanced-data-wrangling" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="advanced-data-wrangling"><span class="header-section-number">8.1</span> Advanced data wrangling</h2>
+<section id="advanced-data-wrangling" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="advanced-data-wrangling"><span class="header-section-number">9.1</span> Advanced data wrangling</h2>
 <p>The tidy folks have also written many more <a href="https://dplyr.tidyverse.org/dev/articles/index.html">articles</a> on dplyr that are worth a look</p>
 </section>
-<section id="tidy-programming" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="tidy-programming"><span class="header-section-number">8.2</span> Tidy programming</h2>
+<section id="tidy-programming" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="tidy-programming"><span class="header-section-number">9.2</span> Tidy programming</h2>
 <p>Programming with dplyr can be complicated because of tidy evaluation. This <a href="https://dplyr.tidyverse.org/articles/programming.html">programming vignette</a> provides useful documentation on data masking and tidy selection</p>
 <p>If you plan to do a lot of R programming, I highly recommend reading chapters 17-21 on <a href="https://adv-r.hadley.nz/metaprogramming.html">meta-programming</a> in R</p>
 
@@ -412,12 +417,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./simulations.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./quarto.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

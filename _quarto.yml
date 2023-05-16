@@ -8,6 +8,7 @@ execute:
   message: false
 
 toc: true 
+toc-depth: 3
 bibliography: references.bib   
   
 book:
@@ -27,8 +28,9 @@ book:
     - cache.qmd
     - parallel_processing.qmd
     - file_and_path_management.qmd
-    - iteration.qmd
     - reproducible_examples.qmd
+    - iteration.qmd
+    - functions.qmd
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
