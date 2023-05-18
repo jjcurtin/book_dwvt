@@ -43,7 +43,7 @@ mtcars %>%
   mutate(model = word(make, start = 2),
     make = word(make)) %>% 
   relocate(model, .after="make") %>%
-  kable(.,
+  knitr::kable(.,
         align = c("l", "l", "c", "c", "c"),
         col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears"))
 
@@ -57,7 +57,7 @@ However, when you call kableExtra, it does away with the nice striping and spaci
 #| echo: false
 #| warning: false
 
-library(kableExtra)
+library(kableExtra, exclude="group_rows")
 
 mtcars %>% 
   select(mpg, cyl, gear) %>%
@@ -66,7 +66,7 @@ mtcars %>%
   mutate(model = word(make, start = 2),
     make = word(make)) %>% 
   relocate(model, .after="make") %>%
-  kable(.,
+  knitr::kable(.,
         align = c("l", "l", "c", "c", "c"),
         col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) 
 
