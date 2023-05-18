@@ -152,5 +152,61 @@
     "title": "3  Parallel Processing",
     "section": "3.3 Conclusions",
     "text": "3.3 Conclusions\nFor future_map(), foreach(), and tidymodels functions in parallel, set up the parallel backend with this code chunk.\n\nlibrary(doParallel)\ncl &lt;- makePSOCKcluster(parallel::detectCores(logical = FALSE))\nregisterDoParallel(cl)\n\nNothing further is needed to use foreach() or tidymodels functions.\nFor future_map(), you need to set up a multisession plan with this code chunk\n\nplan(multisession, workers = parallel::detectCores(logical = FALSE))"
+  },
+  {
+    "objectID": "quarto.html#general",
+    "href": "quarto.html#general",
+    "title": "10  Quarto",
+    "section": "10.1 General",
+    "text": "10.1 General\nComprehensive guide to Quarto\n\n10.1.1 Chunk options\nChunk options are now specified inside the r backtics, with the following syntax:\n#| echo: false\n#| warning: false\nTo specify these options globally, they need to be added to the _quarto.yml file, with these lines:\nexecute:\n   echo: false\n   warning: false\n\n\n10.1.2 Tables\n\n10.1.2.1 HTML\nPlain knitr::kable() renders a nicely striped table in HTML:\n\n\n\n\n\nMake\nModel\nMiles Per Gallon\nCylinders\nGears\n\n\n\n\nMazda\nRX4\n21.0\n6\n4\n\n\nMazda\nRX4\n21.0\n6\n4\n\n\nDatsun\n710\n22.8\n4\n4\n\n\nHornet\n4\n21.4\n6\n3\n\n\nHornet\nSportabout\n18.7\n8\n3\n\n\n\n\n\nHowever, when you call kableExtra, it does away with the nice striping and spacing and you then have to define that explicitly!\n\n\n\n\n\nMake\nModel\nMiles Per Gallon\nCylinders\nGears\n\n\n\n\nMazda\nRX4\n21.0\n6\n4\n\n\nMazda\nRX4\n21.0\n6\n4\n\n\nDatsun\n710\n22.8\n4\n4\n\n\nHornet\n4\n21.4\n6\n3\n\n\nHornet\nSportabout\n18.7\n8\n3\n\n\n\n\n\n\n\nNote the table above, although the code is identical to the first table, has lost all formatting thanks to invoking kableExtra. The table below re-produces that via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn’t actually work!).\n\n\n\n\n\nMake\nModel\nMiles Per Gallon\nCylinders\nGears\n\n\n\n\nMazda\nRX4\n21.0\n6\n4\n\n\nMazda\nRX4\n21.0\n6\n4\n\n\nDatsun\n710\n22.8\n4\n4\n\n\nHornet\n4\n21.4\n6\n3\n\n\nHornet\nSportabout\n18.7\n8\n3\n\n\n\nNote: \n\n\n\n\n\n\n Here is a general comments of the table.\n\n\n\n\n\n\n1 Footnote 1;\n\n\n\n\n\n\n2 Footnote 2;\n\n\n\n\n\n\na Footnote A;\n\n\n\n\n\n\nb Footnote B;\n\n\n\n\n\n\n* Footnote Symbol 1;\n\n\n\n\n\n\n† Footnote Symbol 2\n\n\n\n\n\n\n\n\n\n\n\n\nAdditional HTML-only features of kableExtra are documented here\n\n\n10.1.2.2 PDF\nThe documentation for producing LaTeX tables in kableExtra is here\nThe following two tables demonstrate a complex table of the type used in the PDF ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting. It displays not unlike an HTML table:\n\n\n\nIris\n\n\n\nN\n%\n\n\n\n\nSetosa\n\n\nlarge\nNA\nNA\n\n\nsmall\n50\n0.3\n\n\nVersicolor\n\n\nlarge\n43\n0.3\n\n\nsmall\n7\n0.0\n\n\nVirginica\n\n\nlarge\n50\n0.3\n\n\nsmall\nNA\nNA\n\n\n\nNote: \n\n\n\n\n N = 75\n\n\n\n\n\n\n\n\n\n\nIn LaTeX, this table displays quite differently. Below, the same code has been modified to reproduce exactly the look of the table as it appears in the PDF manuscript. That is, the code in the chunk above produces the output below when rendered with knitr to PDF; but rendering that output to HTML requires the additions in the chunk below:\n\nbootstrap_options = \"none\" added to kable_styling removes the default horizontal lines, under each row, but then font size and table width must now be specified.\npack_rows() adds horizontal lines in HTML but not LaTeX; those must be removed with the label_row_css option .\nFinally, column width is specified, and horizontal lines around the column headers and before the footnote, are added with row_spec()’s extra_css option.\n\n\n\n\nIris\n\n\n\nN\n%\n\n\n\n\nSetosa\n\n\nlarge\n\n\n\n\nsmall\n50\n0.3\n\n\nVersicolor\n\n\nlarge\n43\n0.3\n\n\nsmall\n7\n0.0\n\n\nVirginica\n\n\nlarge\n50\n0.3\n\n\nsmall\n\n\n\n\n\nNote: \n\n\n\n\n N = 75\n\n\n\n\n\n\n\n\n\n\n\n\n10.1.2.3 Useful Table Options and features\nTo be sure tables display with NA cells as blanks (instead of “NA”) include this before your first table:\noptions(knitr.kable.NA = \"\")\nkableExtra has a function is collapse_rows, yet that seems to be persistently broken\nrow_spec() has a parameter, hline_after, which, ostensibly, should create a horizontal line under that row, right? Apparently it only works on LaTeX although this is undocumented. Apparently the solution is to add row_spec(X, extra_css = \"border-bottom: 1px solid\")) (where x is the rownum; 0 for the header, nrow(df) for the last row)\nSimilarly, to supress hlines on headers created by pack_rows(), you need to add extra_css = \"border-bottom: none\" into the pack_rows() command.\n\n\n\n10.1.3 Rendering\nHitting the Render button renders the single active document.\nCall quarto::quarto_render() to render all documents in the active project directory. NB, you must re-render the entire directory if anything changes in the .yml file (such as addition or deletion of a chapter)\nYou can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets\n\n10.1.3.1 PDF\nYou can specify rendering to PDF format by adding the following to your .yml file:\nformat: pdf: documentclass: book\nYou can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:\nquarto::quarto_render(output_format = “pdf”,output_file = “dwt.pdf”)\nHOWEVER, as of 2023_0424 rendering to PDF in the stable release fails; I’ll attempt to install the dev version and test next"
+  },
+  {
+    "objectID": "quarto.html#documents",
+    "href": "quarto.html#documents",
+    "title": "10  Quarto",
+    "section": "10.2 Documents",
+    "text": "10.2 Documents\nWe use Quarto documents for two purposes - reproducible analyses and submitted papers. We will generally render analysis doc to html and papers to pdf. The Quarto Guide provides more detail on on creating pdf and html\nThese documents are styled primarily using Markdown. The Quarto Guide provides more detail on markdown basics"
+  },
+  {
+    "objectID": "quarto.html#journal-articles",
+    "href": "quarto.html#journal-articles",
+    "title": "10  Quarto",
+    "section": "10.3 Journal Articles",
+    "text": "10.3 Journal Articles\n\n10.3.1 Templates\nQuarto does have a system for applying journal article templates to quarto docs, see this reference page\nThe list of available templates is still somewhat small, but extending them seems doable.\n\nInfo on creating a custom template\nTemplate for creating a custom template\n\nRelated reference links for creating an AJP template:\n\nAJP Manuscript requirements\n\nExample AJP Latex Template\nMore APA stype templates\n\n\n\n10.3.2 Bibliographies\nTo add a bibliography with a citation style, add the following lines to the _quarto.yml file:\nbibliography: references.bib\ncsl: name_of_csl_file.csl\nNote, we will typically call our csl files from our central lab_support repo; which simply requires the URL of the raw file from github:\ncsl: https://raw.githubusercontent.com/jjcurtin/lab_support/main/rmd_templates/csl/national-library-of-medicine-grant-proposals.csl\nThe Quarto Guide provides more detail about how to work with citations and footnotes. As with markdown, the format is [@citekey1; @citekey2] — citations go inside square brackets and are separated by semicolons"
+  },
+  {
+    "objectID": "quarto.html#reproducible-analyses",
+    "href": "quarto.html#reproducible-analyses",
+    "title": "10  Quarto",
+    "section": "10.4 Reproducible Analyses",
+    "text": "10.4 Reproducible Analyses"
+  },
+  {
+    "objectID": "quarto.html#presentations",
+    "href": "quarto.html#presentations",
+    "title": "10  Quarto",
+    "section": "10.5 Presentations",
+    "text": "10.5 Presentations\nWe use Quarto to make revealjs slide decks for presentations. The Quarto Guide provides extensive documentation and sample slides. You can begin with the overview of presentations across formats (Quarto can also render powerpoint and other formats). Follow this with a revealjs overview and then the revealjs reference chapter. The Quarto Guide also provides a chapter on presenter tools.\nDivs (:::) and spans([]) are used extensively in presentations. An introduction to their use is provided in the markdown basics chapter. The Pandoc manual provides more detail."
+  },
+  {
+    "objectID": "quarto.html#books",
+    "href": "quarto.html#books",
+    "title": "10  Quarto",
+    "section": "10.6 Books",
+    "text": "10.6 Books\nInformation on setting up a book: https://quarto.org/docs/books/\nInformation on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs"
+  },
+  {
+    "objectID": "quarto.html#publishing",
+    "href": "quarto.html#publishing",
+    "title": "10  Quarto",
+    "section": "10.7 Publishing",
+    "text": "10.7 Publishing\nYou can publish documents, books, and presentations to a variety of places\n\n10.7.1 Presentations and Documents\nOur preferred location for presentations (and Quarto Docs) is Quarto Pub. This site is public and free. To use it, you need to set up an account first.\nTo publish a presentation (or other Quarto doc) to Quarto Pub, you should first log in on your default browsers. You should next go to the Terminal tab in the RStudio IDE. Navigate to the folder that contains your presentation. Then type quarto publish quarto-pub. If this is the first time you are publishing at Quarto Pub on that computer, you will need to authorize it. Follow the prompts in the web browser and then in the terminal to complete the publication process. This authorization is saved in a file called _publish.yml, which will be accessed for future updates to the presentation.\nSee additional instructions in the Quarto guide if necessary.\n\n\n10.7.2 Books"
+  },
+  {
+    "objectID": "quarto.html#terminal-commands",
+    "href": "quarto.html#terminal-commands",
+    "title": "10  Quarto",
+    "section": "10.8 Terminal Commands",
+    "text": "10.8 Terminal Commands\n\nquarto publish quarto-pub to publish a presentation or document to Quarto Pub"
   }
 ]
