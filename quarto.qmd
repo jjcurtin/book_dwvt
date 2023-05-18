@@ -228,8 +228,25 @@ We use Quarto documents for two purposes - reproducible analyses and submitted p
 These documents are styled primarily using Markdown.  The Quarto Guide provides more detail on [markdown basics](https://quarto.org/docs/authoring/markdown-basics.html)
 
 
-## Papers
+## Journal Articles
 
+### Templates
+
+Quarto does have a system for applying journal article templates to quarto docs, see [this reference page](https://quarto.org/docs/journals/)
+
+The list of available templates is still somewhat small, but extending them seems doable.
+
+* [Info on creating a custom template](https://quarto.org/docs/journals/formats.html)
+* [Template for creating a custom template](https://github.com/quarto-journals/article-format-template)
+
+
+Related reference links for creating an AJP template:
+
+* [AJP Manuscript requirements](https://ajp.psychiatryonline.org/ajp_ifora )  
+* [Example AJP Latex Template](https://tex.stackexchange.com/questions/127639/template-for-american-journal-of-psychiatry)
+* [More APA stype templates](https://www.overleaf.com/latex/templates/tagged/apa)  
+
+### Bibliographies
 To add a bibliography with a citation style, add the following lines to the _quarto.yml file:
 
 `bibliography: references.bib`  
