@@ -36,11 +36,10 @@ Here are the number of physical (not logical) cores on this machine.  You may ha
 parallel::detectCores(logical = FALSE)
 ```
 
-Lets use them by setting up a parallel backend.  This works on Windows and Mac OSs.
+Lets use them by setting up a parallel backend.  This works on Windows and Mac OSs.  We prefer to use namespace when calling these functions rather than loading full packages
 ```{r}
-library(doParallel)
-cl <- makePSOCKcluster(parallel::detectCores(logical = FALSE))
-registerDoParallel(cl)
+cl <- parallel::makePSOCKcluster(parallel::detectCores(logical = FALSE))
+doParallel::registerDoParallel(cl)
 ```
 
 
@@ -213,9 +212,8 @@ For `future_map()`, `foreach()`, and tidymodels functions in parallel, set up th
 ```{r}
 #| eval: false
 
-library(doParallel)
-cl <- makePSOCKcluster(parallel::detectCores(logical = FALSE))
-registerDoParallel(cl)
+cl <- parallel::makePSOCKcluster(parallel::detectCores(logical = FALSE))
+doParallel::registerDoParallel(cl)
 ```
 
 Nothing further is needed to use `foreach()` or tidymodels functions.
