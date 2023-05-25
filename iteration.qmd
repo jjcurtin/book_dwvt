@@ -98,6 +98,8 @@ iris %>%
 
 can generally return lists using `map()` and then combine into a df afterwards using `list_rbind()`
 
+Can use `pluck()` in a second map if a first map returned a list with multiple elements
+
 ## `for` loops
 
 
