@@ -96,7 +96,7 @@ iris %>%
 
 ## `map()` and `future_map()`
 
-
+can generally return lists using `map()` and then combine into a df afterwards using `list_rbind()`
 
 ## `for` loops
 
