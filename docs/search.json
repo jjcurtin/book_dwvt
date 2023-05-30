@@ -74,7 +74,7 @@
     "href": "iteration.html#map-and-future_map",
     "title": "6  Iteration",
     "section": "6.5 map() and future_map()",
-    "text": "6.5 map() and future_map()"
+    "text": "6.5 map() and future_map()\ncan generally return lists using map() and then combine into a df afterwards using list_rbind()\nCan use pluck() in a second map if a first map returned a list with multiple elements"
   },
   {
     "objectID": "iteration.html#for-loops",
