@@ -102,6 +102,7 @@ Can use `pluck()` in a second map if a first map returned a list with multiple e
 
 ## `for` loops
 
+Does someone want o do this?
 
 ## `foreach` loops
 
