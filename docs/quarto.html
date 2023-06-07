@@ -210,11 +210,11 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#reproducible-analyses" id="toc-reproducible-analyses" class="nav-link" data-scroll-target="#reproducible-analyses"><span class="header-section-number">10.4</span> Reproducible Analyses</a></li>
   <li><a href="#presentations" id="toc-presentations" class="nav-link" data-scroll-target="#presentations"><span class="header-section-number">10.5</span> Presentations</a></li>
-  <li><a href="#books" id="toc-books" class="nav-link" data-scroll-target="#books"><span class="header-section-number">10.6</span> Books</a></li>
+  <li><a href="#books-and-websites" id="toc-books-and-websites" class="nav-link" data-scroll-target="#books-and-websites"><span class="header-section-number">10.6</span> Books and Websites</a></li>
   <li><a href="#publishing" id="toc-publishing" class="nav-link" data-scroll-target="#publishing"><span class="header-section-number">10.7</span> Publishing</a>
   <ul class="collapse">
   <li><a href="#presentations-and-documents" id="toc-presentations-and-documents" class="nav-link" data-scroll-target="#presentations-and-documents"><span class="header-section-number">10.7.1</span> Presentations and Documents</a></li>
-  <li><a href="#books-1" id="toc-books-1" class="nav-link" data-scroll-target="#books-1"><span class="header-section-number">10.7.2</span> Books</a></li>
+  <li><a href="#books-and-websites-1" id="toc-books-and-websites-1" class="nav-link" data-scroll-target="#books-and-websites-1"><span class="header-section-number">10.7.2</span> Books and Websites</a></li>
   </ul></li>
   <li><a href="#terminal-commands" id="toc-terminal-commands" class="nav-link" data-scroll-target="#terminal-commands"><span class="header-section-number">10.8</span> Terminal Commands</a></li>
   </ul>
@@ -248,7 +248,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Chunk options are now specified inside the r backtics, with the following syntax:</p>
 <p><code>#| echo: false</code><br>
 <code>#| warning: false</code></p>
-<p>To specify these options globally, they need to be added to the _quarto.yml file, with these lines:</p>
+<p>To specify these options globally, they need to be added to the <code>_quarto.yml</code> file, with these lines:</p>
 <p><code>execute:</code><br>
 &nbsp;&nbsp;&nbsp;<code>echo: false</code><br>
 &nbsp;&nbsp;&nbsp;<code>warning: false</code></p>
@@ -640,11 +640,22 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="rendering" class="level3" data-number="10.1.3">
 <h3 data-number="10.1.3" class="anchored" data-anchor-id="rendering"><span class="header-section-number">10.1.3</span> Rendering</h3>
-<p>Hitting the Render button renders the single active document.</p>
-<p>Call quarto::quarto_render() to render all documents in the active project directory. NB, you must re-render the entire directory if anything changes in the .yml file (such as addition or deletion of a chapter)</p>
-<p>You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets</p>
-<section id="pdf-1" class="level4" data-number="10.1.3.1">
-<h4 data-number="10.1.3.1" class="anchored" data-anchor-id="pdf-1"><span class="header-section-number">10.1.3.1</span> PDF</h4>
+<section id="single-page-rendering" class="level4" data-number="10.1.3.1">
+<h4 data-number="10.1.3.1" class="anchored" data-anchor-id="single-page-rendering"><span class="header-section-number">10.1.3.1</span> Single-page rendering</h4>
+<p>Hitting the Render button renders the single active document. This will be the primary method of rendering for analysis documents, manuscripts, and presentations.</p>
+<p>This method can also be used to re-render a single chapter in a book or a single page on a website.</p>
+</section>
+<section id="full-bookwebsite-rendering" class="level4" data-number="10.1.3.2">
+<h4 data-number="10.1.3.2" class="anchored" data-anchor-id="full-bookwebsite-rendering"><span class="header-section-number">10.1.3.2</span> Full book/website rendering</h4>
+<p>For books and websites, which have many .qmd documents linked together, you would render the full book by calling <code>quarto::quarto_render()</code> to render all documents in the active project directory.</p>
+<p>For books and websites, if anything changes in the .yml file (such as addition or deletion of a chapter), you MUST re-render the entire directory in this manner, otherwise the added/deleted chapter will not be rendered correctly.</p>
+</section>
+<section id="rendering-other-formats-and-targets" class="level4" data-number="10.1.3.3">
+<h4 data-number="10.1.3.3" class="anchored" data-anchor-id="rendering-other-formats-and-targets"><span class="header-section-number">10.1.3.3</span> Rendering other formats and targets</h4>
+<p>You can specify render targets and document render ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets</p>
+</section>
+<section id="pdf-1" class="level4" data-number="10.1.3.4">
+<h4 data-number="10.1.3.4" class="anchored" data-anchor-id="pdf-1"><span class="header-section-number">10.1.3.4</span> PDF</h4>
 <p>You can specify rendering to PDF format by adding the following to your .yml file:</p>
 <p>format: pdf: documentclass: book</p>
 <p>You can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:</p>
@@ -694,22 +705,26 @@ ul.task-list li input[type="checkbox"] {
 <p>We use Quarto to make revealjs slide decks for presentations. The Quarto Guide provides extensive documentation and sample slides. You can begin with the <a href="https://quarto.org/docs/presentations">overview</a> of presentations across formats (Quarto can also render powerpoint and other formats). Follow this with a <a href="https://quarto.org/docs/presentations/revealjs/">revealjs overview</a> and then the revealjs <a href="https://quarto.org/docs/reference/formats/presentations/revealjs.html">reference chapter</a>. The Quarto Guide also provides a <a href="https://quarto.org/docs/presentations/revealjs/presenting.html">chapter on presenter tools</a>.</p>
 <p>Divs (:::) and spans([]) are used extensively in presentations. An introduction to their use is provided in the <a href="https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans">markdown basics chapter</a>. The Pandoc manual provides <a href="https://pandoc.org/MANUAL.html#divs-and-spans">more detail</a>.</p>
 </section>
-<section id="books" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="books"><span class="header-section-number">10.6</span> Books</h2>
-<p>Information on setting up a book: https://quarto.org/docs/books/</p>
-<p>Information on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs</p>
+<section id="books-and-websites" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="books-and-websites"><span class="header-section-number">10.6</span> Books and Websites</h2>
+<p>Information on setting up a book: <a href="https://quarto.org/docs/books/" class="uri">https://quarto.org/docs/books/</a></p>
+<p>Information on setting up a website: <a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a></p>
+<p>Information on setting up Github Pages to publish a book/website on commit: <a href="https://quarto.org/docs/publishing/github-pages.html#render-to-docs" class="uri">https://quarto.org/docs/publishing/github-pages.html#render-to-docs</a></p>
+<p>The difference between a book and a website in quarto is the syntax in the <code>_quarto.yml</code> file. Books have chapters, websites have sections; there are also a few differences in the types of metadata options you can specify (for example, books have titles and authors, websites do not). The main visible difference in the published output is that book chapters are numbered, while website sections are not.</p>
 </section>
 <section id="publishing" class="level2" data-number="10.7">
 <h2 data-number="10.7" class="anchored" data-anchor-id="publishing"><span class="header-section-number">10.7</span> Publishing</h2>
-<p>You can <a href="https://quarto.org/docs/publishing">publish</a> documents, books, and presentations to a variety of places</p>
+<p>You can <a href="https://quarto.org/docs/publishing">publish</a> documents, books, and presentations to a variety of places.</p>
 <section id="presentations-and-documents" class="level3" data-number="10.7.1">
 <h3 data-number="10.7.1" class="anchored" data-anchor-id="presentations-and-documents"><span class="header-section-number">10.7.1</span> Presentations and Documents</h3>
 <p>Our preferred location for presentations (and Quarto Docs) is <a href="https://quartopub.com/">Quarto Pub</a>. This site is public and free. To use it, you need to set up an account first.</p>
 <p>To publish a presentation (or other Quarto doc) to Quarto Pub, you should first log in on your default browsers. You should next go to the Terminal tab in the RStudio IDE. Navigate to the folder that contains your presentation. Then type <code>quarto publish quarto-pub</code>. If this is the first time you are publishing at Quarto Pub on that computer, you will need to authorize it. Follow the prompts in the web browser and then in the terminal to complete the publication process. This authorization is saved in a file called _publish.yml, which will be accessed for future updates to the presentation.</p>
 <p>See <a href="https://quarto.org/docs/publishing/quarto-pub.html">additional instructions</a> in the Quarto guide if necessary.</p>
 </section>
-<section id="books-1" class="level3" data-number="10.7.2">
-<h3 data-number="10.7.2" class="anchored" data-anchor-id="books-1"><span class="header-section-number">10.7.2</span> Books</h3>
+<section id="books-and-websites-1" class="level3" data-number="10.7.2">
+<h3 data-number="10.7.2" class="anchored" data-anchor-id="books-and-websites-1"><span class="header-section-number">10.7.2</span> Books and Websites</h3>
+<p>We have chosen to use Github Pages to publish several of our books. See <a href="https://quarto.org/docs/publishing/github-pages.html">this link</a> for detailed information on setting up your repo to have a Github Page and to use Github Actions to publish.</p>
+<p>Basically, any commit which includes changed html files tells Github Actions to re-build the book. The publishing workflow therefore consists of a) rendering locally, and b) committing the newly-rendered documents via github desktop. It usually takes &lt;2 minutes for Github Actions to build and deploy the updated pages</p>
 </section>
 </section>
 <section id="terminal-commands" class="level2" data-number="10.8">

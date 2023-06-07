@@ -18,7 +18,7 @@ Chunk options are now specified inside the r backtics, with the following syntax
 `#| echo: false`  
 `#| warning: false`  
 
-To specify these options globally, they need to be added to the _quarto.yml file, with these lines:
+To specify these options globally, they need to be added to the `_quarto.yml` file, with these lines:
 
 `execute: `  
 &nbsp;&nbsp;&nbsp;`  echo: false`  
@@ -201,11 +201,22 @@ Similarly, to supress hlines on headers created by `pack_rows()`, you need to ad
 
 ### Rendering
 
-Hitting the Render button renders the single active document.
+#### Single-page rendering
 
-Call quarto::quarto_render() to render all documents in the active project directory. NB, you must re-render the entire directory if anything changes in the .yml file (such as addition or deletion of a chapter)
+Hitting the Render button renders the single active document. This will be the primary method of rendering for analysis documents, manuscripts, and presentations. 
 
-You can specify render targets and ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
+This method can also be used to re-render a single chapter in a book or a single page on a website.
+
+#### Full book/website rendering
+
+For books and websites, which have many .qmd documents linked together, you would render the full book by calling `quarto::quarto_render()` to render all documents in the active project directory.
+
+For books and websites, if anything changes in the .yml file (such as addition or deletion of a chapter), you MUST re-render the entire directory in this manner, otherwise the added/deleted chapter will not be rendered correctly.
+
+
+#### Rendering other formats and targets
+
+You can specify render targets and document render ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
 
 #### PDF
 
@@ -270,16 +281,20 @@ We use Quarto to make revealjs slide decks for presentations.  The Quarto Guide 
 Divs (:::) and spans([]) are used extensively in presentations.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
 
 
-## Books
+## Books and Websites
 
-Information on setting up a book: https://quarto.org/docs/books/
+Information on setting up a book: <https://quarto.org/docs/books/>
 
-Information on setting up Github Pages to publish a book on commit: https://quarto.org/docs/publishing/github-pages.html#render-to-docs
+Information on setting up a website: <https://quarto.org/docs/websites/> 
+
+Information on setting up Github Pages to publish a book/website on commit: <https://quarto.org/docs/publishing/github-pages.html#render-to-docs>
+
+The difference between a book and a website in quarto is the syntax in the `_quarto.yml` file. Books have chapters, websites have sections; there are also a few differences in the types of metadata options you can specify (for example, books have titles and authors, websites do not). The main visible difference in the published output is that book chapters are numbered, while website sections are not. 
 
 
 ## Publishing
 
-You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places
+You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places.
 
 ### Presentations and Documents 
 Our preferred location for presentations (and Quarto Docs) is [Quarto Pub](https://quartopub.com/).  This site is public and free.  To use it, you need to set up an account first.
@@ -288,9 +303,11 @@ To publish a presentation (or other Quarto doc) to Quarto Pub, you should first 
 
 See [additional instructions](https://quarto.org/docs/publishing/quarto-pub.html) in the Quarto guide if necessary.
 
-### Books
+### Books and Websites
 
+We have chosen to use Github Pages to publish several of our books. See [this link](https://quarto.org/docs/publishing/github-pages.html) for detailed information on setting up your repo to have a Github Page and to use Github Actions to publish. 
 
+Basically, any commit which includes changed html files tells Github Actions to re-build the book. The publishing workflow therefore consists of a) rendering locally, and b) committing the newly-rendered documents via github desktop. It usually takes <2 minutes for Github Actions to build and deploy the updated pages
 
 
 ## Terminal Commands
