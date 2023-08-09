@@ -660,7 +660,15 @@ ul.task-list li input[type="checkbox"] {
 <p>format: pdf: documentclass: book</p>
 <p>You can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:</p>
 <p>quarto::quarto_render(output_format = “pdf”,output_file = “dwt.pdf”)</p>
-<p>HOWEVER, as of 2023_0424 <a href="https://github.com/quarto-dev/quarto-cli/issues/4951">rendering to PDF in the stable release fails</a>; I’ll attempt to install the dev version and test next</p>
+<section id="pdf-fonts" class="level5" data-number="10.1.3.4.1">
+<h5 data-number="10.1.3.4.1" class="anchored" data-anchor-id="pdf-fonts"><span class="header-section-number">10.1.3.4.1</span> PDF Fonts</h5>
+<p>To specify a font you add the following to the YAML:</p>
+<p>If using Xelatex:<br>
+<code>mainfont : FontName # for document text</code> <code>monofont : FontName  # for code chunk text</code></p>
+<p>If using pdflatex:<br>
+<code>fontfamily : FontName # for document text</code></p>
+<p>Where <code>FontName</code> is the name of your desired system font. To find available system fonts, run, <code>systemfonts::system_fonts()</code> and look for the <em>name</em> of the font (not the name of the font .tff file). For example, if you wish to use Arial font, your <code>FontName</code> should be ArialMT, rather than arial (the name of the font file)</p>
+</section>
 </section>
 </section>
 </section>

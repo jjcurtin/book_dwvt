@@ -230,7 +230,17 @@ You can then explictly render just the PDF format by specifying both the output 
 
 quarto::quarto_render(output_format = "pdf",output_file = "dwt.pdf")
 
-HOWEVER, as of 2023_0424 [rendering to PDF in the stable release fails](https://github.com/quarto-dev/quarto-cli/issues/4951); I'll attempt to install the dev version and test next
+##### PDF Fonts
+To specify a font you add the following to the YAML:
+
+If using Xelatex:  
+`mainfont : FontName # for document text`
+`monofont : FontName  # for code chunk text` 
+
+If using pdflatex:  
+`fontfamily : FontName # for document text`
+
+Where `FontName` is the name of your desired system font. To find available system fonts, run, `systemfonts::system_fonts()` and look for the *name* of the font (not the name of the font .tff file). For example, if you wish to use Arial font, your `FontName` should be ArialMT, rather than arial (the name of the font file)
 
 ## Documents
 
