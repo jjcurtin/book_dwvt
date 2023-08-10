@@ -1,0 +1,174 @@
+# Exploring date-times and dates with lubridate
+
+
+```{r, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+
+
+```{r}
+path <- "data" 
+```
+
+## Date-times/dttm
+* Create a tibble with a date as a character string
+```{r}
+d <- tibble(t = c("2017-01-27 12:01:00", "2017-01-27 23:59:00", "2017-01-27 00:01:00")) %>% 
+  glimpse()
+```
+
+Can use as_datetime to class as dttm
+
+* defaults to assuming character string is in UTC tz
+* will class as dttm in UTC
+```{r}
+d %>% 
+  mutate(t_dttm = as_datetime(t)) %>% 
+  print() %>% 
+  pull(t_dttm) %>% 
+  print()  
+```
+
+* Can class character string as dttm in another timezone with $tz$ argument
+* Will class as dttm in that other timezone retaining original values but just with different timezone
+```{r}
+d %>% 
+  mutate(t_dttm = as_datetime(t, tz= "America/Chicago")) %>% 
+  print() %>% 
+  pull(t_dttm) %>% 
+  print()  
+```
+
+* Can class character string as dttm in another timezone with $tz$
+* AND THEN change timezone (e.g., orginal values were in America/Chicago and then change to UTC tz)
+* $with\_tz()$ returns same moment of time in another timezone
+```{r}
+d %>% 
+  mutate(t_dttm = as_datetime(t, tz= "America/Chicago"),
+         t_dttm = with_tz(t_dttm, tz = "UTC")) %>% 
+  print() %>% 
+  pull(t_dttm) %>% 
+  print()  
+```
+
+* Can force a shift of the time zone keeping the actual time value the same
+* This is a NEW moment in time.  
+* Do if the dttm already has a tz and it is WRONG
+* See $force_tzs()$ if you have dttm in same column which need to be shifted to varied tzs
+  * All values in a column in R need to have same tz
+  * $force\_tzs()$ can accomodate this b/c forcing the tz changes and then returning all values in one time zone (with that latter adjustement preserving their new moments in time)
+
+
+```{r}
+d %>% 
+  mutate(t_dttm = as_datetime(t, tz= "America/Chicago"),
+         t_dttm_forced = force_tz(t_dttm, tzone = "UTC")) %>% 
+  print() %>% 
+  pull(t_dttm_forced) %>% 
+  print()  
+```
+
+* When using write_csv, dttm is converted to UTC first
+* A Z is appended to time to indicate (Z)ero time shift
+* The character string t is written as a character string
+  * It was not a dttm so it is not converted to UTC
+  * It has no Z
+  * HOWEVER, when you read this back, it will assume UTC!!!!
+  * You will need to use $force\_tz()$ if it was actually in another tz
+  * Open dttm_output.csv to see this behavior
+```{r}
+d %>% 
+  mutate(t_dttm = as_datetime(t, tz= "America/Chicago")) %>% 
+  print() %>% 
+  write_csv(file.path(path, "dttm_output.csv")) %>% 
+  print()
+```
+
+* When reading dttm_output.csv, t_dttm is clearly UTC with Z suffix
+* t is clearly an R formatted date-time it is classed as dttm
+  * It had no tz info so it is assumed to be in UTC!
+  * Shift it to get back to whatever tz you want/need usig $force\_tz()$
+
+```{r}
+d_csv <- read_csv(file.path(path, "dttm_output.csv")) %>% 
+  glimpse()
+
+d_csv$t   # CAREFUL if t wasn't in UTC before, this has changed its moment in time when setting to UTC.
+d_csv$t_dttm
+```
+
+
+## Dates
+
+* Use $as\_date()$ to convert character string to date
+* date class does NOT have tz
+```{r}
+(a_date = as_date("2017-01-27"))
+class(a_date)
+```
+
+* Can strip time from dttm with $as\_date()$
+* $as_date() ignores tz and just parse out the date portion of the dttm
+
+```{r}
+(a_dttm = as_datetime("2017-01-27 23:59:01", tz = "America/Chicago"))
+as_date(a_dttm)
+
+(a_dttm = as_datetime("2017-01-27 23:59:01", tz = "UTC"))
+as_date(a_dttm)
+```
+
+
+* Note that base R as.Date() works differently with respect to how it handles the tz of the dttm
+* We will always use $as\_date()$
+```{r}
+(a_dttm = as_datetime("2017-01-27 23:59:01", tz = "America/Chicago"))
+as.Date(a_dttm)
+
+(a_dttm = as_datetime("2017-01-27 23:59:01", tz = "UTC"))
+as.Date(a_dttm)
+```
+
+* When writing to csv, outputs as character.  Since no tz, not tz stamp is needed
+* When reading, the character string is automatically converted to date class
+```{r}
+d <- tibble(dates = c("2017-01-27", "2017-01-28","2017-01-29")) %>% 
+  mutate(dates_asdates = as_date(dates)) %>% 
+  glimpse() %>% 
+  print()
+
+write_csv(d, file.path(path, "date_output.csv"))
+
+d_csv <- read_csv(file.path(path, "date_output.csv")) %>% 
+  glimpse() %>% 
+  print()
+```
+
+
+## Converting unix times
+```{r}
+
+# https://www.epochconverter.com/
+# Epoch timestamp: 1485540001
+# Timestamp in milliseconds: 1485540001000
+# Human time (GMT): Friday, January 27, 2017 6:00:01 PM
+# Human time (your time zone): Friday, January 27, 2017 12:00:01 PM GMT-06:00
+
+as_datetime(1485540001)  #assumes origin is 1970-01-01 unix time and returns UTC timezone
+as_datetime(1485540001, tz='America/Chicago') # same moment in time in different time zone
+```
+
+
+## Conclusions
+
+Lab practices:
+
+* Only use lubridate functions for manipulation of date-time and date objects
+* Recognize that dttm columns saved/read from csv in UTC with Z timezone stamp
+* Qualtrics doesn't timestamp its time variables.  We will set up qualtrics to always export in UTC
+* We can change timezones in our scripts as needed (or leave in UTC)
+* All lubridate functions respect the tz of dttm
+* Dates do NOT have timezones.  Need to think carefully if converting a dttm column to date class
+* We do not need to name variables per their timezone b/c tz is preserved in the units (see exception for qualtrics)

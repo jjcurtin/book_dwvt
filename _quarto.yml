@@ -2,25 +2,25 @@ project:
   type: book
   output-dir: docs
 
-execute: 
+execute:
   echo: true
   warning: false
   message: false
 
-toc: true 
+toc: true
 toc-depth: 3
-bibliography: references.bib   
-  
+bibliography: references.bib
+
 book:
   title: "Data Wrangling in the Tidyverse"
-  author: 
+  author:
   - John J. Curtin, PhD
   - Susan Wanta, MS
   site-url: https://github.io/jjcurtin/dwt
   repo-url: https://github.com/jjcurtin/dwt
   repo-branch: main
   repo-actions: [edit]
-  sharing: [facebook, linkedin]  
+  sharing: [facebook, linkedin]
   page-navigation: true
   chapters:
     - index.qmd
@@ -34,3 +34,4 @@ book:
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
+    - datetimes_dates.qmd

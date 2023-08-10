@@ -235,12 +235,13 @@ To specify a font you add the following to the YAML:
 
 If using Xelatex:  
 `mainfont : FontName # for document text`
+`sansfont : FontName # for H1-H6 text`
 `monofont : FontName  # for code chunk text` 
 
 If using pdflatex:  
 `fontfamily : FontName # for document text`
 
-Where `FontName` is the name of your desired system font. To find available system fonts, run, `systemfonts::system_fonts()` and look for the *name* of the font (not the name of the font .tff file). For example, if you wish to use Arial font, your `FontName` should be ArialMT, rather than arial (the name of the font file)
+Where `FontName` is the name of your desired system font. To find available system fonts, run, `systemfonts::system_fonts()` and look for the *name* of the font (not the name of the font .tff file). For example, if you wish to use Arial font, your `FontName` should be "ArialMT", rather than "arial" or "Arial".
 
 ## Documents
 
