@@ -671,7 +671,9 @@ ul.task-list li input[type="checkbox"] {
 <h5 data-number="10.1.3.4.1" class="anchored" data-anchor-id="pdf-fonts"><span class="header-section-number">10.1.3.4.1</span> PDF Fonts</h5>
 <p>To specify a font you add the following to the YAML:</p>
 <p>If using Xelatex:<br>
-<code>mainfont : FontName # for document text</code> <code>sansfont : FontName # for H1-H6 text</code> <code>monofont : FontName  # for code chunk text</code></p>
+<code>mainfont : FontName # for document text</code><br>
+<code>sansfont : FontName # for H1-H6 text</code><br>
+<code>monofont : FontName  # for code chunk text</code></p>
 <p>If using pdflatex:<br>
 <code>fontfamily : FontName # for document text</code></p>
 <p>Where <code>FontName</code> is the name of your desired system font. To find available system fonts, run, <code>systemfonts::system_fonts()</code> and look for the <em>name</em> of the font (not the name of the font .tff file). For example, if you wish to use Arial font, your <code>FontName</code> should be “ArialMT”, rather than “arial” or “Arial”.</p>
