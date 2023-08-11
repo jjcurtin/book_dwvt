@@ -234,9 +234,9 @@ quarto::quarto_render(output_format = "pdf",output_file = "dwt.pdf")
 To specify a font you add the following to the YAML:
 
 If using Xelatex:  
-`mainfont : FontName # for document text`
-`sansfont : FontName # for H1-H6 text`
-`monofont : FontName  # for code chunk text` 
+`mainfont : FontName # for document text`  
+`sansfont : FontName # for H1-H6 text`  
+`monofont : FontName  # for code chunk text`   
 
 If using pdflatex:  
 `fontfamily : FontName # for document text`
