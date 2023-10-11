@@ -12,7 +12,7 @@ toc-depth: 3
 bibliography: references.bib
 
 book:
-  title: "Data Wrangling in the Tidyverse"
+  title: "Data Wrangling and Visualization in the Tidyverse"
   author:
   - John J. Curtin, PhD
   - Susan Wanta, MS
@@ -29,6 +29,7 @@ book:
     - parallel_processing.qmd
     - file_and_path_management.qmd
     - reproducible_examples.qmd
+    - recoding.qmd
     - iteration.qmd
     - functions.qmd
     - simulations.qmd

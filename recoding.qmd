@@ -1,0 +1,44 @@
+# Variable recoding, releveling and other transformations
+
+
+## if_else()
+
+
+## case_match
+
+replaces `case_when()` in IMHO because clearer syntax
+
+```{r}
+#| eval: false
+
+d_long <- d_long |> 
+  mutate(time_32v1 = case_match(time,
+                                "time1" ~ -2/3,
+                                c("time2", "time3") ~ 1/3),
+         time_3v2 = case_match(time, 
+                               "time1" ~ 0,
+                               "time2" ~ -.5,
+                               "time3" ~ .5))
+```
+
+
+## Manipulating factors
+
+### Setting contrasts for factor
+
+
+```{r}
+(helmert2 = matrix(c(-.5, .5), ncol = 1, dimnames = list(c("time1", "time2"), c("t2v1"))))
+(helmert3 = matrix(c(-2/3, 1/3, 1/3, 0, -.5, .5), ncol = 2, dimnames = list(c("time1", "time2", "time3"), c("t32v1", "t3v2"))))
+```
+
+```{r}
+#| eval: false
+
+contrasts(d2_long$time)
+contrasts(d2_long$time) <- helmert2
+contrasts(d2_long$time)
+```
+
+
+

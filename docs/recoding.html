@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling and Visualization in the Tidyverse - 2&nbsp; Cache</title>
+<title>Data Wrangling and Visualization in the Tidyverse - 6&nbsp; Variable recoding, releveling and other transformations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./parallel_processing.html" rel="next">
-<link href="./conflicts.html" rel="prev">
+<link href="./iteration.html" rel="next">
+<link href="./reproducible_examples.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cache.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -167,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cache.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cache.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></span></a>
   </div>
 </li>
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./recoding.html" class="sidebar-item-text sidebar-link">
+  <a href="./recoding.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span></a>
   </div>
 </li>
@@ -241,22 +241,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#solutions" id="toc-solutions" class="nav-link active" data-scroll-target="#solutions"><span class="header-section-number">2.1</span> Solutions</a>
+  <li><a href="#if_else" id="toc-if_else" class="nav-link active" data-scroll-target="#if_else"><span class="header-section-number">6.1</span> if_else()</a></li>
+  <li><a href="#case_match" id="toc-case_match" class="nav-link" data-scroll-target="#case_match"><span class="header-section-number">6.2</span> case_match</a></li>
+  <li><a href="#manipulating-factors" id="toc-manipulating-factors" class="nav-link" data-scroll-target="#manipulating-factors"><span class="header-section-number">6.3</span> Manipulating factors</a>
   <ul class="collapse">
-  <li><a href="#cache-true-not-recommended" id="toc-cache-true-not-recommended" class="nav-link" data-scroll-target="#cache-true-not-recommended"><span class="header-section-number">2.1.1</span> <code>cache = TRUE</code> (not recommended)</a></li>
-  <li><a href="#explicit-write_rds-not-recommended" id="toc-explicit-write_rds-not-recommended" class="nav-link" data-scroll-target="#explicit-write_rds-not-recommended"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (not recommended</a></li>
-  <li><a href="#xfuncache_rds-our-preferred-method" id="toc-xfuncache_rds-our-preferred-method" class="nav-link" data-scroll-target="#xfuncache_rds-our-preferred-method"><span class="header-section-number">2.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</a></li>
-  <li><a href="#final-notes" id="toc-final-notes" class="nav-link" data-scroll-target="#final-notes"><span class="header-section-number">2.1.4</span> Final notes</a></li>
+  <li><a href="#setting-contrasts-for-factor" id="toc-setting-contrasts-for-factor" class="nav-link" data-scroll-target="#setting-contrasts-for-factor"><span class="header-section-number">6.3.1</span> Setting contrasts for factor</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/cache.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/recoding.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cache</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></h1>
 </div>
 
 
@@ -271,67 +270,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>We use cache to avoid having to repeat time-consuming calculations when they will return the same result each time. To understand how, you should start with an <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache.html">introduction to cache in RMarkdown</a> that provides an overview of the rationale for caching objects. However, be aware that the discussion is anchored in the context of using knitr’s built in caching abilities, which we don’t recommend.</p>
-<p>To use caching effectively, you need to understand when and how to <a href="https://yihui.org/en/2018/06/cache-invalidation/">invalidate the cache</a>.</p>
-<section id="solutions" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="solutions"><span class="header-section-number">2.1</span> Solutions</h2>
-<section id="cache-true-not-recommended" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="cache-true-not-recommended"><span class="header-section-number">2.1.1</span> <code>cache = TRUE</code> (not recommended)</h3>
-<p>You can set <code>cache = TRUE</code> in any specific code chunk to have knitr cache those calculations for your later reuse. However, we don’t recommend this because it makes the process and instances where the cache is invalidated more opaque. And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.</p>
-<p>Nonetheless, this approach is <a href="https://yihui.org/knitr/demo/cache/">well documented</a> including more advanced topics like <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html">paths</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html">lazy loading</a>.</p>
+<section id="if_else" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="if_else"><span class="header-section-number">6.1</span> if_else()</h2>
 </section>
-<section id="explicit-write_rds-not-recommended" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="explicit-write_rds-not-recommended"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (not recommended</h3>
-<p>You could instead manually save objects that you want to avoid recalculating. This is a legitimate method that gives you full and transparent control over caching. It will also work both interactively in the console and when you knit your document. However, its got a bit more overhead RE the code. You need to write code to check if the file exists and load it if it does vs.&nbsp;calculate the object if it doesn’t. This is not too hard but it turns out that a function has already been written to handle this overhead for you. We describe that next.</p>
+<section id="case_match" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="case_match"><span class="header-section-number">6.2</span> case_match</h2>
+<p>replaces <code>case_when()</code> in IMHO because clearer syntax</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>d_long <span class="ot">&lt;-</span> d_long <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_32v1 =</span> <span class="fu">case_match</span>(time,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"time1"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"time2"</span>, <span class="st">"time3"</span>) <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">time_3v2 =</span> <span class="fu">case_match</span>(time, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"time1"</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"time2"</span> <span class="sc">~</span> <span class="sc">-</span>.<span class="dv">5</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"time3"</span> <span class="sc">~</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="xfuncache_rds-our-preferred-method" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="xfuncache_rds-our-preferred-method"><span class="header-section-number">2.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</h3>
-<p>We believe that the <code>xfun::cache_rds()</code> function provides the sweet spot for the balance of control and transparency vs.&nbsp;code overhead. It also works for both interactive/console and knit workflows.</p>
-<p>Lets demonstrate its use. We start by setting up some objects that will be used in later time-consuming calculations. You need to be careful with these objects. If they ever change, you will need to explicitly invalidate your cached object and re-calculate it. More on that below.</p>
+<section id="manipulating-factors" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="manipulating-factors"><span class="header-section-number">6.3</span> Manipulating factors</h2>
+<section id="setting-contrasts-for-factor" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="setting-contrasts-for-factor"><span class="header-section-number">6.3.1</span> Setting contrasts for factor</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now lets use <code>y</code> and <code>z</code> in some time consuming set of calculations</p>
-<ul>
-<li>The first argument parameter in <code>cache_rds()</code> is the code to execute the time-consuming calculation. This code is provided to the function inside of curly brackets, <code>{}</code></li>
-<li>Results from <code>cache_rds()</code> are assigned to your object (e.g., <code>x</code>) as if they came straight from the coded calculations (e.g., instead of <code>x &lt;- y + z</code>, we now have <code>x &lt;- cache_rds({y + z})</code>).</li>
-<li>We recommend explicitly setting the values for the <code>dir</code> and <code>file</code> for the cached object. This way, you control where it is saved and are assured it will be the same location regardless of whether you run this code chunk in the console or knit it. Initial testing suggested the filename and location will differ for interactive/console vs.&nbsp;knit workflows if you use defaults. The <code>/</code> at the end of the directory name is required to designate this as a folder. The filename will have the string assigned to <code>file</code> as the prefix but will have an additional hash and a <code>.rds</code> appended to it as well.</li>
-<li>We recommend explicitly including <code>rerun = FALSE</code> as a third parameter. This provides you an easy way to invalidate the cached object (and a memory aid to consider invalidation when needed). To invalidate, just set it to <code>TRUE</code> and run the chunk again again if any of your globals (e.g., <code>y</code>, <code>z</code>) have changed (and then set back to FALSE after!). Alternatively, you can invalidate the cached object by deleting it from the <code>cache/</code> folder.</li>
-<li><code>cache_rds()</code> has one additional parameter worth mentioning, <code>hash</code>. You can pass a list of global objects to hash (e.g.&nbsp;<code>hash = list(y, z)</code>) that the function will monitor for change. If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it. This can be very useful and we should start using it too. However, our testing suggests that it <em>may</em> invalidate the cache in some instances when it shouldn’t. We havent been able to fully document this issue yet. For now, we recommend using this and paying attention to when the cache is incorrectly invalidated (if ever). Some testing has also suggested that you may need to use &gt;= R version 4.3 to avoid the problem with cache invalidation (but that isn’t definite either :-( We will update this page as we better understand if this is a persistent issue.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> xfun<span class="sc">::</span><span class="fu">cache_rds</span>({</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># pretend that computations take a while</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">+</span> z</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>},</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">rerun =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">hash =</span> <span class="fu">list</span>(y, z),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now we can use x without recalculating it each time when executing the previous chunk in either console or when knit. Yay!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">helmert2 =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"time1"</span>, <span class="st">"time2"</span>), <span class="fu">c</span>(<span class="st">"t2v1"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
+<pre><code>      t2v1
+time1 -0.5
+time2  0.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">helmert3 =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"time1"</span>, <span class="st">"time2"</span>, <span class="st">"time3"</span>), <span class="fu">c</span>(<span class="st">"t32v1"</span>, <span class="st">"t3v2"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           t32v1 t3v2
+time1 -0.6666667  0.0
+time2  0.3333333 -0.5
+time3  0.3333333  0.5</code></pre>
 </div>
 </div>
-<p>You can (and should) read the full documentation on <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-rds.html#cache-rds">xfun::cache_rds()</a> prior to using it in your own code.</p>
-</section>
-<section id="final-notes" class="level3" data-number="2.1.4">
-<h3 data-number="2.1.4" class="anchored" data-anchor-id="final-notes"><span class="header-section-number">2.1.4</span> Final notes</h3>
-<section id="cache-and-github" class="level4" data-number="2.1.4.1">
-<h4 data-number="2.1.4.1" class="anchored" data-anchor-id="cache-and-github"><span class="header-section-number">2.1.4.1</span> Cache and Github</h4>
-<p>We obviously don’t want our cached objects getting added to our repos. This could make the repos become too large and/or add sensitive data to them. It is easy to avoid this though. Assuming you are calling the folder that you will save the cached files to <code>cache/</code> as recommended above, just add the following line to your <code>.gitignore</code> file</p>
-<p><code>*_cache/</code></p>
-</section>
-<section id="saving-model-objects" class="level4" data-number="2.1.4.2">
-<h4 data-number="2.1.4.2" class="anchored" data-anchor-id="saving-model-objects"><span class="header-section-number">2.1.4.2</span> Saving model objects</h4>
-<p>We have also learned that caching that involves saving an rds file (all of these methods) may encounter problems if you try to cache a keras model object (e.g., via <code>mlp()</code> in tidymodels). To be clear, there is no problem saving resampling statistics from <code>fit_resamples()</code> or <code>tune_grid()</code>. The problem is specific to the actual model object returned from <code>fit()</code>. This <a href="https://www.tidyverse.org/blog/2022/09/bundle-0-1-0/">issue</a> with keras (and perhaps some other types) models is documented and the <code>bundles</code> package is designed to solve it. If you plan to cache (or even just directly save) these model objects, read these docs carefully. We will eventually work out a piped solution that works to either manually save or use <code>cache_rds()</code> with these objects if needed. Not a high priority for us right now because we dont use keras much yet in our lab.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(d2_long<span class="sc">$</span>time)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(d2_long<span class="sc">$</span>time) <span class="ot">&lt;-</span> helmert2</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(d2_long<span class="sc">$</span>time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
-</section>
 </section>
 </section>
 
@@ -571,13 +552,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./conflicts.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Function conflicts</span></span>
+      <a href="./reproducible_examples.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./parallel_processing.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parallel Processing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./iteration.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Iteration</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
