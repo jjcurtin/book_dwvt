@@ -274,10 +274,9 @@ To add a bibliography with a citation style, add the following lines to the _qua
 `bibliography: references.bib`  
 `csl: name_of_csl_file.csl`  
 
-Note, we will typically call our csl files from our central lab_support repo; which simply requires the URL of the raw file from github:
+Note, we will typically call our csl files from [the official Cytation Style Language Repo](https://github.com/citation-style-language/styles); which simply requires the URL of the raw file from github.
 
-`csl: https://raw.githubusercontent.com/jjcurtin/lab_support/main/rmd_templates/csl/national-library-of-medicine-grant-proposals.csl`
-
+See docs_arc for specifics about commonly-used ARC csl files.
 
 The Quarto Guide provides more detail about how to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html). As with markdown, the format is `[@citekey1; @citekey2]` — citations go inside square brackets and are separated by semicolons
 
@@ -327,3 +326,33 @@ Basically, any commit which includes changed html files tells Github Actions to 
 
 * 
 
+## Latex and Quarto
+
+Formatting of a PDF rendered from Quarto can be finely controlled with the addition of LaTeX commands. See [this Quarto reference](https://quarto.org/docs/output-formats/pdf-basics.html) as well as some examples below: 
+
+### Inline Commands
+
+Certain latex commands can be placed in qmd files as plaintext (on their own line, with surrounding blank lines), for example: `\newpage` starts a new page, `\hline` adds a horizontal line.
+
+### Chunk Commands
+
+Multiline commands can be wrapped in latex code chunks:
+
+```{=latex}
+#| echo: true
+\begin{tabular}{ll}
+A & B \\
+A & B \\
+\end{tabular}
+```
+
+### YAML Commands
+`\raggedright` added to the inclde-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)
+
+### Packages
+
+`\usepackage{wrapfig}` - allow text wrapping
+`\usepackage{float}` - allow use of float options such as H (use UPPERCASE to preserve floats)
+`\usepackage{caption}` - allows supression of automatic caption numbering
+`\usepackage{lscape}` - allows insertion of a landscape oriented page
+[`\usepackage{enumitem}`](https://ctan.math.illinois.edu/macros/latex/contrib/enumitem/enumitem.pdf) - allows fine-grain control over list styling

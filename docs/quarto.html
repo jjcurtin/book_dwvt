@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -231,6 +231,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#books-and-websites-1" id="toc-books-and-websites-1" class="nav-link" data-scroll-target="#books-and-websites-1"><span class="header-section-number">11.7.2</span> Books and Websites</a></li>
   </ul></li>
   <li><a href="#terminal-commands" id="toc-terminal-commands" class="nav-link" data-scroll-target="#terminal-commands"><span class="header-section-number">11.8</span> Terminal Commands</a></li>
+  <li><a href="#latex-and-quarto" id="toc-latex-and-quarto" class="nav-link" data-scroll-target="#latex-and-quarto"><span class="header-section-number">11.9</span> Latex and Quarto</a>
+  <ul class="collapse">
+  <li><a href="#inline-commands" id="toc-inline-commands" class="nav-link" data-scroll-target="#inline-commands"><span class="header-section-number">11.9.1</span> Inline Commands</a></li>
+  <li><a href="#chunk-commands" id="toc-chunk-commands" class="nav-link" data-scroll-target="#chunk-commands"><span class="header-section-number">11.9.2</span> Chunk Commands</a></li>
+  <li><a href="#yaml-commands" id="toc-yaml-commands" class="nav-link" data-scroll-target="#yaml-commands"><span class="header-section-number">11.9.3</span> YAML Commands</a></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">11.9.4</span> Packages</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/quarto.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -716,8 +723,8 @@ ul.task-list li input[type="checkbox"] {
 <p>To add a bibliography with a citation style, add the following lines to the _quarto.yml file:</p>
 <p><code>bibliography: references.bib</code><br>
 <code>csl: name_of_csl_file.csl</code></p>
-<p>Note, we will typically call our csl files from our central lab_support repo; which simply requires the URL of the raw file from github:</p>
-<p><code>csl: https://raw.githubusercontent.com/jjcurtin/lab_support/main/rmd_templates/csl/national-library-of-medicine-grant-proposals.csl</code></p>
+<p>Note, we will typically call our csl files from <a href="https://github.com/citation-style-language/styles">the official Cytation Style Language Repo</a>; which simply requires the URL of the raw file from github.</p>
+<p>See docs_arc for specifics about commonly-used ARC csl files.</p>
 <p>The Quarto Guide provides more detail about how to work with <a href="https://quarto.org/docs/authoring/footnotes-and-citations.html">citations and footnotes</a>. As with markdown, the format is <code>[@citekey1; @citekey2]</code> — citations go inside square brackets and are separated by semicolons</p>
 </section>
 </section>
@@ -757,8 +764,28 @@ ul.task-list li input[type="checkbox"] {
 <li><p><code>quarto publish quarto-pub</code> to publish a presentation or document to Quarto Pub</p></li>
 <li></li>
 </ul>
+</section>
+<section id="latex-and-quarto" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="latex-and-quarto"><span class="header-section-number">11.9</span> Latex and Quarto</h2>
+<p>Formatting of a PDF rendered from Quarto can be finely controlled with the addition of LaTeX commands. See <a href="https://quarto.org/docs/output-formats/pdf-basics.html">this Quarto reference</a> as well as some examples below:</p>
+<section id="inline-commands" class="level3" data-number="11.9.1">
+<h3 data-number="11.9.1" class="anchored" data-anchor-id="inline-commands"><span class="header-section-number">11.9.1</span> Inline Commands</h3>
+<p>Certain latex commands can be placed in qmd files as plaintext (on their own line, with surrounding blank lines), for example: <code>\newpage</code> starts a new page, <code>\hline</code> adds a horizontal line.</p>
+</section>
+<section id="chunk-commands" class="level3" data-number="11.9.2">
+<h3 data-number="11.9.2" class="anchored" data-anchor-id="chunk-commands"><span class="header-section-number">11.9.2</span> Chunk Commands</h3>
+<p>Multiline commands can be wrapped in latex code chunks:</p>
+</section>
+<section id="yaml-commands" class="level3" data-number="11.9.3">
+<h3 data-number="11.9.3" class="anchored" data-anchor-id="yaml-commands"><span class="header-section-number">11.9.3</span> YAML Commands</h3>
+<p><code>\raggedright</code> added to the inclde-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)</p>
+</section>
+<section id="packages" class="level3" data-number="11.9.4">
+<h3 data-number="11.9.4" class="anchored" data-anchor-id="packages"><span class="header-section-number">11.9.4</span> Packages</h3>
+<p><code>\usepackage{wrapfig}</code> - allow text wrapping <code>\usepackage{float}</code> - allow use of float options such as H (use UPPERCASE to preserve floats) <code>\usepackage{caption}</code> - allows supression of automatic caption numbering <code>\usepackage{lscape}</code> - allows insertion of a landscape oriented page <a href="https://ctan.math.illinois.edu/macros/latex/contrib/enumitem/enumitem.pdf"><code>\usepackage{enumitem}</code></a> - allows fine-grain control over list styling</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
