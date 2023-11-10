@@ -33,7 +33,10 @@ alternatively, you could supply the relative path directly (though this is not p
 
 ## Reading csv files
 
-We typically save our data as csv files.  There are many benefits to this format (e.g., easy to share, easy to view outside of R) but one downside is that they don't store information about variable/column class.  We need to establish the appropriate class for each column when we read the data.
+We typically save our data as csv files (with minor exceptions).  There are many benefits to this format
+
+- easy to share (colleagues don't need R to access)
+- easy to view outside of R (sometimes, we just want to see the data directly and csv can be viewed in any text editor and/or most spreadsheet apps) but one downside is that they don't store information about variable/column class.  We need to establish the appropriate class for each column when we read the data.
 
 ### Using `col_types()`
 
@@ -81,6 +84,8 @@ df <- read_csv(file.path(path_data, "ames_full_cln.csv"),
   glimpse()
 ```
 
+### Using data dictionaries (a.k.a codebooks)
+
 
 ## Sourcing from Github
 Scripts in public repositories on GithHub can be sourced directly from the remote repository on GitHub using `source_url()` from the `devtools' package.  To do this, follow these steps:
@@ -97,7 +102,7 @@ Scripts in public repositories on GithHub can be sourced directly from the remot
 
 `devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R?raw=true")`
 
-Its that easy.  Using this method will allow you to continue to use the most up-to-date version of that script even as the repo owner improves it over time.  It also doesnt require you to worry about where a local clone of that repo might live on your computer or the computers of anyone with which you share your code.
+Its that easy.  Using this method will allow you to continue to use the most up-to-date version of that script even as the repo owner improves it over time.  It also doesn't require you to worry about where a local clone of that repo might live on your computer or the computers of anyone with which you share your code.
 
 
 ## Additional Resources
