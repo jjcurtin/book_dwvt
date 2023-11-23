@@ -119,6 +119,18 @@ gss_cat |>
     )
   )
   
+  
+  
+If we want to manipulate a numeric vector, first coerce it to a character, and then recode it. We need to be sure to quote the right half of each of our recoding pairs, since survey’s values are now character (e.g., "1") rather than numeric (1).
+
+survey <- fct_recode(as.character(survey),
+                     "Strongly agree" = "1", 
+                     "Agree" = "2", 
+                     "Neither agree nor disagree" = "3",
+                     "Disagree" = "4",
+                     "Strongly disagree" = "5")
+  
+  
 ### fct_collapse
 
 If you want to collapse a lot of levels, fct_collapse() is a useful variant of fct_recode(). For each new variable, you can provide a vector of old levels:
