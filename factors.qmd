@@ -80,6 +80,11 @@ gss_cat |>
   mutate(marital = marital |> fct_infreq() |> fct_rev()) |>
   ggplot(aes(x = marital)) +
   geom_bar()
+	
+	
+fct_inseq(): by numeric value of level.
+
+
   
 ## Midifying factor levels
 
