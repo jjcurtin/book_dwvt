@@ -4,7 +4,11 @@ read
 
 https://r4ds.had.co.nz/factors.html
 
+https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics
 
+https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics
+
+https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset
 ## Classing as factor
 
 x1 <- c("Dec", "Apr", "Jan", "Mar")
