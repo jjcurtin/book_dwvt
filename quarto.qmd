@@ -368,3 +368,7 @@ A & B \\
 `\usepackage{caption}` - allows supression of automatic caption numbering
 `\usepackage{lscape}` - allows insertion of a landscape oriented page
 [`\usepackage{enumitem}`](https://ctan.math.illinois.edu/macros/latex/contrib/enumitem/enumitem.pdf) - allows fine-grain control over list styling
+
+### Re-render and freeze
+
+https://quarto.org/docs/projects/code-execution.html
