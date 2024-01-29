@@ -70,8 +70,9 @@ d %>%
   print()  
 ```
 
-* When using write_csv, dttm is converted to UTC first
-* A Z is appended to time to indicate (Z)ero time shift
+* When using `write_csv()` and `vroom_write()`, dttm is converted to UTC first
+  * A Z is appended to time to indicate (Z)ero time shift
+  * Change back to appropriate timezone using `with_tz()` in a `mutate()`
 * The character string t is written as a character string
   * It was not a dttm so it is not converted to UTC
   * It has no Z

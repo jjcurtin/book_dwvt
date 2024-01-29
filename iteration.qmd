@@ -14,6 +14,8 @@ See this [article](https://dplyr.tidyverse.org/dev/articles/colwise.html) for de
 
 See this [article](https://dplyr.tidyverse.org/reference/across.html) for the uses of `across()` in `summarize()` and `mutate()`
 
+use `list_rbind()` with `map()` to bind together lists of dataframes, which is common when using `map()`
+
 In the sections that follow, we provide common examples of approaches to iteration using the `iris` dataset.
 
 ```{r}

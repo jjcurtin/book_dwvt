@@ -1,0 +1,155 @@
+# Factors
+
+read
+
+https://r4ds.had.co.nz/factors.html
+
+https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics
+
+https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics
+
+https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset
+## Classing as factor
+
+x1 <- c("Dec", "Apr", "Jan", "Mar")
+x2 <- c("Dec", "Apr", "Jam", "Mar")
+
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+)
+
+y1 <- fct(x1, levels = month_levels)
+
+y2 <- fct(x2, levels = month_levels)
+
+fct will produce error if value noy in levels when levels supplied
+
+levels(y2)
+
+
+
+You can also create a factor when reading your data with readr with col_factor():
+
+csv <- "
+month,value
+Jan,12
+Feb,56
+Mar,12"
+
+df <- read_csv(csv, col_types = cols(month = col_factor(month_levels)))
+df$month
+
+
+
+## EDA
+
+
+gss_cat |>
+  count(race)
+  
+bar graph
+
+
+## Modifying order
+
+
+### fct_reorder
+relig_summary <- gss_cat |>
+  group_by(relig) |>
+  summarize(
+    tvhours = mean(tvhours, na.rm = TRUE),
+    n = n()
+  )
+  
+  relig_summary |>
+  mutate(
+    relig = fct_reorder(relig, tvhours)
+  ) |>
+  ggplot(aes(x = tvhours, y = relig)) +
+  geom_point()
+  
+  ### fct_relevel
+  
+  However, it does make sense to pull “Not applicable” to the front with the other special levels. You can use fct_relevel(). It takes a factor, f, and then any number of levels that you want to move to the front of the line.
+
+ggplot(rincome_summary, aes(x = age, y = fct_relevel(rincome, "Not applicable"))) +
+  geom_point()
+  
+### fct_infreq & fct_rev
+  
+  Finally, for bar plots, you can use fct_infreq() to order levels in decreasing frequency: this is the simplest type of reordering because it doesn’t need any extra variables. Combine it with fct_rev() if you want them in increasing frequency so that in the bar plot largest values are on the right, not the left.
+
+gss_cat |>
+  mutate(marital = marital |> fct_infreq() |> fct_rev()) |>
+  ggplot(aes(x = marital)) +
+  geom_bar()
+	
+	
+fct_inseq(): by numeric value of level.
+
+
+  
+## Midifying factor levels
+
+
+### fct_recode
+  
+  gss_cat |>
+  mutate(
+    partyid = fct_recode(partyid,
+      "Republican, strong"    = "Strong republican",
+      "Republican, weak"      = "Not str republican",
+      "Independent, near rep" = "Ind,near rep",
+      "Independent, near dem" = "Ind,near dem",
+      "Democrat, weak"        = "Not str democrat",
+      "Democrat, strong"      = "Strong democrat"
+    )
+  ) 
+  
+  
+  fct_recode() will leave the levels that aren’t explicitly mentioned as is, and will warn you if you accidentally refer to a level that doesn’t exist
+  
+  
+  To combine groups, you can assign multiple old levels to the same new level:
+
+gss_cat |>
+  mutate(
+    partyid = fct_recode(partyid,
+      "Republican, strong"    = "Strong republican",
+      "Republican, weak"      = "Not str republican",
+      "Independent, near rep" = "Ind,near rep",
+      "Independent, near dem" = "Ind,near dem",
+      "Democrat, weak"        = "Not str democrat",
+      "Democrat, strong"      = "Strong democrat",
+      "Other"                 = "No answer",
+      "Other"                 = "Don't know",
+      "Other"                 = "Other party"
+    )
+  )
+  
+  
+  
+If we want to manipulate a numeric vector, first coerce it to a character, and then recode it. We need to be sure to quote the right half of each of our recoding pairs, since survey’s values are now character (e.g., "1") rather than numeric (1).
+
+survey <- fct_recode(as.character(survey),
+                     "Strongly agree" = "1", 
+                     "Agree" = "2", 
+                     "Neither agree nor disagree" = "3",
+                     "Disagree" = "4",
+                     "Strongly disagree" = "5")
+  
+  
+### fct_collapse
+
+If you want to collapse a lot of levels, fct_collapse() is a useful variant of fct_recode(). For each new variable, you can provide a vector of old levels:
+
+gss_cat |>
+  mutate(
+    partyid = fct_collapse(partyid,
+      "other" = c("No answer", "Don't know", "Other party"),
+      "rep" = c("Strong republican", "Not str republican"),
+      "ind" = c("Ind,near rep", "Independent", "Ind,near dem"),
+      "dem" = c("Not str democrat", "Strong democrat")
+    )
+  )
