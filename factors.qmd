@@ -9,6 +9,7 @@ https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and
 https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics
 
 https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset
+
 ## Classing as factor
 
 x1 <- c("Dec", "Apr", "Jan", "Mar")
@@ -90,7 +91,7 @@ fct_inseq(): by numeric value of level.
 
 
   
-## Midifying factor levels
+## Modifying factor levels
 
 
 ### fct_recode
