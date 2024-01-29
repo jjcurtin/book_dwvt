@@ -1,13 +1,287 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
 # Simulations
 
-```{r a108-setup, include = FALSE} 
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+## The Components of a Simulation
+
+### Setting up Xs (exogenous variables)
+
+Typically use `mvrnorm()` in the MASS package to produces a set of $X$ that have some specified population means, variances, and covariances.  In our example, we will simulate 3 variables with differing means, variances = 1, and covariances = 0.  Of course, you could do whatever you need here.
+
+- Specify population means 
+```{r}
+means <- c(4, 6, 10)
+```
+
+- Variance/covariance matrix.  Can do this with uncorrelated Xs with variances of 1 using `diag()`.  Or can specific specific variances and covariances
+```{r}
+sigma <- diag(3) 
+
+sigma
+```
+
+- Here we demonstrate use of matrix for specific sigma (but with same values as above)
+```{r}
+#| eval: false
+sigma <- matrix(c(1, 0, 0, 
+                  0, 1, 0, 
+                  0, 0, 1), 
+                nrow = 3, byrow = TRUE) 
+```
+
+Now we can generate data for a specific $N$ (in this case, 1000)
+```{r}
+n_obs <- 1000
+x <- MASS::mvrnorm(n = n_obs, mu = means, Sigma = sigma) |>  
+    magrittr::set_colnames(str_c("x", 1:length(means))) |>  
+    as_tibble() 
 ```
 
 ```{r}
-library(tidyverse)
-library(tidymodels)
+x |> head()
 
-tidymodels_prefer()
+x |> summarize(across(everything(), list(mean = mean, var = var)))
+
+cor(x)
 ```
 
+### Defining a Data Generating Process (DGP) for a Quantitative Y
+
+We start with dataframe $x$
+
+- Add an intercept as first column
+```{r}
+x <- x |> 
+  mutate(x0 = 1) |> 
+  relocate(x0)
+
+head(x)
+```
+
+- Set parameter estimates.  This includes $b_0$ as the first entry
+```{r}
+b <- c(100, 2, 5, 1)
+```
+
+- Set standard deviation of error
+```{r}
+e <- 10
+```
+
+- Calculate Y and put it all in a dataframe
+```{r}
+d <- x |> 
+  mutate(y = rowSums(t(t(x)*b)) + rnorm(n_obs, 
+                                        mean = 0, 
+                                        sd = e))
+
+head(d)
+```
+
+### Wrap it all in a function
+
+```{r}
+get_data <- function(s, n_obs, means, sigma, b, e) {
+  
+  x <- MASS::mvrnorm(n = n_obs, mu = means, Sigma = sigma) |>  
+    magrittr::set_colnames(str_c("x", 1:length(means))) |>  
+    as_tibble() |> 
+    mutate(x0 = 1) |> 
+    relocate(x0)
+  
+  x |> 
+    mutate(y = rowSums(t(t(x)*b)) + rnorm(n_obs, 0, e)) |> 
+    mutate(s = s) |> 
+    relocate(s)
+}
+```
+
+Now we can use this function to simulate a data set with any properties
+```{r}
+get_data(1,
+         n_obs <- 1000,
+         means <- c(4, 6, 10), 
+         sigma <- diag(3),
+         b <- c(100, 2, 5, 1),
+         e <- 10)
+```
+
+### Iterate over simulations
+
+Lets pretend we want 100 simulated datasets
+
+- It is important to set a seed to make these datasets reproducible
+- We can use map (or `future_map()`) to iterate over `get_data()`
+- We can use list columns for this so we get a dataframe with rows for each simulated dataset and the full dataset for each entry for the `data` column
+
+```{r}
+n_sims <- 100  # this would generally be much higher!
+
+n_obs <- 1000
+means <- c(4, 6, 10)
+sigma <- diag(3)
+b <- c(100, 2, 5, 1)
+e <- 10
+
+sims <- 1:n_sims |> 
+  map(\(s) get_data(s, n_obs, means, sigma, b, e)) |> 
+  list_rbind() |> 
+  nest(.by = s,
+       .key = "data")
+
+head(sims)
+```
+
+We can now use this df with list columns to calculate whatever we are testing for our simulation.  
+
+In this trivial example, lets show that the parameter estimate for $x_1$ matches what we set.  We will also use list columns to store intermedidate results (e.g., the lm)
+
+- write function to use our simulated data to estimate $b_1$ (Note that we could have used an anonymous function for this, but I think its cleaner to have a named function)
+```{r}
+fit_lm <- function(d){
+  lm(y ~ x1 + x2 + x3, data = d) 
+}
+```
+
+- Now fit this model for each simulated dataset and save model in list column
+- Notice we now have a column that stores these models
+```{r}
+sims <- sims |> 
+  mutate(model = map(data, fit_lm))
+
+head(sims)
+```
+
+Now lets extract $b_1$ from the models and save in their own column.  We can write a function for this and use `broom::tidy()`
+```{r}
+get_b1 <- function(model){
+ model |> 
+    broom::tidy() |> 
+    filter(term == "x1") |> 
+    pull(estimate)
+}
+
+sims <- sims |> 
+  mutate(b1 = map(model, get_b1))
+
+head(sims)
+```
+
+Now we can unnest the column for `b1` and do analyses.  Of course, we could unnest other columns if we needed access to the simuated data or the linear models we fit
+```{r}
+sims <- sims |> 
+  unnest(b1)
+
+head(sims)
+
+# mean and standard error of sampling distribution
+sims |> 
+  summarize(mean = mean(b1), sd = sd(b1))
+
+# plot of the sampling distribution
+sims |> 
+  ggplot(data = sims,
+         mapping = aes(x = b1)) + 
+  geom_histogram(bins  = 30)
+```
+
+
+## Other Extensions and Loose Ends
+
+### Binary Y
+
+In the example above, we simulated a quantitative Y that was a linear function of 3 Xs.   Often, we need to simulate binary outcomes.  This is easy too.
+
+- We typically simulate binary outcomes using the logistic function. You could use other functional forms but this one works well for most our needs.
+
+- We can use our same X
+```{r}
+head(x)
+```
+
+- But now the DGP for Y is different.  First we need to calculate the probability of the positive class as a function of X
+```{r}
+calc_p <- function(d, b0, b1, b2, b3){
+ exp(b0 + b1*x$x1 + b2*x$x2 + b3*x$x3) /
+   (1 + exp(b0 + b1*x$x1 + b2*x$x2 + b3*x$x3))
+}
+```
+
+- Now we can apply this over the rows of d
+```{r}
+d <- x |> 
+  mutate(p = calc_p(x, 1,2,3,4))
+
+head(d)
+```
+
+- And now we can use the binomial distribution to get binary outcome based on these probabilities
+```{r}
+d <- d |> 
+  mutate(y = rbinom(1000,1,p))
+
+head(d)
+```
+
+- And of course, we can wrap this all up into one function to simulate these data
+
+```{r}
+#| eval: false
+get_binary_data <- function(s, n_obs, means, sigma, b) {
+  
+  x <- MASS::mvrnorm(n = n_obs, mu = means, Sigma = sigma) |>  
+    magrittr::set_colnames(str_c("x", 1:length(means))) |>  
+    as_tibble() |> 
+    mutate(x0 = 1) |> 
+    relocate(x0)
+  
+  calc_p <- function(x, b){
+   exp(b[1] + b[2]*x$x1 + b[3]*x$x2 + b[4]*x$x3) /
+     (1 + exp(b[1] + b[2]*x$x1 + b[3]*x$x2 + b[4]*x$x3))
+  } 
+  
+  x |> 
+    mutate(p = calc_p(x, b)) |> 
+    mutate(y = rbinom(nrow(x), 1, p))  
+}
+```
+
+From here, you can now pick up as before for the quantitative example
+
+### Fixing the variance of Y to set value
+
+- insert notes from markus
+- Talk with markus about need for scaled Y and possible use of mvrnorm() for all variables
+
+### Converting between correlation and covariance matrices
+
+`MASS::mvrnorm()` takes sigma (the variance/covariance matrix).  Sometimes, we might want to think in terms of correlations.  
+
+Here is a function to convert a correlation matrix to a variance/covariance matrix
+
+```{r}
+cor2cov <- function (r, sd){
+  diag(sd) %*% r %*% diag(sd)
+}
+```
+
+```{r}
+r <- matrix(c(1.0, 0.4, 0.3,
+              0.4, 1.0, 0.5,
+              0.3, 0.5, 1.0),
+            nrow = 3, byrow = TRUE)
+
+sd <- c(5, 10, 2)
+
+cor2cov(r, sd)
+```
