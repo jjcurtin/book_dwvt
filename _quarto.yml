@@ -28,6 +28,7 @@ book:
     - cache.qmd
     - parallel_processing.qmd
     - file_and_path_management.qmd
+    - contrasts.qmdd
     - reproducible_examples.qmd
     - recoding.qmd
     - iteration.qmd
