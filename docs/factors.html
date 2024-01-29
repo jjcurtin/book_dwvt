@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling and Visualization in the Tidyverse - 8&nbsp; Variable recoding, releveling and other transformations</title>
+<title>Data Wrangling and Visualization in the Tidyverse - 6&nbsp; Factors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./iteration.html" rel="next">
-<link href="./factor_contrasts.html" rel="prev">
+<link href="./factor_contrasts.html" rel="next">
+<link href="./reproducible_examples.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -108,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./recoding.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./factors.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Factors</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -191,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./factors.html" class="sidebar-item-text sidebar-link">
+  <a href="./factors.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Factors</span></span></a>
   </div>
 </li>
@@ -203,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./recoding.html" class="sidebar-item-text sidebar-link active">
+  <a href="./recoding.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span></a>
   </div>
 </li>
@@ -259,21 +225,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#if_else" id="toc-if_else" class="nav-link active" data-scroll-target="#if_else"><span class="header-section-number">8.1</span> if_else()</a></li>
-  <li><a href="#case_match" id="toc-case_match" class="nav-link" data-scroll-target="#case_match"><span class="header-section-number">8.2</span> case_match</a></li>
-  <li><a href="#manipulating-factors" id="toc-manipulating-factors" class="nav-link" data-scroll-target="#manipulating-factors"><span class="header-section-number">8.3</span> Manipulating factors</a>
+  <li><a href="#classing-as-factor" id="toc-classing-as-factor" class="nav-link active" data-scroll-target="#classing-as-factor"><span class="header-section-number">6.1</span> Classing as factor</a></li>
+  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda"><span class="header-section-number">6.2</span> EDA</a></li>
+  <li><a href="#modifying-order" id="toc-modifying-order" class="nav-link" data-scroll-target="#modifying-order"><span class="header-section-number">6.3</span> Modifying order</a>
   <ul class="collapse">
-  <li><a href="#setting-contrasts-for-factor" id="toc-setting-contrasts-for-factor" class="nav-link" data-scroll-target="#setting-contrasts-for-factor"><span class="header-section-number">8.3.1</span> Setting contrasts for factor</a></li>
+  <li><a href="#fct_reorder" id="toc-fct_reorder" class="nav-link" data-scroll-target="#fct_reorder"><span class="header-section-number">6.3.1</span> fct_reorder</a></li>
+  <li><a href="#fct_infreq-fct_rev" id="toc-fct_infreq-fct_rev" class="nav-link" data-scroll-target="#fct_infreq-fct_rev"><span class="header-section-number">6.3.2</span> fct_infreq &amp; fct_rev</a></li>
+  </ul></li>
+  <li><a href="#modifying-factor-levels" id="toc-modifying-factor-levels" class="nav-link" data-scroll-target="#modifying-factor-levels"><span class="header-section-number">6.4</span> Modifying factor levels</a>
+  <ul class="collapse">
+  <li><a href="#fct_recode" id="toc-fct_recode" class="nav-link" data-scroll-target="#fct_recode"><span class="header-section-number">6.4.1</span> fct_recode</a></li>
+  <li><a href="#fct_collapse" id="toc-fct_collapse" class="nav-link" data-scroll-target="#fct_collapse"><span class="header-section-number">6.4.2</span> fct_collapse</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/recoding.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/factors.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Factors</span></h1>
 </div>
 
 
@@ -288,47 +260,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="if_else" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="if_else"><span class="header-section-number">8.1</span> if_else()</h2>
+<p>read</p>
+<p>https://r4ds.had.co.nz/factors.html</p>
+<p>https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics</p>
+<p>https://www.kaggle.com/datasets/dillonmyrick/high-school-student-performance-and-demographics</p>
+<p>https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset</p>
+<section id="classing-as-factor" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="classing-as-factor"><span class="header-section-number">6.1</span> Classing as factor</h2>
+<p>x1 &lt;- c(“Dec”, “Apr”, “Jan”, “Mar”) x2 &lt;- c(“Dec”, “Apr”, “Jam”, “Mar”)</p>
+<p>month_levels &lt;- c( “Jan”, “Feb”, “Mar”, “Apr”, “May”, “Jun”, “Jul”, “Aug”, “Sep”, “Oct”, “Nov”, “Dec” )</p>
+<p>y1 &lt;- fct(x1, levels = month_levels)</p>
+<p>y2 &lt;- fct(x2, levels = month_levels)</p>
+<p>fct will produce error if value noy in levels when levels supplied</p>
+<p>levels(y2)</p>
+<p>You can also create a factor when reading your data with readr with col_factor():</p>
+<p>csv &lt;- ” month,value Jan,12 Feb,56 Mar,12”</p>
+<p>df &lt;- read_csv(csv, col_types = cols(month = col_factor(month_levels))) df$month</p>
 </section>
-<section id="case_match" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="case_match"><span class="header-section-number">8.2</span> case_match</h2>
-<p>replaces <code>case_when()</code> in IMHO because clearer syntax</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>d_long <span class="ot">&lt;-</span> d_long <span class="sc">|&gt;</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_32v1 =</span> <span class="fu">case_match</span>(time,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"time1"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(<span class="st">"time2"</span>, <span class="st">"time3"</span>) <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">time_3v2 =</span> <span class="fu">case_match</span>(time, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"time1"</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"time2"</span> <span class="sc">~</span> <span class="sc">-</span>.<span class="dv">5</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"time3"</span> <span class="sc">~</span> .<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="eda" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="eda"><span class="header-section-number">6.2</span> EDA</h2>
+<p>gss_cat |&gt; count(race)</p>
+<p>bar graph</p>
 </section>
-<section id="manipulating-factors" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="manipulating-factors"><span class="header-section-number">8.3</span> Manipulating factors</h2>
-<section id="setting-contrasts-for-factor" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="setting-contrasts-for-factor"><span class="header-section-number">8.3.1</span> Setting contrasts for factor</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">helmert2 =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"time1"</span>, <span class="st">"time2"</span>), <span class="fu">c</span>(<span class="st">"t2v1"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      t2v1
-time1 -0.5
-time2  0.5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">helmert3 =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">0</span>, <span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"time1"</span>, <span class="st">"time2"</span>, <span class="st">"time3"</span>), <span class="fu">c</span>(<span class="st">"t32v1"</span>, <span class="st">"t3v2"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           t32v1 t3v2
-time1 -0.6666667  0.0
-time2  0.3333333 -0.5
-time3  0.3333333  0.5</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(d2_long<span class="sc">$</span>time)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(d2_long<span class="sc">$</span>time) <span class="ot">&lt;-</span> helmert2</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(d2_long<span class="sc">$</span>time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="modifying-order" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="modifying-order"><span class="header-section-number">6.3</span> Modifying order</h2>
+<section id="fct_reorder" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="fct_reorder"><span class="header-section-number">6.3.1</span> fct_reorder</h3>
+<p>relig_summary &lt;- gss_cat |&gt; group_by(relig) |&gt; summarize( tvhours = mean(tvhours, na.rm = TRUE), n = n() )</p>
+<p>relig_summary |&gt; mutate( relig = fct_reorder(relig, tvhours) ) |&gt; ggplot(aes(x = tvhours, y = relig)) + geom_point()</p>
+<p>### fct_relevel</p>
+<p>However, it does make sense to pull “Not applicable” to the front with the other special levels. You can use fct_relevel(). It takes a factor, f, and then any number of levels that you want to move to the front of the line.</p>
+<p>ggplot(rincome_summary, aes(x = age, y = fct_relevel(rincome, “Not applicable”))) + geom_point()</p>
+</section>
+<section id="fct_infreq-fct_rev" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="fct_infreq-fct_rev"><span class="header-section-number">6.3.2</span> fct_infreq &amp; fct_rev</h3>
+<p>Finally, for bar plots, you can use fct_infreq() to order levels in decreasing frequency: this is the simplest type of reordering because it doesn’t need any extra variables. Combine it with fct_rev() if you want them in increasing frequency so that in the bar plot largest values are on the right, not the left.</p>
+<p>gss_cat |&gt; mutate(marital = marital |&gt; fct_infreq() |&gt; fct_rev()) |&gt; ggplot(aes(x = marital)) + geom_bar()</p>
+<p>fct_inseq(): by numeric value of level.</p>
+</section>
+</section>
+<section id="modifying-factor-levels" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="modifying-factor-levels"><span class="header-section-number">6.4</span> Modifying factor levels</h2>
+<section id="fct_recode" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="fct_recode"><span class="header-section-number">6.4.1</span> fct_recode</h3>
+<p>gss_cat |&gt; mutate( partyid = fct_recode(partyid, “Republican, strong” = “Strong republican”, “Republican, weak” = “Not str republican”, “Independent, near rep” = “Ind,near rep”, “Independent, near dem” = “Ind,near dem”, “Democrat, weak” = “Not str democrat”, “Democrat, strong” = “Strong democrat” ) )</p>
+<p>fct_recode() will leave the levels that aren’t explicitly mentioned as is, and will warn you if you accidentally refer to a level that doesn’t exist</p>
+<p>To combine groups, you can assign multiple old levels to the same new level:</p>
+<p>gss_cat |&gt; mutate( partyid = fct_recode(partyid, “Republican, strong” = “Strong republican”, “Republican, weak” = “Not str republican”, “Independent, near rep” = “Ind,near rep”, “Independent, near dem” = “Ind,near dem”, “Democrat, weak” = “Not str democrat”, “Democrat, strong” = “Strong democrat”, “Other” = “No answer”, “Other” = “Don’t know”, “Other” = “Other party” ) )</p>
+<p>If we want to manipulate a numeric vector, first coerce it to a character, and then recode it. We need to be sure to quote the right half of each of our recoding pairs, since survey’s values are now character (e.g., “1”) rather than numeric (1).</p>
+<p>survey &lt;- fct_recode(as.character(survey), “Strongly agree” = “1”, “Agree” = “2”, “Neither agree nor disagree” = “3”, “Disagree” = “4”, “Strongly disagree” = “5”)</p>
+</section>
+<section id="fct_collapse" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="fct_collapse"><span class="header-section-number">6.4.2</span> fct_collapse</h3>
+<p>If you want to collapse a lot of levels, fct_collapse() is a useful variant of fct_recode(). For each new variable, you can provide a vector of old levels:</p>
+<p>gss_cat |&gt; mutate( partyid = fct_collapse(partyid, “other” = c(“No answer”, “Don’t know”, “Other party”), “rep” = c(“Strong republican”, “Not str republican”), “ind” = c(“Ind,near rep”, “Independent”, “Ind,near dem”), “dem” = c(“Not str democrat”, “Strong democrat”) ) )</p>
 
 
 </section>
@@ -570,13 +555,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./factor_contrasts.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Setting Factor Contrasts</span></span>
+      <a href="./reproducible_examples.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">How to Create a Reproducible Example (Reprex)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./iteration.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iteration</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./factor_contrasts.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Setting Factor Contrasts</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -191,44 +191,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Factors</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factor_contrasts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Setting Factor Contrasts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./recoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iteration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./programming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Programming Notes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Programming Notes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datetimes_dates.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">resources.html</span></span></a>
   </div>
 </li>
     </ul>
@@ -247,6 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#using-col_types" id="toc-using-col_types" class="nav-link" data-scroll-target="#using-col_types"><span class="header-section-number">4.3.1</span> Using <code>col_types()</code></a></li>
   <li><a href="#using-a-separate-mutate" id="toc-using-a-separate-mutate" class="nav-link" data-scroll-target="#using-a-separate-mutate"><span class="header-section-number">4.3.2</span> Using a separate <code>mutate()</code></a></li>
+  <li><a href="#using-data-dictionaries-a.k.a-codebooks" id="toc-using-data-dictionaries-a.k.a-codebooks" class="nav-link" data-scroll-target="#using-data-dictionaries-a.k.a-codebooks"><span class="header-section-number">4.3.3</span> Using data dictionaries (a.k.a codebooks)</a></li>
   </ul></li>
   <li><a href="#sourcing-from-github" id="toc-sourcing-from-github" class="nav-link" data-scroll-target="#sourcing-from-github"><span class="header-section-number">4.4</span> Sourcing from Github</a></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">4.5</span> Additional Resources</a></li>
@@ -292,7 +311,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="reading-csv-files" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="reading-csv-files"><span class="header-section-number">4.3</span> Reading csv files</h2>
-<p>We typically save our data as csv files. There are many benefits to this format (e.g., easy to share, easy to view outside of R) but one downside is that they don’t store information about variable/column class. We need to establish the appropriate class for each column when we read the data.</p>
+<p>We typically save our data as csv files (with minor exceptions). There are many benefits to this format</p>
+<ul>
+<li>easy to share (colleagues don’t need R to access)</li>
+<li>easy to view outside of R (sometimes, we just want to see the data directly and csv can be viewed in any text editor and/or most spreadsheet apps) but one downside is that they don’t store information about variable/column class. We need to establish the appropriate class for each column when we read the data.</li>
+</ul>
 <section id="using-col_types" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="using-col_types"><span class="header-section-number">4.3.1</span> Using <code>col_types()</code></h3>
 <p>If possible, it is best to set the class for each column/variable specifically using the <code>col_types()</code> parameter in <code>dplyr::read_csv()</code> This forces you to specifically examine and consider each column to decide its class (e.g., is a column with numbers best set as numeric or ordered factor) and the levels if its class is nominal. Of course, this is part of cleaning EDA so you should have done this when you first started working with the data.</p>
@@ -429,6 +452,9 @@ $ sale_price      &lt;dbl&gt; 215000, 105000, 172000, 189900, 213500, 191500, 23
 </div>
 </div>
 </section>
+<section id="using-data-dictionaries-a.k.a-codebooks" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="using-data-dictionaries-a.k.a-codebooks"><span class="header-section-number">4.3.3</span> Using data dictionaries (a.k.a codebooks)</h3>
+</section>
 </section>
 <section id="sourcing-from-github" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sourcing-from-github"><span class="header-section-number">4.4</span> Sourcing from Github</h2>
@@ -445,7 +471,7 @@ $ sale_price      &lt;dbl&gt; 215000, 105000, 172000, 189900, 213500, 191500, 23
 <li>Pass this url as a string into devtools::source_url()` in your R script. For example:</li>
 </ol>
 <p><code>devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/fun_modeling.R?raw=true")</code></p>
-<p>Its that easy. Using this method will allow you to continue to use the most up-to-date version of that script even as the repo owner improves it over time. It also doesnt require you to worry about where a local clone of that repo might live on your computer or the computers of anyone with which you share your code.</p>
+<p>Its that easy. Using this method will allow you to continue to use the most up-to-date version of that script even as the repo owner improves it over time. It also doesn’t require you to worry about where a local clone of that repo might live on your computer or the computers of anyone with which you share your code.</p>
 </section>
 <section id="additional-resources" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">4.5</span> Additional Resources</h2>

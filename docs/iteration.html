@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling and Visualization in the Tidyverse - 7&nbsp; Iteration</title>
+<title>Data Wrangling and Visualization in the Tidyverse - 9&nbsp; Iteration</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./iteration.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Iteration</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./iteration.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iteration</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -191,44 +191,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Factors</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factor_contrasts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Setting Factor Contrasts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./recoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iteration.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./programming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Programming Notes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Programming Notes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datetimes_dates.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">resources.html</span></span></a>
   </div>
 </li>
     </ul>
@@ -241,14 +259,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction-and-curated-resources" id="toc-introduction-and-curated-resources" class="nav-link active" data-scroll-target="#introduction-and-curated-resources"><span class="header-section-number">7.1</span> Introduction and curated resources</a></li>
-  <li><a href="#select-subset-of-columns" id="toc-select-subset-of-columns" class="nav-link" data-scroll-target="#select-subset-of-columns"><span class="header-section-number">7.2</span> select() subset of columns</a></li>
-  <li><a href="#get-summary-statistics-for-multiple-columns" id="toc-get-summary-statistics-for-multiple-columns" class="nav-link" data-scroll-target="#get-summary-statistics-for-multiple-columns"><span class="header-section-number">7.3</span> Get summary statistics for multiple columns</a></li>
-  <li><a href="#apply-mutate-to-multiple-columns" id="toc-apply-mutate-to-multiple-columns" class="nav-link" data-scroll-target="#apply-mutate-to-multiple-columns"><span class="header-section-number">7.4</span> Apply mutate() to multiple columns</a></li>
-  <li><a href="#map-and-future_map" id="toc-map-and-future_map" class="nav-link" data-scroll-target="#map-and-future_map"><span class="header-section-number">7.5</span> <code>map()</code> and <code>future_map()</code></a></li>
-  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="header-section-number">7.6</span> <code>for</code> loops</a></li>
-  <li><a href="#foreach-loops" id="toc-foreach-loops" class="nav-link" data-scroll-target="#foreach-loops"><span class="header-section-number">7.7</span> <code>foreach</code> loops</a></li>
-  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting"><span class="header-section-number">7.8</span> Nesting</a></li>
+  <li><a href="#introduction-and-curated-resources" id="toc-introduction-and-curated-resources" class="nav-link active" data-scroll-target="#introduction-and-curated-resources"><span class="header-section-number">9.1</span> Introduction and curated resources</a></li>
+  <li><a href="#select-subset-of-columns" id="toc-select-subset-of-columns" class="nav-link" data-scroll-target="#select-subset-of-columns"><span class="header-section-number">9.2</span> select() subset of columns</a></li>
+  <li><a href="#get-summary-statistics-for-multiple-columns" id="toc-get-summary-statistics-for-multiple-columns" class="nav-link" data-scroll-target="#get-summary-statistics-for-multiple-columns"><span class="header-section-number">9.3</span> Get summary statistics for multiple columns</a></li>
+  <li><a href="#apply-mutate-to-multiple-columns" id="toc-apply-mutate-to-multiple-columns" class="nav-link" data-scroll-target="#apply-mutate-to-multiple-columns"><span class="header-section-number">9.4</span> Apply mutate() to multiple columns</a></li>
+  <li><a href="#map-and-future_map" id="toc-map-and-future_map" class="nav-link" data-scroll-target="#map-and-future_map"><span class="header-section-number">9.5</span> <code>map()</code> and <code>future_map()</code></a></li>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="header-section-number">9.6</span> <code>for</code> loops</a></li>
+  <li><a href="#foreach-loops" id="toc-foreach-loops" class="nav-link" data-scroll-target="#foreach-loops"><span class="header-section-number">9.7</span> <code>foreach</code> loops</a></li>
+  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting"><span class="header-section-number">9.8</span> Nesting</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jjcurtin/dwt/edit/main/iteration.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -257,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Iteration</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Iteration</span></h1>
 </div>
 
 
@@ -272,11 +290,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="introduction-and-curated-resources" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="introduction-and-curated-resources"><span class="header-section-number">7.1</span> Introduction and curated resources</h2>
+<section id="introduction-and-curated-resources" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="introduction-and-curated-resources"><span class="header-section-number">9.1</span> Introduction and curated resources</h2>
 <p>See this <a href="https://dplyr.tidyverse.org/dev/articles/rowwise.html">article</a> for details on the use of dplyr for row-wise operations</p>
 <p>See this <a href="https://dplyr.tidyverse.org/dev/articles/colwise.html">article</a> for details on the use of dplyr for column-wise operations</p>
 <p>See this <a href="https://dplyr.tidyverse.org/reference/across.html">article</a> for the uses of <code>across()</code> in <code>summarize()</code> and <code>mutate()</code></p>
+<p>use <code>list_rbind()</code> with <code>map()</code> to bind together lists of dataframes, which is common when using <code>map()</code></p>
 <p>In the sections that follow, we provide common examples of approaches to iteration using the <code>iris</code> dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -301,8 +320,8 @@ $ Species      &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, setos
 </div>
 </div>
 </section>
-<section id="select-subset-of-columns" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="select-subset-of-columns"><span class="header-section-number">7.2</span> select() subset of columns</h2>
+<section id="select-subset-of-columns" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="select-subset-of-columns"><span class="header-section-number">9.2</span> select() subset of columns</h2>
 <p>There is <a href="https://dplyr.tidyverse.org/reference/select.html">a good tutorial</a> providing more detail on selecting subsets of columns. Here we illustrate a few common applications in our lab.</p>
 <p>It is easy to select a subset of columns based on their class. Common functions for selecting on column class are * <code>is.numeric</code> * <code>is.factor</code> * <code>is.ordered</code> * <code>is.character</code>.</p>
 <p>These class functions are used inside of the <code>where()</code> function. For example, here we select all numeric columns. Notice that the parentheses are left off of the <code>is.numeric</code> function when using <code>where()</code></p>
@@ -348,8 +367,8 @@ $ Petal.Width &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2,
 </div>
 </div>
 </section>
-<section id="get-summary-statistics-for-multiple-columns" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="get-summary-statistics-for-multiple-columns"><span class="header-section-number">7.3</span> Get summary statistics for multiple columns</h2>
+<section id="get-summary-statistics-for-multiple-columns" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="get-summary-statistics-for-multiple-columns"><span class="header-section-number">9.3</span> Get summary statistics for multiple columns</h2>
 <p>We use <code>across()</code> combined with <code>summarize()</code> to get summary statistics across sets of columns. This can also be combined with <code>group_by()</code> to do this within subsets/groups for rows Mean for all numeric columns</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
@@ -375,26 +394,26 @@ $ Petal.Width &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2,
 </div>
 <p>df %&gt;% summarise(across(c(col1, col2), list(mean=mean, sd=sd), na.rm=TRUE))</p>
 </section>
-<section id="apply-mutate-to-multiple-columns" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="apply-mutate-to-multiple-columns"><span class="header-section-number">7.4</span> Apply mutate() to multiple columns</h2>
+<section id="apply-mutate-to-multiple-columns" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="apply-mutate-to-multiple-columns"><span class="header-section-number">9.4</span> Apply mutate() to multiple columns</h2>
 <p>We use <code>across()</code> combined with <code>mutate()</code> to apply the same transformation or other function to multiple columns.</p>
 <p>multiply values in col1 and col2 by 2 df %&gt;% mutate(across(c(col1, col2), function(x) x*2))</p>
 <p>iris %&gt;% mutate(across(c(Sepal.Length, Sepal.Width), round))</p>
 </section>
-<section id="map-and-future_map" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="map-and-future_map"><span class="header-section-number">7.5</span> <code>map()</code> and <code>future_map()</code></h2>
+<section id="map-and-future_map" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="map-and-future_map"><span class="header-section-number">9.5</span> <code>map()</code> and <code>future_map()</code></h2>
 <p>can generally return lists using <code>map()</code> and then combine into a df afterwards using <code>list_rbind()</code></p>
 <p>Can use <code>pluck()</code> in a second map if a first map returned a list with multiple elements</p>
 </section>
-<section id="for-loops" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">7.6</span> <code>for</code> loops</h2>
+<section id="for-loops" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">9.6</span> <code>for</code> loops</h2>
 <p>Does someone want o do this?</p>
 </section>
-<section id="foreach-loops" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="foreach-loops"><span class="header-section-number">7.7</span> <code>foreach</code> loops</h2>
+<section id="foreach-loops" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="foreach-loops"><span class="header-section-number">9.7</span> <code>foreach</code> loops</h2>
 </section>
-<section id="nesting" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="nesting"><span class="header-section-number">7.8</span> Nesting</h2>
+<section id="nesting" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="nesting"><span class="header-section-number">9.8</span> Nesting</h2>
 <p>Some useful tutorials</p>
 <ul>
 <li>https://r4ds.had.co.nz/many-models.html</li>
@@ -642,12 +661,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./recoding.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Variable recoding, releveling and other transformations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./functions.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Functions</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Functions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
