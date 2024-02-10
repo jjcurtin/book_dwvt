@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Parallel Processing
 
 ```{r setup}
@@ -24,7 +29,7 @@ The [furrr](https://cran.r-project.org/web/packages/furrr/index.html) package pr
 
 [foreach](https://cran.r-project.org/web/packages/foreach/vignettes/foreach.html) provides an alternative for loop that can run sequentially or in parallel as requested.  `foreach` is used under the hood to do resampling by `fit_resamples()` and `tune_grid()` in tidymodels
 
-Michael Hallquist has provided a useful and detailed [overview](https://psu-psychology.github.io/r-bootcamp-2018/talks/parallel_r.html) of parallel processing.   It is a good first read to orient to terms and concepts.  However, it does not describe either the `future` package or the `furrr` pacakge.  It does provide brief introduction to `foreach`
+Michael Hallquist has provided a useful and detailed [overview](https://psu-psychology.github.io/r-bootcamp-2018/talks/parallel_r.html) of parallel processing.   It is a good first read to orient to terms and concepts.  However, it does not describe either the `future` package or the `furrr` package.  It does provide brief introduction to `foreach`
 
 [Info on future ecosystem](https://dcgerard.github.io/advancedr/09_future.html) and [more](https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html)
 
@@ -36,7 +41,11 @@ Here are the number of physical (not logical) cores on this machine.  You may ha
 parallel::detectCores(logical = FALSE)
 ```
 
-Lets use them by setting up a parallel backend.  This works on Windows and Mac OSs.  We prefer to use namespace when calling these functions rather than loading full packages
+Lets use them by setting up a parallel backend.  
+
+- This works on Windows, Mac OSs, and Linux.  
+- Options that use forking rather than sockets may be [faster](https://www.r-bloggers.com/2019/06/parallel-r-socket-or-fork/) for Linux and Mac OSs but we prefer sockets because it works on all three major OSs and we use all three in our lab.
+- We prefer to use namespace when calling these functions rather than loading full packages
 ```{r}
 cl <- parallel::makePSOCKcluster(parallel::detectCores(logical = FALSE))
 doParallel::registerDoParallel(cl)
