@@ -18,10 +18,17 @@ You could instead manually save objects that you want to avoid recalculating.  T
 
 ### `xfun::cache_rds()` (our preferred method)
 
-We believe that the `xfun::cache_rds()` function provides the sweet spot for the balance of control and transparency vs. code overhead.  It also works for both interactive/console and knit workflows.  
+We believe that the `xfun::cache_rds()` function provides the sweet spot for the balance of control and transparency vs. code overhead.  It also works for both interactive/console and render workflows.  
 
-Lets demonstrate its use.   We start by setting up some objects that will be used in later time-consuming calculations.
-You need to be careful with these objects.  If they ever change, you will need to explicitly invalidate your cached object and re-calculate it.  More on that below.
+Lets demonstrate its use.   
+
+- First we recommend setting up an environment variable called `rerun_setting` and setting it to FALSE. Put this with your other environment settings at the top of your script so you can find (and change) it easily
+```{r}
+rerun_setting <- FALSE
+```
+
+
+Next, we set up some objects that will be used in later time-consuming calculations.  You need to be careful with these objects.  If they ever change, you will need to explicitly invalidate your cached object and re-calculate it.  More on that below.
 
 ```{r}
 y <- 2
@@ -32,17 +39,15 @@ Now lets use `y` and `z` in some time consuming set of calculations
 
 * The first argument parameter in `cache_rds()` is the code to execute the time-consuming calculation.  This code is provided to the function inside of curly brackets, `{}`
 * Results from `cache_rds()` are assigned to your object (e.g., `x`) as if they came straight from the coded calculations (e.g., instead of `x <- y + z`, we now have `x <- cache_rds({y + z})`).
-* We recommend explicitly setting the values for the `dir` and `file` for the cached object.  This way, you control where it is saved and are assured it will be the same location regardless of whether you run this code chunk in the console or knit it.  Initial testing suggested the filename and location will differ for interactive/console vs. knit workflows if you use defaults.  The `/` at the end of the directory name is required to designate this as a folder.  The filename will have the string assigned to `file` as the prefix but will have an additional hash and a `.rds` appended to it as well.
-* We recommend explicitly including `rerun = FALSE` as a third parameter.  This provides you an easy way to invalidate the cached object (and a memory aid to consider invalidation when needed).  To invalidate, just set it to `TRUE` and run the chunk again again if any of your globals (e.g., `y`, `z`) have changed (and then set back to FALSE after!).   Alternatively, you can invalidate the cached object by deleting it from the `cache/` folder.
-* `cache_rds()` has one additional parameter worth mentioning, `hash`.   You can pass a list of global objects to hash (e.g. `hash = list(y, z)`) that the function will monitor for change.  If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it.  This can be very useful and we should start using it too.  However, our testing suggests that it *may* invalidate the cache in some instances when it shouldn't.  We havent been able to fully document this issue yet. For now, we recommend using this and paying attention to when the cache is incorrectly invalidated (if ever).  Some testing has also suggested that you may need to use >= R version 4.3 to avoid the problem with cache invalidation (but that isn't definite either :-(    We will update this page as we better understand if this is a persistent issue.  
+* We recommend explicitly setting the values for the `dir` and `file` for the cached object.  This way, you control where it is saved and are assured it will be the same location regardless of whether you run this code chunk in the console or knit it.  Initial testing suggested the filename and location will differ for interactive/console vs. rendered workflows if you use defaults.  The `/` at the end of the directory name is required to designate this as a folder.  The filename will have the string assigned to `file` as the prefix but will have an additional hash and a `.rds` appended to it as well.
+* We recommend explicitly including `rerun = rerun_setting` as a third parameter.  This provides you an easy way to invalidate the cached object (and a memory aid to consider invalidation when needed).  To invalidate just this code chunk, set it to `TRUE` and run the chunk again again if any of your globals (e.g., `y`, `z`) have changed (and then set back to FALSE after!).  We also recommended setting `rerun_setting <- TRUE` when you are done with the script and ready to render a final version.  This will fix any previously undetected cache issues in your final output.   
+* `cache_rds()` has one additional parameter worth mentioning, `hash`.   You can pass a list of global objects to hash (e.g. `hash = list(y, z)`) that the function will monitor for change.  If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it.  This could be very useful to catch cache invalidation issues.  However, our testing suggests that it *may* invalidate the cache in some instances when it shouldn't.  We haven't been able to fully document this issue yet. For now, we recommend not using this and instead manually invalidating as needed using either `rerun = TRUE` or `rerun_setting <- TRUE` when you are done with your code. 
 ```{r cache_demo}
-
 x <- xfun::cache_rds({
   Sys.sleep(5) # pretend that computations take a while
   y + z
 },
-rerun = FALSE,
-hash = list(y, z),
+rerun = rerun_setting,
 dir = "cache/",
 file = "cache_demo")
 ```
@@ -60,9 +65,9 @@ You can (and should) read the full documentation on [xfun::cache_rds()](https://
 ### Final notes
 #### Cache and Github
 
-We obviously don't want our cached objects getting added to our repos.  This could make the repos become too large and/or add sensitive data to them.  It is easy to avoid this though. Assuming you are calling the folder that you will save the cached files to `cache/` as recommended above, just add the following line to your `.gitignore` file
+We may not want our cached objects getting added to our repos.  This could make the repos become too large and/or add sensitive data to them in some instance.  It is easy to avoid this though. Assuming you are calling the folder that you will save the cached files to `cache/` as recommended above, just add the following line to your `.gitignore` file
 
-`*_cache/`
+`*cache/`
 
 
 #### Saving model objects
