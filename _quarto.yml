@@ -10,6 +10,7 @@ execute:
 toc: true
 toc-depth: 3
 bibliography: references.bib
+css: book.css
 
 book:
   title: "Data Wrangling and Visualization in the Tidyverse"
