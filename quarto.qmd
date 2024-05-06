@@ -36,6 +36,33 @@ To specify these options globally, they need to be added to the `_quarto.yml` fi
 &nbsp;&nbsp;&nbsp;`  echo: false`  
 &nbsp;&nbsp;&nbsp;`  warning: false`  
 
+### Figures
+
+To be included in the quarto figure environment, a figure must have a label that starts with `fig-`. You can specify the caption as well as the output height/width (in inches) as follows:
+
+````{{r}}
+#| label: fig-1
+#| fig-cap: "A Basic Barplot Figure"
+#| fig-height: 6
+#| fig-width: 6
+
+ggplot(data, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+````
+
+To display a code-generated figure without the caption, the label CANNOT start with `fig-`.You must also remove the `#| fig-cap:` option from the chunk, and explicitly include a height and/or width specification, this time using `out-width` and `out-height`:
+
+
+```{{r}}
+#| label: a-fig-1
+#| out-width: 6in
+#| out-height: 6in
+
+ggplot(data, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+```
+
+
 
 
 ### Tables
