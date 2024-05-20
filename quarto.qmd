@@ -7,8 +7,9 @@ options(conflicts.policy = "depends.ok")
 library(tidyverse)
 ```
 
-## General
 
+
+## General
 
 ### YAML formats
 
@@ -145,6 +146,10 @@ Additional HTML-only features of kableExtra are documented [here](https://cran.r
 
 
 #### PDF
+
+If using the [typst APAish manuscript](https://github.com/mvuorre/quarto-apaish) extension, note that Quarto 1.4XXX uses an older version of Typst without good table support. That should be fixed in the 1.5 release.
+
+
 The documentation for producing LaTeX tables in kableExtra is [here](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf)
 
 The following two tables demonstrate a complex table of the type used in the PDF ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting. It displays not unlike an HTML table:
@@ -305,17 +310,31 @@ Related reference links for creating an AJP template:
 
 * [AJP Manuscript requirements](https://ajp.psychiatryonline.org/ajp_ifora )  
 * [Example AJP Latex Template](https://tex.stackexchange.com/questions/127639/template-for-american-journal-of-psychiatry)
-* [More APA stype templates](https://www.overleaf.com/latex/templates/tagged/apa)  
+* [More APA style templates](https://www.overleaf.com/latex/templates/tagged/apa)  
+* [Typst APAish manuscript](https://github.com/mvuorre/quarto-apaish)
+
 
 ### Bibliographies
-To add a bibliography with a citation style, add the following lines to the _quarto.yml file:
+To add a bibliography with a citation style, add the following lines to the _quarto.yml or the .qmd file:
 
 `bibliography: references.bib`  
 `csl: name_of_csl_file.csl`  
 
-Note, we will typically call our csl files from [the official Cytation Style Language Repo](https://github.com/citation-style-language/styles); which simply requires the URL of the raw file from github.
+For a [typst APAish manuscript](https://github.com/mvuorre/quarto-apaish) your yaml will look like this to use the built-in typst citation style:
 
-See docs_arc for specifics about commonly-used ARC csl files.
+`bibliography: references.bib`
+`bibliographystyle: apa`
+
+Or download a local copy of the desired .csl file:
+`bibliography: references.bib`
+`bibliographystyle: nature_journal.csl`
+
+At the moment, this extension doesn't support linking to the CSL repo (below).
+
+
+Note, we will typically call our csl files from [the official Citation Style Language Repo](https://github.com/citation-style-language/styles); which simply requires the URL of the raw file from github.
+
+See [docs_arc](https://jjcurtin.github.io/docs_arc/resources.html) for specifics about commonly-used ARC csl files.
 
 The Quarto Guide provides more detail about how to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html). As with markdown, the format is `[@citekey1; @citekey2]` — citations go inside square brackets and are separated by semicolons
 
@@ -329,6 +348,7 @@ We use Quarto to make revealjs slide decks for presentations.  The Quarto Guide 
 
 Divs (:::) and spans([]) are used extensively in presentations.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
 
+In a project, presentations should be located in subfolder that starts with an underscore, ie. _presentations, to prevent those files from being rendered during the project render.
 
 ## Books and Websites
 
