@@ -322,12 +322,12 @@ To add a bibliography with a citation style, add the following lines to the _qua
 
 For a [typst APAish manuscript](https://github.com/mvuorre/quarto-apaish) your yaml will look like this to use the built-in typst citation style:
 
-`bibliography: references.bib`
+`bibliography: references.bib`  
 `bibliographystyle: apa`
 
-Or download a local copy of the desired .csl file:
-`bibliography: references.bib`
-`bibliographystyle: nature_journal.csl`
+Or download a local copy of the desired .csl file:  
+`bibliography: references.bib`  
+`bibliographystyle: name_of_csl_file.csl`
 
 At the moment, this extension doesn't support linking to the CSL repo (below).
 

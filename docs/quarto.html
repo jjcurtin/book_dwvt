@@ -840,8 +840,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>bibliography: references.bib</code><br>
 <code>csl: name_of_csl_file.csl</code></p>
 <p>For a <a href="https://github.com/mvuorre/quarto-apaish">typst APAish manuscript</a> your yaml will look like this to use the built-in typst citation style:</p>
-<p><code>bibliography: references.bib</code> <code>bibliographystyle: apa</code></p>
-<p>Or download a local copy of the desired .csl file: <code>bibliography: references.bib</code> <code>bibliographystyle: nature_journal.csl</code></p>
+<p><code>bibliography: references.bib</code><br>
+<code>bibliographystyle: apa</code></p>
+<p>Or download a local copy of the desired .csl file:<br>
+<code>bibliography: references.bib</code><br>
+<code>bibliographystyle: name_of_csl_file.csl</code></p>
 <p>At the moment, this extension doesn’t support linking to the CSL repo (below).</p>
 <p>Note, we will typically call our csl files from <a href="https://github.com/citation-style-language/styles">the official Citation Style Language Repo</a>; which simply requires the URL of the raw file from github.</p>
 <p>See <a href="https://jjcurtin.github.io/docs_arc/resources.html">docs_arc</a> for specifics about commonly-used ARC csl files.</p>
