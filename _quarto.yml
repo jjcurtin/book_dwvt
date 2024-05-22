@@ -31,7 +31,6 @@ book:
     - file_and_path_management.qmd
     - reproducible_examples.qmd
     - factors.qmd
-    - factor_contrasts.qmd
     - recoding.qmd
     - iteration.qmd
     - functions.qmd
