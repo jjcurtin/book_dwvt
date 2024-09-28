@@ -1,5 +1,8 @@
 ---
-title: "Untitled"
+editor_options: 
+  chunk_output_type: console
 ---
+
+# Tidy Data
 
 https://tidyr.tidyverse.org/articles/tidy-data.html
