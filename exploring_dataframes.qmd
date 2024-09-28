@@ -1,0 +1,138 @@
+---
+editor_options: 
+  chunk_output_type: console
+---
+
+# Exploring dataframes
+
+Make an example data frame to explore 
+```{r}
+library(tidyverse)
+N = 10
+d <- tibble(x1 = rnorm(N, 10, 2), 
+            x2 = rnorm(N, 10, 2),
+            y1 = sample(letters, N, replace = TRUE), 
+            y2 = sample(letters, N, replace = TRUE), 
+            z = sample(c("dog", "cat", "fish"), N, replace = TRUE)) |> 
+  mutate(z = fct(z, levels = c("dog", "cat", "fish")))
+```
+
+## glimpse() 
+
+`glimpse()`
+
+-  Provides info about nrows, ncols, column names, column types and a "glimpse" of some of the data in each column
+- returns the tibble so can be used at the end of a pipe when you first read the data with `read_csv()` or similar
+
+```{r}
+d |> glimpse()
+```
+
+## Rows, Columns, and Names
+
+If you don't glimpse the dataframe, you should at least check the number of rows and columns, and review the column names
+
+```{r}
+d |> nrow()
+d |> ncol()
+d |> names()
+```
+
+## Viewing the dataframe directly
+
+I often use `view()` interactively with the data but `view()` does not work when rendering quarto documents.   You should use `head()`, `tail()`, or `slice_sample()` if you want the output saved in your quarto report. 
+
+`head()`, `tail()` or `slice_sample()`
+
+- `head()` and `tail()` returns the first or last 6 rows of the tibble.  Can be changed using `n = argument`j
+- `slice_sample()` returns a random row from the tibble.  Can be changed to more rows using `n = argument`
+- I find that showing someone some rows with these functions makes the data more real to them.  However, works best where there are only a few columns so that they can all be displayed in the console
+
+```{r}
+d |> head()
+d |> tail (n = 3)
+d |> slice_sample(n = 5)
+```
+
+## skim()
+
+`skim()`
+
+- Included in the `skimr` package
+- Provides a detailed summary of the dataframe
+- But the output takes up too much space
+- Can use `yank()` to select only the data types you want to see and you can limit to only some columns if needed. 
+- Can customize skim to return only the descriptives you want
+
+### Make your own skimmer
+
+Lets start with a custom skim that returns only the descriptives I generally want
+
+- Easiest to start with the base skim() 
+- Then remove statistics you don't want by setting to NULL
+- Then add any statistics you do want (see example below for syntax)
+- Do this for each data type
+- However, for base (which are reported for all data types), you can't remove and add, you just need to set what you want
+
+```{r}
+library(skimr)
+
+my_skim <- skim_with(base = sfl(n_complete = ~ sum(!is.na(.), na.rm = TRUE),
+                                n_missing = ~sum(is.na(.), na.rm = TRUE)),
+                     numeric = sfl(p25 = NULL,
+                                   p75 = NULL,
+                                   hist = NULL),
+                     character = sfl(min = NULL, max = NULL),
+                     factor = sfl(ordered = NULL))
+```
+
+### Use with all variables 
+
+First with all output at once.  Does provide summary tables with nrows, ncols, and counts of columns of each datatype.  Maybe fine to start (though a bit verbose)
+```{r}
+d |> my_skim()
+```
+
+### Use with specific data types
+I prefer to `yank()` a class/type at a time but then we don't see rows and columns and all classes present.   Could combine with `nrow()` and `ncol()`
+```{r}
+d |> my_skim() |> 
+  yank("numeric")
+
+d |> my_skim() |> 
+ yank("character")
+
+d |> my_skim() |> 
+  yank("factor")
+```
+
+### Limit output to specific columns
+
+We can limit the dataframes returned by skimr to a subset of the variables/columns in the original data
+
+- This can be done across or within a data type
+- Columns can be selected using tidy select functions
+- Can be combined with `yank()` to limit the output to specific data types if your selected columns are all the same type
+```{r}
+d |> my_skim(x1, y2) 
+```
+
+```{r}
+d |> my_skim(contains("x")) |> 
+  yank("numeric")
+```
+
+## Limit output to specific descriptive statistics
+
+We can limit the dataframes returned by skimr to a subset of the statistics using `focus()`
+
+- This is a variant of `dplyr::select()` but safer to use with skimmer dataframes
+- This can be done across or within a data type
+- Must pre-pend column name with data type (and a `.`)
+- Columns can be selected using tidy select functions
+- Can be combined with `yank()` to limit the output to specific data types
+```{r}
+d |> my_skim() |>
+  focus(n_missing, numeric.mean) |> 
+  yank("numeric")
+```
