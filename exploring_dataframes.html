@@ -332,11 +332,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 10
 Columns: 5
-$ x1 &lt;dbl&gt; 10.149369, 8.392568, 10.711624, 14.831280, 9.068880, 8.903704, 7.58…
-$ x2 &lt;dbl&gt; 7.855190, 10.947247, 7.699809, 9.933179, 13.900455, 8.928774, 8.869…
-$ y1 &lt;chr&gt; "y", "f", "i", "z", "r", "o", "p", "p", "q", "k"
-$ y2 &lt;chr&gt; "u", "f", "c", "z", "d", "m", "a", "o", "h", "g"
-$ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
+$ x1 &lt;dbl&gt; 6.863323, 9.676553, 10.308161, 9.139060, 12.964243, 7.085727, 4.774…
+$ x2 &lt;dbl&gt; 8.531637, 11.925143, 7.046731, 7.625833, 11.905477, 7.430857, 10.97…
+$ y1 &lt;chr&gt; "r", "h", "u", "h", "j", "s", "x", "j", "e", "x"
+$ y2 &lt;chr&gt; "n", "u", "t", "c", "q", "x", "u", "d", "o", "i"
+$ z  &lt;fct&gt; cat, fish, dog, fish, cat, fish, cat, fish, cat, fish</code></pre>
 </div>
 </div>
 </section>
@@ -373,32 +373,32 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <pre><code># A tibble: 6 × 5
      x1    x2 y1    y2    z    
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt;
-1 10.1   7.86 y     u     dog  
-2  8.39 10.9  f     f     dog  
-3 10.7   7.70 i     c     cat  
-4 14.8   9.93 z     z     dog  
-5  9.07 13.9  r     d     fish 
-6  8.90  8.93 o     m     cat  </code></pre>
+1  6.86  8.53 r     n     cat  
+2  9.68 11.9  h     u     fish 
+3 10.3   7.05 u     t     dog  
+4  9.14  7.63 h     c     fish 
+5 13.0  11.9  j     q     cat  
+6  7.09  7.43 s     x     fish </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span> <span class="fu">tail</span> (<span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
      x1    x2 y1    y2    z    
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt;
-1  9.13 10.7  p     o     fish 
-2  7.59  9.78 q     h     dog  
-3  9.87 11.3  k     g     dog  </code></pre>
+1  7.27 10.2  j     d     fish 
+2  9.77  9.51 e     o     cat  
+3 11.5  11.6  x     i     fish </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
      x1    x2 y1    y2    z    
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt;
-1  9.87 11.3  k     g     dog  
-2  9.13 10.7  p     o     fish 
-3  8.39 10.9  f     f     dog  
-4 10.7   7.70 i     c     cat  
-5 10.1   7.86 y     u     dog  </code></pre>
+1  7.09  7.43 s     x     fish 
+2  4.77 11.0  x     u     cat  
+3  9.68 11.9  h     u     fish 
+4 10.3   7.05 u     t     dog  
+5  9.77  9.51 e     o     cat  </code></pre>
 </div>
 </div>
 </section>
@@ -503,7 +503,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
@@ -511,7 +511,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -540,7 +540,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">dog: 5, cat: 3, fis: 2</td>
+<td style="text-align: left;">fis: 5, cat: 4, dog: 1</td>
 </tr>
 </tbody>
 </table>
@@ -563,21 +563,21 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.62</td>
-<td style="text-align: right;">2.10</td>
-<td style="text-align: right;">7.58</td>
-<td style="text-align: right;">9.10</td>
-<td style="text-align: right;">14.83</td>
+<td style="text-align: right;">8.93</td>
+<td style="text-align: right;">2.44</td>
+<td style="text-align: right;">4.77</td>
+<td style="text-align: right;">9.41</td>
+<td style="text-align: right;">12.96</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10.00</td>
-<td style="text-align: right;">1.85</td>
-<td style="text-align: right;">7.70</td>
+<td style="text-align: right;">9.68</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">7.05</td>
 <td style="text-align: right;">9.86</td>
-<td style="text-align: right;">13.90</td>
+<td style="text-align: right;">11.93</td>
 </tr>
 </tbody>
 </table>
@@ -610,21 +610,21 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.62</td>
-<td style="text-align: right;">2.10</td>
-<td style="text-align: right;">7.58</td>
-<td style="text-align: right;">9.10</td>
-<td style="text-align: right;">14.83</td>
+<td style="text-align: right;">8.93</td>
+<td style="text-align: right;">2.44</td>
+<td style="text-align: right;">4.77</td>
+<td style="text-align: right;">9.41</td>
+<td style="text-align: right;">12.96</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10.00</td>
-<td style="text-align: right;">1.85</td>
-<td style="text-align: right;">7.70</td>
+<td style="text-align: right;">9.68</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">7.05</td>
 <td style="text-align: right;">9.86</td>
-<td style="text-align: right;">13.90</td>
+<td style="text-align: right;">11.93</td>
 </tr>
 </tbody>
 </table>
@@ -650,7 +650,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
@@ -658,7 +658,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -691,7 +691,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">dog: 5, cat: 3, fis: 2</td>
+<td style="text-align: left;">fis: 5, cat: 4, dog: 1</td>
 </tr>
 </tbody>
 </table>
@@ -768,7 +768,7 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">9</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -792,11 +792,11 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.62</td>
-<td style="text-align: right;">2.1</td>
-<td style="text-align: right;">7.58</td>
-<td style="text-align: right;">9.1</td>
-<td style="text-align: right;">14.83</td>
+<td style="text-align: right;">8.93</td>
+<td style="text-align: right;">2.44</td>
+<td style="text-align: right;">4.77</td>
+<td style="text-align: right;">9.41</td>
+<td style="text-align: right;">12.96</td>
 </tr>
 </tbody>
 </table>
@@ -825,21 +825,21 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.62</td>
-<td style="text-align: right;">2.10</td>
-<td style="text-align: right;">7.58</td>
-<td style="text-align: right;">9.10</td>
-<td style="text-align: right;">14.83</td>
+<td style="text-align: right;">8.93</td>
+<td style="text-align: right;">2.44</td>
+<td style="text-align: right;">4.77</td>
+<td style="text-align: right;">9.41</td>
+<td style="text-align: right;">12.96</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10.00</td>
-<td style="text-align: right;">1.85</td>
-<td style="text-align: right;">7.70</td>
+<td style="text-align: right;">9.68</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">7.05</td>
 <td style="text-align: right;">9.86</td>
-<td style="text-align: right;">13.90</td>
+<td style="text-align: right;">11.93</td>
 </tr>
 </tbody>
 </table>
@@ -875,12 +875,12 @@ $ z  &lt;fct&gt; dog, dog, cat, dog, fish, cat, cat, fish, dog, dog</code></pre>
 <tr class="odd">
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.62</td>
+<td style="text-align: right;">8.93</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">9.68</td>
 </tr>
 </tbody>
 </table>
