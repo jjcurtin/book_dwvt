@@ -5,6 +5,7 @@ execute:
   echo: true
   warning: false
   message: false
+  freeze: auto
 
 toc: true
 toc-depth: 3
