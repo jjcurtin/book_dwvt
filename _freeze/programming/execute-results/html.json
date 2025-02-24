@@ -1,0 +1,15 @@
+{
+  "hash": "685c6f06ef986d328c35b5728c818e20",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Programming Notes \n\n\n::: {.cell}\n\n```{.r .cell-code}\n#|echo: false\n\noptions(conflicts.policy = \"depends.ok\")\n```\n:::\n\n\n\n\n## Advanced data wrangling\n\nThe tidy folks have also written many more [articles](https://dplyr.tidyverse.org/dev/articles/index.html) on dplyr that are worth a look\n\n\n## Tidy programming\n\nProgramming with dplyr can be complicated because of tidy evaluation.   This [programming vignette](https://dplyr.tidyverse.org/articles/programming.html) provides useful documentation on data masking and tidy selection\n\nIf you plan to do a lot of R programming, I highly recommend reading chapters 17-21 on [meta-programming](https://adv-r.hadley.nz/metaprogramming.html) in R",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

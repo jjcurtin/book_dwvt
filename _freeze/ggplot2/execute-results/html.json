@@ -1,0 +1,17 @@
+{
+  "hash": "351c74e02196945f315fd1a0769e3e3c",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# ggplot2\n\n[ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/) is a good reference for all things ggplot\n\n\n## Themes\n\nThis plot shows the default theme for ggplot\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nd  <- tibble(x = rnorm(100), y = rnorm(100))\nd |> ggplot(aes(x = x, y = y)) +\n       geom_point()\n```\n\n::: {.cell-output-display}\n![](ggplot2_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\nYou can apply other built-in themes by adding them to the plot.  Our preferred default is `theme_classic()`\n\n\n::: {.cell}\n\n```{.r .cell-code}\nd |> ggplot(aes(x = x, y = y)) +\n       geom_point() +\n       theme_classic()\n```\n\n::: {.cell-output-display}\n![](ggplot2_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n\nYou may prefer to increase the size of axis labels, scale, and title (not displayed on this figure).  All themes have a `base_size` parameter which controls the base font size. The base font size is the size that the axis titles use; the plot title is usually bigger (1.2x), and the tick and strip labels are smaller (0.8x). The default `base_size` = 11.\n\nHere is an example setting `base_size = 14`.  You might prefer this larger font for figures in a presentation.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nd |> ggplot(aes(x = x, y = y)) +\n       geom_point() +\n       theme_classic(base_size = 16)\n```\n\n::: {.cell-output-display}\n![](ggplot2_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\nFor consistent figures for all the the figures generated in notebook, you should set the theme at the top of the notebook as part of seting up your environment.  This will also remove the need to apply a theme to each figure individually.  Use `theme_set()` for this.\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ntheme_set(theme_classic(base_size = 16))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nd |> ggplot(aes(x = x, y = y)) +\n       geom_point()\n```\n\n::: {.cell-output-display}\n![](ggplot2_files/figure-html/unnamed-chunk-5-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "ggplot2_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

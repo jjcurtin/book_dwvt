@@ -1,0 +1,15 @@
+{
+  "hash": "9b9a91f8b7d1b230011dcc7fa6a5f32a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Variable recoding, releveling and other transformations\n\n\n## if_else()\n\n\n## case_match\n\nreplaces `case_when()` in IMHO because clearer syntax\n\n\n::: {.cell}\n\n```{.r .cell-code}\nd_long <- d_long |> \n  mutate(time_32v1 = case_match(time,\n                                \"time1\" ~ -2/3,\n                                c(\"time2\", \"time3\") ~ 1/3),\n         time_3v2 = case_match(time, \n                               \"time1\" ~ 0,\n                               \"time2\" ~ -.5,\n                               \"time3\" ~ .5))\n```\n:::\n\n\n\n## Manipulating factors\n\n### Setting contrasts for factor\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n(helmert2 = matrix(c(-.5, .5), ncol = 1, dimnames = list(c(\"time1\", \"time2\"), c(\"t2v1\"))))\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n      t2v1\ntime1 -0.5\ntime2  0.5\n```\n\n\n:::\n\n```{.r .cell-code}\n(helmert3 = matrix(c(-2/3, 1/3, 1/3, 0, -.5, .5), ncol = 2, dimnames = list(c(\"time1\", \"time2\", \"time3\"), c(\"t32v1\", \"t3v2\"))))\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n           t32v1 t3v2\ntime1 -0.6666667  0.0\ntime2  0.3333333 -0.5\ntime3  0.3333333  0.5\n```\n\n\n:::\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ncontrasts(d2_long$time)\ncontrasts(d2_long$time) <- helmert2\ncontrasts(d2_long$time)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
