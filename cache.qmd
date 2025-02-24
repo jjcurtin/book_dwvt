@@ -12,9 +12,37 @@ You can set `cache = TRUE` in any specific code chunk to have knitr cache those 
 
 Nonetheless, this approach is [well documented](https://yihui.org/knitr/demo/cache/) including more advanced topics like [paths](https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html) and [lazy loading](https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html).
 
-### Explicit `write_rds()` (not recommended
+### Explicit `write_rds()` (OK - we use this in our lab at times)
 
 You could instead manually save objects that you want to avoid recalculating.  This is a legitimate method that gives you full and transparent control over caching.  It will also work both interactively in the console and when you knit your document.  However, its got a bit more overhead RE the code.  You need to write code to check if the file exists and load it if it does vs. calculate the object if it doesn't.   This is not too hard but it turns out that a function has already been written to handle this overhead for you.  We describe that next.
+
+Here is an example of this brute force (but more transparent) optioni
+
+Make a folder called `cache` at the root of your project.  This is where we will store the file that contains the output of your costly computations.
+
+Then write a if-else statement that checks if that file already exist.  If it does, load it. If it does not, do the computations and save the object (so that its available the next time to use)
+
+
+Now, if you need to update the computations, you must manually delete `brute_force_method.rds` and then the computations will be recalculated
+```{r}
+
+if (file.exists(here::here("cache/brute_force_method.rds"))){
+  
+ # file with computations exists, so just load it
+ results <- readr::read_rds(here::here("cache/brute_force_method.rds"))
+  
+} else {
+ 
+  # pretend these computations take a while by calling Sys.sleep ()
+  Sys.sleep(10)
+  results <- 1 
+ 
+  # write results so we have it the next time we run this code chunk 
+  results |>  readr::write_rds(here::here("cache/brute_force_method.rds"))
+}
+
+results
+```
 
 ### `xfun::cache_rds()` (our preferred method)
 
