@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#solutions" id="toc-solutions" class="nav-link active" data-scroll-target="#solutions"><span class="header-section-number">2.1</span> Solutions</a>
   <ul class="collapse">
   <li><a href="#cache-true-not-recommended" id="toc-cache-true-not-recommended" class="nav-link" data-scroll-target="#cache-true-not-recommended"><span class="header-section-number">2.1.1</span> <code>cache = TRUE</code> (not recommended)</a></li>
-  <li><a href="#explicit-write_rds-not-recommended" id="toc-explicit-write_rds-not-recommended" class="nav-link" data-scroll-target="#explicit-write_rds-not-recommended"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (not recommended</a></li>
+  <li><a href="#explicit-write_rds-ok---we-use-this-in-our-lab-at-times" id="toc-explicit-write_rds-ok---we-use-this-in-our-lab-at-times" class="nav-link" data-scroll-target="#explicit-write_rds-ok---we-use-this-in-our-lab-at-times"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (OK - we use this in our lab at times)</a></li>
   <li><a href="#xfuncache_rds-our-preferred-method" id="toc-xfuncache_rds-our-preferred-method" class="nav-link" data-scroll-target="#xfuncache_rds-our-preferred-method"><span class="header-section-number">2.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</a></li>
   <li><a href="#final-notes" id="toc-final-notes" class="nav-link" data-scroll-target="#final-notes"><span class="header-section-number">2.1.4</span> Final notes</a></li>
   </ul></li>
@@ -314,9 +314,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can set <code>cache = TRUE</code> in any specific code chunk to have knitr cache those calculations for your later reuse. However, we don’t recommend this because it makes the process and instances where the cache is invalidated more opaque. And more importantly, this caching will not be used for interactive use when you send your code chunks to the console as you work live.</p>
 <p>Nonetheless, this approach is <a href="https://yihui.org/knitr/demo/cache/">well documented</a> including more advanced topics like <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-path.html">paths</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/cache-lazy.html">lazy loading</a>.</p>
 </section>
-<section id="explicit-write_rds-not-recommended" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="explicit-write_rds-not-recommended"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (not recommended</h3>
+<section id="explicit-write_rds-ok---we-use-this-in-our-lab-at-times" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="explicit-write_rds-ok---we-use-this-in-our-lab-at-times"><span class="header-section-number">2.1.2</span> Explicit <code>write_rds()</code> (OK - we use this in our lab at times)</h3>
 <p>You could instead manually save objects that you want to avoid recalculating. This is a legitimate method that gives you full and transparent control over caching. It will also work both interactively in the console and when you knit your document. However, its got a bit more overhead RE the code. You need to write code to check if the file exists and load it if it does vs.&nbsp;calculate the object if it doesn’t. This is not too hard but it turns out that a function has already been written to handle this overhead for you. We describe that next.</p>
+<p>Here is an example of this brute force (but more transparent) optioni</p>
+<p>Make a folder called <code>cache</code> at the root of your project. This is where we will store the file that contains the output of your costly computations.</p>
+<p>Then write a if-else statement that checks if that file already exist. If it does, load it. If it does not, do the computations and save the object (so that its available the next time to use)</p>
+<p>Now, if you need to update the computations, you must manually delete <code>brute_force_method.rds</code> and then the computations will be recalculated</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"cache/brute_force_method.rds"</span>))){</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># file with computations exists, so just load it</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> results <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"cache/brute_force_method.rds"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pretend these computations take a while by calling Sys.sleep ()</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">10</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="dv">1</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># write results so we have it the next time we run this code chunk </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  results <span class="sc">|&gt;</span>  readr<span class="sc">::</span><span class="fu">write_rds</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"cache/brute_force_method.rds"</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
 </section>
 <section id="xfuncache_rds-our-preferred-method" class="level3" data-number="2.1.3">
 <h3 data-number="2.1.3" class="anchored" data-anchor-id="xfuncache_rds-our-preferred-method"><span class="header-section-number">2.1.3</span> <code>xfun::cache_rds()</code> (our preferred method)</h3>
@@ -326,12 +351,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>First we recommend setting up an environment variable called <code>rerun_setting</code> and setting it to FALSE. Put this with your other environment settings at the top of your script so you can find (and change) it easily</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rerun_setting <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rerun_setting <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we set up some objects that will be used in later time-consuming calculations. You need to be careful with these objects. If they ever change, you will need to explicitly invalidate your cached object and re-calculate it. More on that below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now lets use <code>y</code> and <code>z</code> in some time consuming set of calculations</p>
 <ul>
@@ -343,17 +368,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>cache_rds()</code> has one additional parameter worth mentioning, <code>hash</code>. You can pass a list of global objects to hash (e.g.&nbsp;<code>hash = list(y, z)</code>) that the function will monitor for change. If any of these globals are re-calculated, it will invalidate your cached object and re-calculate it. This could be very useful to catch cache invalidation issues. However, our testing suggests that it <em>may</em> invalidate the cache in some instances when it shouldn’t. We haven’t been able to fully document this issue yet. For now, we recommend not using this and instead manually invalidating as needed using either <code>rerun = TRUE</code> or <code>rerun_setting &lt;- TRUE</code> when you are done with your code.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> xfun<span class="sc">::</span><span class="fu">cache_rds</span>({</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># pretend that computations take a while</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">+</span> z</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>},</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">rerun =</span> rerun_setting,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> xfun<span class="sc">::</span><span class="fu">cache_rds</span>({</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># pretend that computations take a while</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">+</span> z</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>},</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">rerun =</span> rerun_setting,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">dir =</span> <span class="st">"cache/"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">file =</span> <span class="st">"cache_demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can use x without recalculating it each time when executing the previous chunk in either console or when knit. Yay!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -456,24 +481,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/github\.io\/jjcurtin\/dwt");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -508,11 +515,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

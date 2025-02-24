@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -332,11 +332,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 10
 Columns: 5
-$ x1 &lt;dbl&gt; 8.773417, 8.237697, 10.796528, 8.998571, 8.059999, 10.549883, 12.77…
-$ x2 &lt;dbl&gt; 10.982540, 7.290412, 11.217987, 9.894893, 7.723042, 10.056853, 9.33…
-$ y1 &lt;chr&gt; "c", "k", "c", "f", "k", "r", "k", "q", "x", "m"
-$ y2 &lt;chr&gt; "l", "x", "p", "b", "c", "h", "x", "p", "f", "g"
-$ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
+$ x1 &lt;dbl&gt; 9.864656, 10.648627, 9.370226, 8.208932, 7.798212, 10.212464, 11.69…
+$ x2 &lt;dbl&gt; 9.760840, 12.671562, 10.331021, 4.643704, 11.381113, 13.237035, 9.0…
+$ y1 &lt;chr&gt; "b", "o", "q", "j", "e", "c", "l", "j", "a", "l"
+$ y2 &lt;chr&gt; "h", "e", "a", "v", "x", "v", "y", "r", "v", "w"
+$ z  &lt;fct&gt; fish, cat, dog, fish, fish, fish, cat, cat, cat, fish</code></pre>
 </div>
 </div>
 </section>
@@ -373,32 +373,32 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <pre><code># A tibble: 6 × 5
      x1    x2 y1    y2    z    
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt;
-1  8.77 11.0  c     l     dog  
-2  8.24  7.29 k     x     fish 
-3 10.8  11.2  c     p     cat  
-4  9.00  9.89 f     b     cat  
-5  8.06  7.72 k     c     cat  
-6 10.5  10.1  r     h     dog  </code></pre>
+1  9.86  9.76 b     h     fish 
+2 10.6  12.7  o     e     cat  
+3  9.37 10.3  q     a     dog  
+4  8.21  4.64 j     v     fish 
+5  7.80 11.4  e     x     fish 
+6 10.2  13.2  c     v     fish </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span> <span class="fu">tail</span> (<span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
      x1    x2 y1    y2    z    
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt;
-1  6.96 10.8  q     p     cat  
-2 10.4   8.38 x     f     cat  
-3  9.02  9.55 m     g     cat  </code></pre>
+1  8.88 11.0  j     r     cat  
+2  9.12  9.21 a     v     cat  
+3 12.4   9.38 l     w     fish </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
      x1    x2 y1    y2    z    
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;fct&gt;
-1 10.8  11.2  c     p     cat  
-2  9.00  9.89 f     b     cat  
-3  6.96 10.8  q     p     cat  
-4 10.4   8.38 x     f     cat  
-5  8.06  7.72 k     c     cat  </code></pre>
+1 11.7   9.03 l     y     cat  
+2  7.80 11.4  e     x     fish 
+3  8.88 11.0  j     r     cat  
+4  9.12  9.21 a     v     cat  
+5 10.6  12.7  o     e     cat  </code></pre>
 </div>
 </div>
 </section>
@@ -503,7 +503,7 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
@@ -540,7 +540,7 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">cat: 7, dog: 2, fis: 1</td>
+<td style="text-align: left;">fis: 5, cat: 4, dog: 1</td>
 </tr>
 </tbody>
 </table>
@@ -563,21 +563,21 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.46</td>
-<td style="text-align: right;">1.68</td>
-<td style="text-align: right;">6.96</td>
-<td style="text-align: right;">9.01</td>
-<td style="text-align: right;">12.77</td>
+<td style="text-align: right;">9.82</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">7.80</td>
+<td style="text-align: right;">9.62</td>
+<td style="text-align: right;">12.44</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.52</td>
-<td style="text-align: right;">1.36</td>
-<td style="text-align: right;">7.29</td>
-<td style="text-align: right;">9.72</td>
-<td style="text-align: right;">11.22</td>
+<td style="text-align: right;">10.06</td>
+<td style="text-align: right;">2.39</td>
+<td style="text-align: right;">4.64</td>
+<td style="text-align: right;">10.05</td>
+<td style="text-align: right;">13.24</td>
 </tr>
 </tbody>
 </table>
@@ -610,21 +610,21 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.46</td>
-<td style="text-align: right;">1.68</td>
-<td style="text-align: right;">6.96</td>
-<td style="text-align: right;">9.01</td>
-<td style="text-align: right;">12.77</td>
+<td style="text-align: right;">9.82</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">7.80</td>
+<td style="text-align: right;">9.62</td>
+<td style="text-align: right;">12.44</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.52</td>
-<td style="text-align: right;">1.36</td>
-<td style="text-align: right;">7.29</td>
-<td style="text-align: right;">9.72</td>
-<td style="text-align: right;">11.22</td>
+<td style="text-align: right;">10.06</td>
+<td style="text-align: right;">2.39</td>
+<td style="text-align: right;">4.64</td>
+<td style="text-align: right;">10.05</td>
+<td style="text-align: right;">13.24</td>
 </tr>
 </tbody>
 </table>
@@ -650,7 +650,7 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
@@ -691,7 +691,7 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">cat: 7, dog: 2, fis: 1</td>
+<td style="text-align: left;">fis: 5, cat: 4, dog: 1</td>
 </tr>
 </tbody>
 </table>
@@ -792,11 +792,11 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.46</td>
-<td style="text-align: right;">1.68</td>
-<td style="text-align: right;">6.96</td>
-<td style="text-align: right;">9.01</td>
-<td style="text-align: right;">12.77</td>
+<td style="text-align: right;">9.82</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">9.62</td>
+<td style="text-align: right;">12.44</td>
 </tr>
 </tbody>
 </table>
@@ -825,21 +825,21 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.46</td>
-<td style="text-align: right;">1.68</td>
-<td style="text-align: right;">6.96</td>
-<td style="text-align: right;">9.01</td>
-<td style="text-align: right;">12.77</td>
+<td style="text-align: right;">9.82</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">7.80</td>
+<td style="text-align: right;">9.62</td>
+<td style="text-align: right;">12.44</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.52</td>
-<td style="text-align: right;">1.36</td>
-<td style="text-align: right;">7.29</td>
-<td style="text-align: right;">9.72</td>
-<td style="text-align: right;">11.22</td>
+<td style="text-align: right;">10.06</td>
+<td style="text-align: right;">2.39</td>
+<td style="text-align: right;">4.64</td>
+<td style="text-align: right;">10.05</td>
+<td style="text-align: right;">13.24</td>
 </tr>
 </tbody>
 </table>
@@ -875,12 +875,12 @@ $ z  &lt;fct&gt; dog, fish, cat, cat, cat, dog, cat, cat, cat, cat</code></pre>
 <tr class="odd">
 <td style="text-align: left;">x1</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.46</td>
+<td style="text-align: right;">9.82</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">x2</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">9.52</td>
+<td style="text-align: right;">10.06</td>
 </tr>
 </tbody>
 </table>
@@ -970,24 +970,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/github\.io\/jjcurtin\/dwt");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1022,11 +1004,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
