@@ -5,7 +5,7 @@ editor_options:
 ---
 # Function conflicts
 
-Function conflicts occur when you attach (via 'library()`) multiple packages and these packages contain functions that share identical names.   When you do this, the functions that are attached later will "mask" the functions with the same name that are loaded earlier.  This means that if you call the function in your script (without its namespace), R will execute the code associated with the latter function.   This can cause errors if you are not aware of this conflict and subsequent masking.  
+Function conflicts occur when you attach (via `library()`) multiple packages and these packages contain functions that share identical names.   When you do this, the functions that are attached later will "mask" the functions with the same name that are loaded earlier.  This means that if you call the function in your script (without its namespace), R will execute the code associated with the latter function.   This can cause errors if you are not aware of this conflict and subsequent masking.  
 
 R does tell you about these conflicts and associated masking when you load packages but they are only warnings and they are easy to miss.   You should think carefully about situations where function conflicts exist across your attached packages and decide intentionally how to resolve them (or prevent them from happening in the first place).  In the next sections, we describe what we believe to be best practices to handle these situations.
 
@@ -20,6 +20,7 @@ You should only attach full packages if you intend to use multiple functions fro
 
 **Option 2**: If you find using the namespace of the function cumbersome, you can attach a single function from a package rather than the full package.  For example, if we wanted to use only `mvrnorm()` from MASS, we could use this code: `library(MASS, include.only = "mvrnorm)`.  Now you can call `mvrnorm()` without pre-pending its namespace (MASS::).  You can pass a character vector containing multiple function names rather than a single function to `include.only` if you intend to use several functions from the package (e.g., `library(MASS, include.only = c("mvrnorm", "lda"))`).
 
+**Option 3**: If you really need to load most of the functions in a package but several conflict with tidyverse or tidymodels (or other key packages), you can load the additional package but exclude the problematic function or functions.  For example, if you really want to use many of the functions in the MASS package, you could load MASS but exclude the `select()` function to avoid that conflict: `library(MASS, exclude = c("select"))`.  If you later need to use `select()` from MASS, you can use the namespace `MASS::select()` to call it.  
 
 ## Base R conflict managemnt
 
