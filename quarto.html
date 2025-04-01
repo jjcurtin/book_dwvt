@@ -278,11 +278,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#general" id="toc-general" class="nav-link active" data-scroll-target="#general"><span class="header-section-number">14.1</span> General</a>
   <ul class="collapse">
   <li><a href="#yaml-formats" id="toc-yaml-formats" class="nav-link" data-scroll-target="#yaml-formats"><span class="header-section-number">14.1.1</span> YAML formats</a></li>
-  <li><a href="#cli-rendering" id="toc-cli-rendering" class="nav-link" data-scroll-target="#cli-rendering"><span class="header-section-number">14.1.2</span> CLI Rendering</a></li>
-  <li><a href="#chunk-options" id="toc-chunk-options" class="nav-link" data-scroll-target="#chunk-options"><span class="header-section-number">14.1.3</span> Chunk options</a></li>
-  <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures"><span class="header-section-number">14.1.4</span> Figures</a></li>
-  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables"><span class="header-section-number">14.1.5</span> Tables</a></li>
-  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering"><span class="header-section-number">14.1.6</span> Rendering</a></li>
+  <li><a href="#chunk-options" id="toc-chunk-options" class="nav-link" data-scroll-target="#chunk-options"><span class="header-section-number">14.1.2</span> Chunk options</a></li>
+  <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures"><span class="header-section-number">14.1.3</span> Figures</a></li>
+  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables"><span class="header-section-number">14.1.4</span> Tables</a></li>
+  <li><a href="#rendering" id="toc-rendering" class="nav-link" data-scroll-target="#rendering"><span class="header-section-number">14.1.5</span> Rendering</a></li>
   </ul></li>
   <li><a href="#documents" id="toc-documents" class="nav-link" data-scroll-target="#documents"><span class="header-section-number">14.2</span> Documents</a></li>
   <li><a href="#journal-articles" id="toc-journal-articles" class="nav-link" data-scroll-target="#journal-articles"><span class="header-section-number">14.3</span> Journal Articles</a>
@@ -303,10 +302,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#inline-commands" id="toc-inline-commands" class="nav-link" data-scroll-target="#inline-commands"><span class="header-section-number">14.9.1</span> Inline Commands</a></li>
   <li><a href="#chunk-commands" id="toc-chunk-commands" class="nav-link" data-scroll-target="#chunk-commands"><span class="header-section-number">14.9.2</span> Chunk Commands</a></li>
-  <li><a href="#yaml-commands" id="toc-yaml-commands" class="nav-link" data-scroll-target="#yaml-commands"><span class="header-section-number">14.9.3</span> YAML Commands</a></li>
+  <li><a href="#yaml" id="toc-yaml" class="nav-link" data-scroll-target="#yaml"><span class="header-section-number">14.9.3</span> YAML</a></li>
   <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">14.9.4</span> Packages</a></li>
   <li><a href="#re-render-and-freeze" id="toc-re-render-and-freeze" class="nav-link" data-scroll-target="#re-render-and-freeze"><span class="header-section-number">14.9.5</span> Re-render and freeze</a></li>
   </ul></li>
+  <li><a href="#using-parameters" id="toc-using-parameters" class="nav-link" data-scroll-target="#using-parameters"><span class="header-section-number">14.10</span> Using Parameters</a>
+  <ul class="collapse">
+  <li><a href="#using-parameter-values" id="toc-using-parameter-values" class="nav-link" data-scroll-target="#using-parameter-values"><span class="header-section-number">14.10.1</span> Using parameter values</a></li>
+  <li><a href="#passing-parameter-values-at-command-line" id="toc-passing-parameter-values-at-command-line" class="nav-link" data-scroll-target="#passing-parameter-values-at-command-line"><span class="header-section-number">14.10.2</span> Passing parameter values at command line</a></li>
+  </ul></li>
+  <li><a href="#projects" id="toc-projects" class="nav-link" data-scroll-target="#projects"><span class="header-section-number">14.11</span> Projects</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jjcurtin/dwt/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -340,17 +345,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://quarto.org/docs/reference/formats/html.html">HTML</a></li>
 <li><a href="https://quarto.org/docs/reference/formats/pdf.html">PDF</a></li>
 </ul>
-</section>
-<section id="cli-rendering" class="level3" data-number="14.1.2">
-<h3 data-number="14.1.2" class="anchored" data-anchor-id="cli-rendering"><span class="header-section-number">14.1.2</span> CLI Rendering</h3>
-<ul>
-<li>quarto render filename.qmd –to pdf</li>
-<li>quarto render filename.qmd –to html</li>
-</ul>
 <p><a href="https://quarto.org/docs/guide/">Comprehensive guide</a> to Quarto</p>
 </section>
-<section id="chunk-options" class="level3" data-number="14.1.3">
-<h3 data-number="14.1.3" class="anchored" data-anchor-id="chunk-options"><span class="header-section-number">14.1.3</span> Chunk options</h3>
+<section id="chunk-options" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="chunk-options"><span class="header-section-number">14.1.2</span> Chunk options</h3>
 <p>Chunk options are now specified inside the r backtics, with the following syntax:</p>
 <p><code>#| echo: false</code><br>
 <code>#| warning: false</code></p>
@@ -359,8 +357,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 &nbsp;&nbsp;&nbsp;<code>echo: false</code><br>
 &nbsp;&nbsp;&nbsp;<code>warning: false</code></p>
 </section>
-<section id="figures" class="level3" data-number="14.1.4">
-<h3 data-number="14.1.4" class="anchored" data-anchor-id="figures"><span class="header-section-number">14.1.4</span> Figures</h3>
+<section id="figures" class="level3" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="figures"><span class="header-section-number">14.1.3</span> Figures</h3>
 <p>To be included in the quarto figure environment, a figure must have a label that starts with <code>fig-</code>. You can specify the caption as well as the output height/width (in inches) as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-1</span></span>
@@ -381,10 +379,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_bar(stat = "identity")</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="tables" class="level3" data-number="14.1.5">
-<h3 data-number="14.1.5" class="anchored" data-anchor-id="tables"><span class="header-section-number">14.1.5</span> Tables</h3>
-<section id="html" class="level4" data-number="14.1.5.1">
-<h4 data-number="14.1.5.1" class="anchored" data-anchor-id="html"><span class="header-section-number">14.1.5.1</span> HTML</h4>
+<section id="tables" class="level3" data-number="14.1.4">
+<h3 data-number="14.1.4" class="anchored" data-anchor-id="tables"><span class="header-section-number">14.1.4</span> Tables</h3>
+<section id="html" class="level4" data-number="14.1.4.1">
+<h4 data-number="14.1.4.1" class="anchored" data-anchor-id="html"><span class="header-section-number">14.1.4.1</span> HTML</h4>
 <p>Plain knitr::kable() renders a nicely striped table in HTML:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -606,8 +604,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Additional HTML-only features of kableExtra are documented <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html#HTML_Only_Features">here</a></p>
 </section>
-<section id="pdf" class="level4" data-number="14.1.5.2">
-<h4 data-number="14.1.5.2" class="anchored" data-anchor-id="pdf"><span class="header-section-number">14.1.5.2</span> PDF</h4>
+<section id="pdf" class="level4" data-number="14.1.4.2">
+<h4 data-number="14.1.4.2" class="anchored" data-anchor-id="pdf"><span class="header-section-number">14.1.4.2</span> PDF</h4>
 <p>If using the <a href="https://github.com/mvuorre/quarto-apaish">typst APAish manuscript</a> extension, note that Quarto 1.4XXX uses an older version of Typst without good table support. That should be fixed in the 1.5 release.</p>
 <p>The documentation for producing LaTeX tables in kableExtra is <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf">here</a></p>
 <p>The following two tables demonstrate a complex table of the type used in the PDF ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting. It displays not unlike an HTML table:</p>
@@ -756,8 +754,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="useful-table-options-and-features" class="level4" data-number="14.1.5.3">
-<h4 data-number="14.1.5.3" class="anchored" data-anchor-id="useful-table-options-and-features"><span class="header-section-number">14.1.5.3</span> Useful Table Options and features</h4>
+<section id="useful-table-options-and-features" class="level4" data-number="14.1.4.3">
+<h4 data-number="14.1.4.3" class="anchored" data-anchor-id="useful-table-options-and-features"><span class="header-section-number">14.1.4.3</span> Useful Table Options and features</h4>
 <p>To be sure tables display with NA cells as blanks (instead of “NA”) include this before your first table:</p>
 <p><code>options(knitr.kable.NA = "")</code></p>
 <p>kableExtra has a function is collapse_rows, yet that seems to be <a href="https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows">persistently</a> <a href="https://github.com/haozhu233/kableExtra/issues/624">broken</a></p>
@@ -765,30 +763,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Similarly, to supress hlines on headers created by <code>pack_rows()</code>, you need to add <code>extra_css = "border-bottom: none"</code> into the <code>pack_rows()</code> command.</p>
 </section>
 </section>
-<section id="rendering" class="level3" data-number="14.1.6">
-<h3 data-number="14.1.6" class="anchored" data-anchor-id="rendering"><span class="header-section-number">14.1.6</span> Rendering</h3>
-<section id="single-page-rendering" class="level4" data-number="14.1.6.1">
-<h4 data-number="14.1.6.1" class="anchored" data-anchor-id="single-page-rendering"><span class="header-section-number">14.1.6.1</span> Single-page rendering</h4>
-<p>Hitting the Render button renders the single active document. This will be the primary method of rendering for analysis documents, manuscripts, and presentations.</p>
-<p>This method can also be used to re-render a single chapter in a book or a single page on a website.</p>
-</section>
-<section id="full-bookwebsite-rendering" class="level4" data-number="14.1.6.2">
-<h4 data-number="14.1.6.2" class="anchored" data-anchor-id="full-bookwebsite-rendering"><span class="header-section-number">14.1.6.2</span> Full book/website rendering</h4>
+<section id="rendering" class="level3" data-number="14.1.5">
+<h3 data-number="14.1.5" class="anchored" data-anchor-id="rendering"><span class="header-section-number">14.1.5</span> Rendering</h3>
+<p>For rendering books and slides, we have written a bash script to handle setting the <code>_quarto.yml</code> file and then rendering the full project or a single file.</p>
+<ul>
+<li>call the function from the terminal: <code>./render.sh filename.qmd book</code></li>
+<li>the first parameter can be the name of the qmd file or <code>all</code> to render all units (only used for books, not slides)</li>
+<li>the second parameter can be <code>book</code>, <code>slides</code> or <code>slides_wide</code></li>
+</ul>
+<section id="full-bookwebsite-rendering" class="level4" data-number="14.1.5.1">
+<h4 data-number="14.1.5.1" class="anchored" data-anchor-id="full-bookwebsite-rendering"><span class="header-section-number">14.1.5.1</span> Full book/website rendering</h4>
 <p>For books and websites, which have many .qmd documents linked together, you would render the full book by calling <code>quarto::quarto_render()</code> to render all documents in the active project directory.</p>
 <p>For books and websites, if anything changes in the .yml file (such as addition or deletion of a chapter), you MUST re-render the entire directory in this manner, otherwise the added/deleted chapter will not be rendered correctly.</p>
 </section>
-<section id="rendering-other-formats-and-targets" class="level4" data-number="14.1.6.3">
-<h4 data-number="14.1.6.3" class="anchored" data-anchor-id="rendering-other-formats-and-targets"><span class="header-section-number">14.1.6.3</span> Rendering other formats and targets</h4>
+<section id="rendering-other-formats-and-targets" class="level4" data-number="14.1.5.2">
+<h4 data-number="14.1.5.2" class="anchored" data-anchor-id="rendering-other-formats-and-targets"><span class="header-section-number">14.1.5.2</span> Rendering other formats and targets</h4>
 <p>You can specify render targets and document render ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets</p>
 </section>
-<section id="pdf-1" class="level4" data-number="14.1.6.4">
-<h4 data-number="14.1.6.4" class="anchored" data-anchor-id="pdf-1"><span class="header-section-number">14.1.6.4</span> PDF</h4>
+<section id="pdf-1" class="level4" data-number="14.1.5.3">
+<h4 data-number="14.1.5.3" class="anchored" data-anchor-id="pdf-1"><span class="header-section-number">14.1.5.3</span> PDF</h4>
 <p>You can specify rendering to PDF format by adding the following to your .yml file:</p>
 <p>format: pdf: documentclass: book</p>
 <p>You can then explictly render just the PDF format by specifying both the output format and the filename in the call to quarto_render:</p>
 <p>quarto::quarto_render(output_format = “pdf”,output_file = “dwt.pdf”)</p>
-<section id="pdf-fonts" class="level5" data-number="14.1.6.4.1">
-<h5 data-number="14.1.6.4.1" class="anchored" data-anchor-id="pdf-fonts"><span class="header-section-number">14.1.6.4.1</span> PDF Fonts</h5>
+<section id="pdf-fonts" class="level5" data-number="14.1.5.3.1">
+<h5 data-number="14.1.5.3.1" class="anchored" data-anchor-id="pdf-fonts"><span class="header-section-number">14.1.5.3.1</span> PDF Fonts</h5>
 <p>To specify a font you add the following to the YAML:</p>
 <p>If using Xelatex:<br>
 <code>mainfont : FontName # for document text</code><br>
@@ -877,8 +876,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="terminal-commands" class="level2" data-number="14.8">
 <h2 data-number="14.8" class="anchored" data-anchor-id="terminal-commands"><span class="header-section-number">14.8</span> Terminal Commands</h2>
 <ul>
-<li><p><code>quarto publish quarto-pub</code> to publish a presentation or document to Quarto Pub</p></li>
-<li></li>
+<li><code>quarto publish quarto-pub</code> to publish a presentation or document to Quarto Pub</li>
+<li><code>quarto render filename.qmd --to pdf</code></li>
+<li><code>quarto render filename.qmd --to html</code></li>
+<li><code>quarto render docname.qmd -o outputname.html</code></li>
+<li><code>quarto render docname.qmd -P pv1:1 -P pv2:5</code></li>
+<li><code>/opt/quarto/"${QUARTO_VERSION}"/bin/quarto check</code> to check installation details</li>
 </ul>
 </section>
 <section id="latex-and-quarto" class="level2" data-number="14.9">
@@ -892,9 +895,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="14.9.2" class="anchored" data-anchor-id="chunk-commands"><span class="header-section-number">14.9.2</span> Chunk Commands</h3>
 <p>Multiline commands can be wrapped in latex code chunks:</p>
 </section>
-<section id="yaml-commands" class="level3" data-number="14.9.3">
-<h3 data-number="14.9.3" class="anchored" data-anchor-id="yaml-commands"><span class="header-section-number">14.9.3</span> YAML Commands</h3>
-<p><code>\raggedright</code> added to the inclde-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)</p>
+<section id="yaml" class="level3" data-number="14.9.3">
+<h3 data-number="14.9.3" class="anchored" data-anchor-id="yaml"><span class="header-section-number">14.9.3</span> YAML</h3>
+<p><code>\raggedright</code> added to the include-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)</p>
+<p>We wuse the following in the YAML header to set up a html document to render as a single file with a TOC.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  html<span class="sc">:</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    embed<span class="sc">-</span>resources<span class="sc">:</span> true</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    toc<span class="sc">:</span> true </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    toc_depth<span class="sc">:</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="packages" class="level3" data-number="14.9.4">
 <h3 data-number="14.9.4" class="anchored" data-anchor-id="packages"><span class="header-section-number">14.9.4</span> Packages</h3>
@@ -903,9 +914,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="re-render-and-freeze" class="level3" data-number="14.9.5">
 <h3 data-number="14.9.5" class="anchored" data-anchor-id="re-render-and-freeze"><span class="header-section-number">14.9.5</span> Re-render and freeze</h3>
 <p>https://quarto.org/docs/projects/code-execution.html</p>
-
-
 </section>
+</section>
+<section id="using-parameters" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="using-parameters"><span class="header-section-number">14.10</span> Using Parameters</h2>
+<p>You define parameters in the YAML using the syntax below</p>
+<ul>
+<li>You can assign initial values to the parameters. These values will be used by default if you do not replace them with new values from the command line when you render the script.</li>
+<li>You can update these values with new values you pass in when you render the script (see below).<br>
+</li>
+<li>If you only provide a subset of updated parameter values when you render the document, the default values will be used for the remaining parameters.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>params<span class="sc">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  pv1<span class="sc">:</span> <span class="dv">5</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  pv2<span class="sc">:</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In some instances, I prefer to assign the values from the params list to individual variables</p>
+<ul>
+<li>Code is shorter when using these variables</li>
+<li>I can update them interactively if I want to use different values (the params list is read-only)</li>
+</ul>
+<p>First set the parameters in the YAML as above. Then put this code chunk right at the top of the script. If you edit this code chunk to assign new values interactively, make sure you comment it out when you save the final script!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pv1 <span class="ot">&lt;-</span> params<span class="sc">$</span>pv1</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pv2 <span class="ot">&lt;-</span> params<span class="sc">$</span>pv2</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pv1 &lt;- 5 # Use this line to interactively assign new value</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pv2 &lt;- 10 # use this line to interactively assign new value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="using-parameter-values" class="level3" data-number="14.10.1">
+<h3 data-number="14.10.1" class="anchored" data-anchor-id="using-parameter-values"><span class="header-section-number">14.10.1</span> Using parameter values</h3>
+<p>When you use params in the YAML, a list named <code>params</code> is created.</p>
+<ul>
+<li>You can then use this list as normal with no further code needed to establish the values.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>params<span class="sc">$</span>pv1 <span class="sc">+</span> params<span class="sc">$</span>pv2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>You can also access these values using inline r statements. See example below. I strongly recommend using this in the title of your document so that you can confirm that you correctly updated the parameter values when you rendered! e.g.,</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Demo of quarto document with pv1 = `r params$pv1` and  pv2 = `r params$pv2`."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Or if you assigned the parameter values to variables as I recommended, you can just use those variables as you normally would. They will start with the values assigned to associated parameters (in YAML or input from command line)</li>
+</ul>
+</section>
+<section id="passing-parameter-values-at-command-line" class="level3" data-number="14.10.2">
+<h3 data-number="14.10.2" class="anchored" data-anchor-id="passing-parameter-values-at-command-line"><span class="header-section-number">14.10.2</span> Passing parameter values at command line</h3>
+<p>I prefer to render quarto documents in the terminal.</p>
+<ul>
+<li>You can indicate the output filename (otherwise, the output file name is set to the input filename with a different extension).<br>
+</li>
+<li>You can also pass in values to the parameters, which is typically why we use parameters in the first place</li>
+</ul>
+<p>Use the following syntax to render quarto documents at command line.</p>
+<ul>
+<li>use -P to provide a parameter value. No space between parameter name and value. If you provide values for only a subset of parameters, defaults will be used for other parameters</li>
+<li>use <code>-o</code> to specify filename (defaults to input filename if not provided).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>quarto render docname.qmd <span class="sc">-</span>o outputname.html  <span class="sc">-</span>P pv1<span class="sc">:</span><span class="dv">1</span> <span class="sc">-</span>P pv2<span class="sc">:</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="projects" class="level2" data-number="14.11">
+<h2 data-number="14.11" class="anchored" data-anchor-id="projects"><span class="header-section-number">14.11</span> Projects</h2>
+<p>As of 2024 our preferred method for creating reproducible analysis is to have a <a href="https://quarto.org/docs/projects/quarto-projects.html">quarto project</a> for each study. Clone from John’s <a href="https://github.com/jjcurtin/study_template">study template repo</a> to begin a new project.</p>
+<p>A project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats.</p>
+<p>Please note that most of the documentation on John’s <a href="https://jjcurtin.github.io/book_dwvt/quarto.html">Data Wrangling quarto page</a> was written when we were creating each format type as a standalone. This information is still valid for that workflow. Differences related to projects will be noted in the appropriate section on that page.</p>
+
+
 </section>
 
 </main> <!-- /main -->
