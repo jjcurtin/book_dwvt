@@ -2,11 +2,8 @@
 
 ```{r}
 #| echo: false
-
-options(conflicts.policy = "depends.ok")
 library(tidyverse)
 ```
-
 
 
 ## General
@@ -15,11 +12,6 @@ library(tidyverse)
 
 - [HTML](https://quarto.org/docs/reference/formats/html.html)
 - [PDF](https://quarto.org/docs/reference/formats/pdf.html)
-
-### CLI Rendering 
-
-- quarto render filename.qmd --to pdf
-- quarto render filename.qmd --to html
 
 
 [Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
@@ -245,11 +237,11 @@ Similarly, to supress hlines on headers created by `pack_rows()`, you need to ad
 
 ### Rendering
 
-#### Single-page rendering
+For rendering books and slides, we have written a bash script to handle setting the `_quarto.yml` file and then rendering the full project or a single file.  
 
-Hitting the Render button renders the single active document. This will be the primary method of rendering for analysis documents, manuscripts, and presentations. 
-
-This method can also be used to re-render a single chapter in a book or a single page on a website.
+- call the function from the terminal: `./render.sh filename.qmd book`
+- the first parameter can be the name of the qmd file or `all` to render all units (only used for books, not slides)
+- the second parameter can be `book`, `slides` or `slides_wide`
 
 #### Full book/website rendering
 
@@ -381,9 +373,12 @@ Basically, any commit which includes changed html files tells Github Actions to 
 
 ## Terminal Commands
 
-* `quarto publish quarto-pub` to publish a presentation or document to Quarto Pub
-
-* 
+- `quarto publish quarto-pub` to publish a presentation or document to Quarto Pub
+- `quarto render filename.qmd --to pdf`
+- `quarto render filename.qmd --to html`
+- `quarto render docname.qmd -o outputname.html`
+- `quarto render docname.qmd -P pv1:1 -P pv2:5`
+- `/opt/quarto/"${QUARTO_VERSION}"/bin/quarto check` to check installation details 
 
 ## Latex and Quarto
 
@@ -405,8 +400,20 @@ A & B \\
 \end{tabular}
 ```
 
-### YAML Commands
-`\raggedright` added to the inclde-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)
+### YAML
+`\raggedright` added to the include-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)
+
+
+We wuse the following in the YAML header to set up a html document to render as a single file with a TOC.
+```{r}
+#| eval: false
+
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 4
+```
 
 ### Packages
 
@@ -419,3 +426,76 @@ A & B \\
 ### Re-render and freeze
 
 https://quarto.org/docs/projects/code-execution.html
+
+## Using Parameters
+
+You define parameters in the YAML using the syntax below
+
+* You can assign initial values to the parameters.  These values will be used by default if you do not replace them with new values from the command line when you render the script.
+* You can update these values with new values you pass in when you render the script (see below).    
+* If you only provide a subset of updated parameter values when you render the document, the default values will be used for the remaining parameters.
+
+```{r}
+#| eval: false
+
+params:
+  pv1: 5
+  pv2: 10
+```
+
+In some instances, I prefer to assign the values from the params list to individual variables
+
+* Code is shorter when using these variables
+* I can update them interactively if I want to use different values (the params list is read-only)
+
+First set the parameters in the YAML as above.  Then put this code chunk right at the top of the script.   If you edit this code chunk to assign new values interactively, make sure you comment it out when you save the final script!
+```{r}
+pv1 <- params$pv1
+pv2 <- params$pv2
+# pv1 <- 5 # Use this line to interactively assign new value
+# pv2 <- 10 # use this line to interactively assign new value
+```
+
+
+### Using parameter values
+When you use params in the YAML, a list named `params` is created.  
+
+* You can then use this list as normal with no further code needed to establish the values.
+```{r}
+params$pv1 + params$pv2
+```
+
+* You can also access these values using inline r statements. See example below.  I strongly recommend using this in the title of your document so that you can confirm that you correctly updated the parameter values when you rendered!  e.g.,
+
+```{r}
+#| eval: false
+
+title: "Demo of quarto document with pv1 = `r params$pv1` and  pv2 = `r params$pv2`."
+```
+
+* Or if you assigned the parameter values to variables as I recommended, you can just use those variables as you normally would.  They will start with the values assigned to associated parameters (in YAML or input from command line)
+
+### Passing parameter values at command line
+
+I prefer to render quarto documents in the terminal.  
+
+* You can indicate the output filename (otherwise, the output file name is set to the input filename with a different extension).  
+* You can also pass in values to the parameters, which is typically why we use parameters in the first place
+
+Use the following syntax to render quarto documents at command line.
+
+* use -P to provide a parameter value.  No space between parameter name and value.  If you provide values for only a subset of parameters, defaults will be used for other parameters
+* use `-o` to specify filename (defaults to input filename if not provided).
+
+```{r}
+#| eval: false
+
+quarto render docname.qmd -o outputname.html  -P pv1:1 -P pv2:5
+```
+
+## Projects
+As of 2024 our preferred method for creating reproducible analysis is to have a [quarto project](https://quarto.org/docs/projects/quarto-projects.html) for each study. Clone from John's [study template repo](https://github.com/jjcurtin/study_template) to begin a new project.
+
+A project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents  to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats. 
+
+Please note that most of the documentation on John's [Data Wrangling quarto page](https://jjcurtin.github.io/book_dwvt/quarto.html) was written when we were creating each format type as a standalone. This information is still valid for that workflow. Differences related to projects will be noted in the appropriate section on that page.
