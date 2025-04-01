@@ -450,6 +450,8 @@ In some instances, I prefer to assign the values from the params list to individ
 
 First set the parameters in the YAML as above.  Then put this code chunk right at the top of the script.   If you edit this code chunk to assign new values interactively, make sure you comment it out when you save the final script!
 ```{r}
+#| eval: false
+
 pv1 <- params$pv1
 pv2 <- params$pv2
 # pv1 <- 5 # Use this line to interactively assign new value
@@ -462,6 +464,8 @@ When you use params in the YAML, a list named `params` is created.
 
 * You can then use this list as normal with no further code needed to establish the values.
 ```{r}
+#| eval: false
+
 params$pv1 + params$pv2
 ```
 
