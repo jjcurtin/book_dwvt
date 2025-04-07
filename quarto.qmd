@@ -497,9 +497,22 @@ Use the following syntax to render quarto documents at command line.
 quarto render docname.qmd -o outputname.html  -P pv1:1 -P pv2:5
 ```
 
-## Projects
-As of 2024 our preferred method for creating reproducible analysis is to have a [quarto project](https://quarto.org/docs/projects/quarto-projects.html) for each study. Clone from John's [study template repo](https://github.com/jjcurtin/study_template) to begin a new project.
+## Manuscript Projects
+As of 2024 our preferred method for creating reproducible analysis is to have a [quarto project](https://quarto.org/docs/projects/quarto-projects.html) for each study.  
 
 A project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents  to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats. 
 
 Please note that most of the documentation on John's [Data Wrangling quarto page](https://jjcurtin.github.io/book_dwvt/quarto.html) was written when we were creating each format type as a standalone. This information is still valid for that workflow. Differences related to projects will be noted in the appropriate section on that page.
+
+Here are steps to set up a manuscript project:
+
+1.  Create study repo for project on github in John's account (call it study_NAME)
+2.  Add collaborators to the repo
+3.  Clone the repo to your computer
+4.  Create manuscript project files in the repo.  In the terminal (in github folder above new repo) type `quarto create project manuscript` and then indicate the name of the repo folder when asked
+5.  Add a gh-pages branch to the repo. Do this in terminal with these commands
+  - `git switch --orphan gh-pages`
+  - `git commit --allow-empty -m "Initial commit on orphan branch"`
+  - `git push -u origin gh-pages`
+
+6. Set up github to publish website from the gh-pages branch.  Go to settings, pages, and select the gh-pages and /root as the branch to publish from. The website will be published at https://jjcurtin.github.io/study_NAME
