@@ -311,7 +311,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-parameter-values" id="toc-using-parameter-values" class="nav-link" data-scroll-target="#using-parameter-values"><span class="header-section-number">14.10.1</span> Using parameter values</a></li>
   <li><a href="#passing-parameter-values-at-command-line" id="toc-passing-parameter-values-at-command-line" class="nav-link" data-scroll-target="#passing-parameter-values-at-command-line"><span class="header-section-number">14.10.2</span> Passing parameter values at command line</a></li>
   </ul></li>
-  <li><a href="#projects" id="toc-projects" class="nav-link" data-scroll-target="#projects"><span class="header-section-number">14.11</span> Projects</a></li>
+  <li><a href="#manuscript-projects" id="toc-manuscript-projects" class="nav-link" data-scroll-target="#manuscript-projects"><span class="header-section-number">14.11</span> Manuscript Projects</a></li>
+  <li><a href="#quarto-templates" id="toc-quarto-templates" class="nav-link" data-scroll-target="#quarto-templates"><span class="header-section-number">14.12</span> Quarto Templates</a>
+  <ul class="collapse">
+  <li><a href="#yaml-files" id="toc-yaml-files" class="nav-link" data-scroll-target="#yaml-files"><span class="header-section-number">14.12.1</span> YAML files</a></li>
+  <li><a href="#manuscripts" id="toc-manuscripts" class="nav-link" data-scroll-target="#manuscripts"><span class="header-section-number">14.12.2</span> Manuscripts</a></li>
+  </ul></li>
+  <li><a href="#letterhead" id="toc-letterhead" class="nav-link" data-scroll-target="#letterhead"><span class="header-section-number">14.13</span> letterhead</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jjcurtin/dwt/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -979,11 +985,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="projects" class="level2" data-number="14.11">
-<h2 data-number="14.11" class="anchored" data-anchor-id="projects"><span class="header-section-number">14.11</span> Projects</h2>
-<p>As of 2024 our preferred method for creating reproducible analysis is to have a <a href="https://quarto.org/docs/projects/quarto-projects.html">quarto project</a> for each study. Clone from John’s <a href="https://github.com/jjcurtin/study_template">study template repo</a> to begin a new project.</p>
+<section id="manuscript-projects" class="level2" data-number="14.11">
+<h2 data-number="14.11" class="anchored" data-anchor-id="manuscript-projects"><span class="header-section-number">14.11</span> Manuscript Projects</h2>
+<p>As of 2024 our preferred method for creating reproducible analysis is to have a <a href="https://quarto.org/docs/projects/quarto-projects.html">quarto project</a> for each study.</p>
 <p>A project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats.</p>
 <p>Please note that most of the documentation on John’s <a href="https://jjcurtin.github.io/book_dwvt/quarto.html">Data Wrangling quarto page</a> was written when we were creating each format type as a standalone. This information is still valid for that workflow. Differences related to projects will be noted in the appropriate section on that page.</p>
+<p>Here are steps to set up a manuscript project:</p>
+<ol type="1">
+<li>Create study repo for project on github in John’s account (call it study_NAME)</li>
+<li>Add collaborators to the repo</li>
+<li>Clone the repo to your computer</li>
+<li>Create manuscript project files in the repo. In the terminal (in github folder above new repo) type <code>quarto create project manuscript</code> and then indicate the name of the repo folder when asked</li>
+<li>Add a gh-pages branch to the repo. Do this in terminal with these commands</li>
+</ol>
+<ul>
+<li><code>git switch --orphan gh-pages</code></li>
+<li><code>git commit --allow-empty -m "Initial commit on orphan branch"</code></li>
+<li><code>git push -u origin gh-pages</code></li>
+</ul>
+<ol start="6" type="1">
+<li>Set up github to publish website from the gh-pages branch. Go to settings, pages, and select the gh-pages and /root as the branch to publish from. The website will be published at https://jjcurtin.github.io/study_NAME</li>
+</ol>
+</section>
+<section id="quarto-templates" class="level2" data-number="14.12">
+<h2 data-number="14.12" class="anchored" data-anchor-id="quarto-templates"><span class="header-section-number">14.12</span> Quarto Templates</h2>
+<p>All of the following templates are quarto files for use in creating lab-related documentation</p>
+<ul>
+<li><a href="https://github.com/jjcurtin/lab_support/blob/main/templates/simple.qmd">Simple Quarto Template</a>. This simple template allows you to set margins/font and to switch from HTML to PDF output.</li>
+</ul>
+<section id="yaml-files" class="level3" data-number="14.12.1">
+<h3 data-number="14.12.1" class="anchored" data-anchor-id="yaml-files"><span class="header-section-number">14.12.1</span> YAML files</h3>
+<p>Including these YAML files in a blank .qmd document sets up output for either HTML or PDF, tailored to ARC standards with respect to margins, font, etc.</p>
+<p>TBD (CONTENTS NEED TO BE ADDED TO THESE FILES)</p>
+<ul>
+<li><a href="https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_html.qmd">HTML YAML</a></li>
+<li><a href="https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_pdf.qmd">PD YAML</a></li>
+</ul>
+</section>
+<section id="manuscripts" class="level3" data-number="14.12.2">
+<h3 data-number="14.12.2" class="anchored" data-anchor-id="manuscripts"><span class="header-section-number">14.12.2</span> Manuscripts</h3>
+<section id="apa" class="level4" data-number="14.12.2.1">
+<h4 data-number="14.12.2.1" class="anchored" data-anchor-id="apa"><span class="header-section-number">14.12.2.1</span> APA</h4>
+<p><a href="https://github.com/jjcurtin/lab_support/blob/main/templates/apa.qmd">.qmd template</a>. This is based on the template at <a href="https://github.com/wjschne/apaquarto">this repo</a>. Our version is currently under development to try and load assets from our lab_support repo rather than installing the extention files locally.</p>
+</section>
+<section id="csl-files" class="level4" data-number="14.12.2.2">
+<h4 data-number="14.12.2.2" class="anchored" data-anchor-id="csl-files"><span class="header-section-number">14.12.2.2</span> CSL files</h4>
+<p>Below are the YAML code of a couple that we use frequently (linked to the primary CSL repo)</p>
+<p>NIH Grant Proposals:<br>
+<code>csl: https://raw.githubusercontent.com/citation-style-language/styles/master/national-library-of-medicine-grant-proposals.csl</code></p>
+<p>Elsevier (Vancouver substyle):<br>
+<code>csl: https://raw.githubusercontent.com/citation-style-language/styles-distribution/f8524f9b9df60e94e98f824f242a1fb27cc9fc59/elsevier-vancouver.csl</code></p>
+<p>APA 7th Edition:<br>
+<code>csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl</code></p>
+<p>Note: the <a href="https://github.com/jjcurtin/lab_support/blob/main/templates/apa.qmd">apa quarto template</a> in the <code>lab_support</code> repo calls its own version of the apa.csl from within its ex_apa support folder.</p>
+</section>
+</section>
+</section>
+<section id="letterhead" class="level2" data-number="14.13">
+<h2 data-number="14.13" class="anchored" data-anchor-id="letterhead"><span class="header-section-number">14.13</span> letterhead</h2>
+<p>Letterhead: <a href="https://github.com/jjcurtin/lab_support/blob/main/templates/letterhead.qmd">.qmd template</a>. See Susan or John for assistance in personalizing this for other lab members.</p>
 
 
 </section>

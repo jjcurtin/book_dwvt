@@ -610,11 +610,31 @@
     ]
   },
   {
-    "objectID": "quarto.html#projects",
-    "href": "quarto.html#projects",
+    "objectID": "quarto.html#manuscript-projects",
+    "href": "quarto.html#manuscript-projects",
     "title": "14  Quarto",
-    "section": "14.11 Projects",
-    "text": "14.11 Projects\nAs of 2024 our preferred method for creating reproducible analysis is to have a quarto project for each study. Clone from John’s study template repo to begin a new project.\nA project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats.\nPlease note that most of the documentation on John’s Data Wrangling quarto page was written when we were creating each format type as a standalone. This information is still valid for that workflow. Differences related to projects will be noted in the appropriate section on that page.",
+    "section": "14.11 Manuscript Projects",
+    "text": "14.11 Manuscript Projects\nAs of 2024 our preferred method for creating reproducible analysis is to have a quarto project for each study.\nA project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats.\nPlease note that most of the documentation on John’s Data Wrangling quarto page was written when we were creating each format type as a standalone. This information is still valid for that workflow. Differences related to projects will be noted in the appropriate section on that page.\nHere are steps to set up a manuscript project:\n\nCreate study repo for project on github in John’s account (call it study_NAME)\nAdd collaborators to the repo\nClone the repo to your computer\nCreate manuscript project files in the repo. In the terminal (in github folder above new repo) type quarto create project manuscript and then indicate the name of the repo folder when asked\nAdd a gh-pages branch to the repo. Do this in terminal with these commands\n\n\ngit switch --orphan gh-pages\ngit commit --allow-empty -m \"Initial commit on orphan branch\"\ngit push -u origin gh-pages\n\n\nSet up github to publish website from the gh-pages branch. Go to settings, pages, and select the gh-pages and /root as the branch to publish from. The website will be published at https://jjcurtin.github.io/study_NAME",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto.html#quarto-templates",
+    "href": "quarto.html#quarto-templates",
+    "title": "14  Quarto",
+    "section": "14.12 Quarto Templates",
+    "text": "14.12 Quarto Templates\nAll of the following templates are quarto files for use in creating lab-related documentation\n\nSimple Quarto Template. This simple template allows you to set margins/font and to switch from HTML to PDF output.\n\n\n14.12.1 YAML files\nIncluding these YAML files in a blank .qmd document sets up output for either HTML or PDF, tailored to ARC standards with respect to margins, font, etc.\nTBD (CONTENTS NEED TO BE ADDED TO THESE FILES)\n\nHTML YAML\nPD YAML\n\n\n\n14.12.2 Manuscripts\n\n14.12.2.1 APA\n.qmd template. This is based on the template at this repo. Our version is currently under development to try and load assets from our lab_support repo rather than installing the extention files locally.\n\n\n14.12.2.2 CSL files\nBelow are the YAML code of a couple that we use frequently (linked to the primary CSL repo)\nNIH Grant Proposals:\ncsl: https://raw.githubusercontent.com/citation-style-language/styles/master/national-library-of-medicine-grant-proposals.csl\nElsevier (Vancouver substyle):\ncsl: https://raw.githubusercontent.com/citation-style-language/styles-distribution/f8524f9b9df60e94e98f824f242a1fb27cc9fc59/elsevier-vancouver.csl\nAPA 7th Edition:\ncsl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl\nNote: the apa quarto template in the lab_support repo calls its own version of the apa.csl from within its ex_apa support folder.",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto.html#letterhead",
+    "href": "quarto.html#letterhead",
+    "title": "14  Quarto",
+    "section": "14.13 letterhead",
+    "text": "14.13 letterhead\nLetterhead: .qmd template. See Susan or John for assistance in personalizing this for other lab members.",
     "crumbs": [
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Quarto</span>"
     ]
