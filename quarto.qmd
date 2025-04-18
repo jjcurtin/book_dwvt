@@ -516,3 +516,45 @@ Here are steps to set up a manuscript project:
   - `git push -u origin gh-pages`
 
 6. Set up github to publish website from the gh-pages branch.  Go to settings, pages, and select the gh-pages and /root as the branch to publish from. The website will be published at https://jjcurtin.github.io/study_NAME
+
+
+
+## Quarto Templates
+All of the following templates are quarto files for use in creating lab-related documentation
+
+*  [Simple Quarto Template](https://github.com/jjcurtin/lab_support/blob/main/templates/simple.qmd). This simple template allows you to set margins/font and to switch from HTML to PDF output.
+
+
+### YAML files
+
+Including these YAML files in a blank .qmd document sets up output for either HTML or PDF, tailored to ARC standards with respect to margins, font, etc.
+
+TBD (CONTENTS NEED TO BE ADDED TO THESE FILES)
+
+*  [HTML YAML](https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_html.qmd)
+*  [PD YAML](https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_pdf.qmd)
+
+
+### Manuscripts
+
+#### APA
+[.qmd template](https://github.com/jjcurtin/lab_support/blob/main/templates/apa.qmd). This is based on the template at [this repo](https://github.com/wjschne/apaquarto). Our version is currently under development to try and load assets from our lab_support repo rather than installing the extention files locally.
+
+#### CSL files
+
+Below are the YAML code of a couple that we use frequently (linked to the primary CSL repo)
+
+NIH Grant Proposals:  
+`csl: https://raw.githubusercontent.com/citation-style-language/styles/master/national-library-of-medicine-grant-proposals.csl`
+
+Elsevier (Vancouver substyle):  
+`csl: https://raw.githubusercontent.com/citation-style-language/styles-distribution/f8524f9b9df60e94e98f824f242a1fb27cc9fc59/elsevier-vancouver.csl`
+
+APA 7th Edition:  
+`csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl`
+
+Note: the [apa quarto template](https://github.com/jjcurtin/lab_support/blob/main/templates/apa.qmd) in the `lab_support` repo calls its own version of the apa.csl from within its ex_apa support folder. 
+
+
+## letterhead
+Letterhead: [.qmd template](https://github.com/jjcurtin/lab_support/blob/main/templates/letterhead.qmd). See Susan or John for assistance in personalizing this for other lab members.
