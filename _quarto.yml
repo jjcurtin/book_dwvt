@@ -39,5 +39,6 @@ book:
     - simulations.qmd
     - programming.qmd
     - quarto.qmd
+    - quarto.qmd
     - datetimes_dates.qmd
     - resources.qmd

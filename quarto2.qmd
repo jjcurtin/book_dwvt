@@ -1,0 +1,615 @@
+# Quarto (Revision Draft)
+
+```{r}
+#| echo: false
+library(tidyverse)
+```
+
+## Proposed outline
+
+* I propose breaking out simple info into a "Quarto Basics" page for new users, and everything else into a "Advanced Quarto" page. Most reference material for you would go on the second page, hopefully making it easier to find.
+
+* I have eliminated console commands which require installing the quarto R package, as we are moving towards having students be comfortable with terminal from the start
+
+* All template links will need updating if we alter the organization in lab_support
+
+
+
+
+
+## Quarto Basics
+
+This page is for those new to Quarto. It provides basic information on installing & writing simple Quarto scripts, in the same way you may have previously written an R script or R-Markdown script.
+
+### Installing Quarto
+
+* [Getting started with Quarto](https://quarto.org/docs/get-started/)
+* [Installing Quarto on Linux](https://jjcurtin.github.io/docs_arc/linux_install.html#quarto)
+
+
+### General Documentation
+
+[Comprehensive guide](https://quarto.org/docs/guide/) to Quarto
+
+You can create a new quarto document from within RStudio using File -> New; or start by copying an existing script. We also have @sec-Templates you can start with.
+
+Quarto documents are styled primarily using Markdown.  The Quarto Guide provides more detail on [markdown basics](https://quarto.org/docs/authoring/markdown-basics.html)
+
+### Documents
+We use Quarto documents for two purposes - reproducible analyses and submitted papers.  We will generally render analysis docs to html, and papers to pdf.  The Quarto Guide provides more detail on on creating [pdfs](https://quarto.org/docs/output-formats/pdf-basics.html) and [html](https://quarto.org/docs/output-formats/html-basics.html) documents.
+
+####  Output Formats
+The YAML header of your quarto document specifies your output format. These pages provide additional format-specific header options:
+
+- [HTML](https://quarto.org/docs/reference/formats/html.html)
+- [PDF](https://quarto.org/docs/reference/formats/pdf.html)
+
+
+### Presentations
+We also use Quarto to make revealjs slide decks for presentations.  The Quarto Guide provides extensive documentation and sample slides.  
+
+* You can begin with the [overview](https://quarto.org/docs/presentations) of presentations across formats (Quarto can also render powerpoint and other formats).  
+* Follow this with a [revealjs overview](https://quarto.org/docs/presentations/revealjs/) and then the revealjs [reference chapter](https://quarto.org/docs/reference/formats/presentations/revealjs.html) for header options. 
+* The Quarto Guide also provides a [chapter on presenter tools](https://quarto.org/docs/presentations/revealjs/presenting.html).
+
+Divs (:::) and spans([]) are used extensively in presentations.  An introduction to their use is provided in the [markdown basics chapter](https://quarto.org/docs/authoring/markdown-basics.html#divs-and-spans). The Pandoc manual provides [more detail](https://pandoc.org/MANUAL.html#divs-and-spans).
+
+
+### Chunk options
+
+Chunk options are now specified inside the chunk rather than as part of the chunk header, with the following syntax:
+
+`#| echo: false`  
+`#| warning: false`  
+
+To specify these options globally, they need to be added to the `_quarto.yml` file, with these lines:
+
+`execute: `  
+&nbsp;&nbsp;&nbsp;`  echo: false`  
+&nbsp;&nbsp;&nbsp;`  warning: false`  
+
+
+### Figures
+
+To be included in the quarto figure environment, a code chunk producing a figure must have a label that starts with `fig-`. You can specify the caption as well as the output height/width (in inches) as follows:
+
+````{{r}}
+#| label: fig-1
+#| fig-cap: "A Basic Barplot Figure"
+#| fig-height: 6
+#| fig-width: 6
+
+ggplot(data, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+````
+
+To display a code-generated figure without the caption, the label CANNOT start with `fig-`.You must also remove the `#| fig-cap:` option from the chunk, and explicitly include a height and/or width specification, this time using `out-width` and `out-height`:
+
+
+```{{r}}
+#| label: a-fig-1
+#| out-width: 6in
+#| out-height: 6in
+
+ggplot(data, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+```
+
+### Simple HTML Tables
+
+Plain knitr::kable() renders a nicely striped table in HTML:
+
+```{r}
+#| echo: false
+#| warning: false
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(5) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  knitr::kable(.,
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears"))
+
+
+```
+
+See the Advanced Quarto page for code to produce more complex tables.
+
+
+
+
+### Citations
+The Quarto Guide provides more detail about how to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html). As with markdown, the format is `[@citekey1; @citekey2]` — citations go inside square brackets and are separated by semicolons
+
+### Bibliographies
+To add a bibliography with a citation style, add the following lines to the .qmd file YAML header (or to the _quarto.yml for Advanced Formats):
+
+`bibliography: references.bib`  
+`csl: name_of_csl_file.csl`  
+
+Note, we will typically call our csl files from [the official Citation Style Language Repo](https://github.com/citation-style-language/styles); which simply requires the URL of the raw file from github.
+
+See Advanced Quarto: CSL Files for YAML code for our commonly used CSL files
+
+The Quarto Guide provides more detail about how to work with [citations and footnotes](https://quarto.org/docs/authoring/footnotes-and-citations.html). As with markdown, the format is `[@citekey1; @citekey2]` — citations go inside square brackets and are separated by semicolons
+
+
+### Rendering
+
+At the most basic, inside RStudio you can use the terminal command `quarto render path/to/filename.qmd` to render your output document.
+
+You can also specify what format to render to, using the `--to` flag:
+
+`quarto render path/to/filename.qmd # renders all formats specified in YAML header`
+`quarto render path/to/filename.qmd --to pdf # renders only PDF format`
+
+
+## Publishing
+
+Rendering a quarto document produces an output file of a specified format, usually in the same folder as the parent .qmd document. To make that file available to others, we instead `publish` the documents.
+
+You can [publish](https://quarto.org/docs/publishing) documents, books, and presentations to a variety of places. The two primary types you will encounter and how to publish them, are described below:
+
+### Internal Analysis Documents
+John maintains a [Reports repo](https://github.com/jjcurtin/reports) in which we publish study-related analysis documents which should be shared among lab members only (i.e., which may display sensitive data). They are "published" by copying  the bash script in the root of that repo ([render_report.sh](https://github.com/jjcurtin/reports/blob/main/render_report.sh)) to your project directory and running from within your project. The script also places the output document in a folder structure organized by study or project, and commits it to the report repo. This allows any lab member with repo access to view the html report without needing to re-run the analysis file, and without making sensitive data public. 
+
+### Presentations and Reproducible Analysis Documents 
+Our preferred location for presentations and documents which are intended to be shared outside the lab is [Quarto Pub](https://quartopub.com/).  This site is public and free.  You can set up your own account, or there are two lab accounts; one for [presentations](https://arcpubs.quarto.pub/) and one for [other documents](https://arc.quarto.pub/). Sensitive information should not be published to Quarto Pub. Formal presentations by lab members to public audiences should be placed in the arcpubs repo.
+
+To publish a presentation (or other Quarto doc) to Quarto Pub, you should first log in on your default browsers.  You should next go to the Terminal tab in the RStudio IDE.  Navigate to the folder that contains your presentation.  Then type `quarto publish quarto-pub`.  If this is the first time you are publishing at Quarto Pub on that computer, you will need to authorize it.  Follow the prompts in the web browser and then in the terminal to complete the publication process.  This authorization is saved in a file called _publish.yml, which will be accessed for future updates to the presentation.
+
+See [additional instructions](https://quarto.org/docs/publishing/quarto-pub.html) in the Quarto guide if necessary.
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+## Advanced Quarto
+
+This page is intended for those already familiar with the Quarto basics. It primarily provides specific code examples and refernces for specialized tasks involving Quarto.
+
+## Terminal Commands Quick Reference
+
+- `quarto publish quarto-pub` to publish a presentation or document to Quarto Pub
+- `quarto render filename.qmd --to pdf`
+- `quarto render filename.qmd --to html`
+- `quarto render docname.qmd -o outputname.html`
+- `quarto render docname.qmd -P pv1:1 -P pv2:5`
+- `/opt/quarto/"${QUARTO_VERSION}"/bin/quarto check` to check installation details 
+
+To get information on options you can use with a terminal command, type `quarto command_name help`: e.g., `quarto render help` will list all flag options for the `quarto render` command. 
+
+
+## Advanced Format Types
+
+### Books and Websites
+
+Information on setting up a book: <https://quarto.org/docs/books/>
+
+Information on setting up a website: <https://quarto.org/docs/websites/> 
+
+Information on setting up Github Pages to publish a book/website on commit: <https://quarto.org/docs/publishing/github-pages.html#render-to-docs>
+
+The difference between a book and a website in quarto is the syntax in the `_quarto.yml` file. Books have chapters, websites have sections; there are also a few differences in the types of metadata options you can specify (for example, books have titles and authors, websites do not). The main visible difference in the published output is that book chapters are numbered, while website sections are not. 
+
+### Publishing Books and Websites
+
+We have chosen to use Github Pages to publish several of our books. See [this link](https://quarto.org/docs/publishing/github-pages.html) for detailed information on setting up your repo to have a Github Page and to use Github Actions to publish. 
+
+Basically, any commit which includes changed html files tells Github Actions to re-build the book. The publishing workflow therefore consists of a) rendering locally, and b) committing the newly-rendered documents via github desktop. It usually takes <2 minutes for Github Actions to build and deploy the updated pages.
+
+
+### Manuscript Projects
+As of 2025 our preferred method for creating public reproducible analysis is to have a [quarto project](https://quarto.org/docs/projects/quarto-projects.html) for each study.  
+
+A project allows you to connect a website, presentations (both slidesets and posters), and PDFs/word documents to a set of analysis notebooks (formerly our ana_.Rmd files). That way, code across all output formats can be updated simultaneously from a single location. Plots and charts can also be produced from these notebooks, which can them be used across multiple output document formats. 
+
+#### Setting up a manuscript project from scratch:
+
+1.  Create study repo for project on github in John's account (call it study_NAME)
+2.  Add collaborators to the repo
+3.  Clone the repo to your computer
+4.  Create manuscript project files in the repo.  In the terminal (in github folder above new repo) type `quarto create project manuscript` and then indicate the name of the repo folder when asked
+5.  Add a gh-pages branch to the repo. Do this in terminal with these commands
+      - `git switch --orphan gh-pages`
+      - `git commit --allow-empty -m "Initial commit on orphan branch"`
+      - `git push -u origin gh-pages`
+6. Set up github to publish website from the gh-pages branch.  Go to settings, pages, and select the gh-pages and /root as the branch to publish from. The website will be published at https://jjcurtin.github.io/study_NAME
+
+#### Using the Study Template Repo
+
+John has an [existing repo](https://github.com/jjcurtin/study_template) which can be cloned to use as a template for a manuscript project. This will be more useful to our lab members than creating it from scratch, as it already has many useful modifications to the default project.
+
+Note that in a project, presentations are located in subfolder that starts with an underscore, ie. `_presentations`, to prevent those files from being rendered during the project render.
+
+
+### Journal Articles
+
+#### Manuscript Templates 
+
+Quarto does have a system for applying journal article templates to quarto docs, see [this reference page](https://quarto.org/docs/journals/)
+
+The list of available templates is still somewhat small, but extending them seems doable.
+
+* [Info on creating a custom template](https://quarto.org/docs/journals/formats.html)
+* [Template for creating a custom template](https://github.com/quarto-journals/article-format-template)
+
+#### Generic Preprint template
+
+* [Typst Preprint Extension](https://github.com/mvuorre/quarto-preprint)
+
+#### AJP templates
+
+* [AJP Manuscript requirements](https://ajp.psychiatryonline.org/ajp_ifora )  
+* [Example AJP Latex Template](https://tex.stackexchange.com/questions/127639/template-for-american-journal-of-psychiatry)
+
+##### APA templates
+
+* [More APA style templates](https://www.overleaf.com/latex/templates/tagged/apa)  
+* [Lab APA template](https://github.com/jjcurtin/lab_support/blob/main/templates/apa.qmd). This is based on the template at [this repo](https://github.com/wjschne/apaquarto). Our version loads assets from our lab_support repo rather than installing the extention files locally. This is not a currently preferred template.
+* [Typst APAish manuscript](https://github.com/mvuorre/quarto-apaish). As of 2025 this is our preferred APA manuscript format and is built into our template Manuscript Project. 
+
+
+Note that Typst manuscripts have a the built-in typst citation style, which takes a slightly different format than our usual YAML:
+
+`bibliography: references.bib`  
+`bibliographystyle: apa`
+
+Or you can download a local copy of the desired .csl file and call them that way:
+
+`bibliography: references.bib`  
+`bibliographystyle: name_of_csl_file.csl`
+
+As of summer 2025, this extension doesn't support linking to the CSL repo (see Quarto Basics - Bibliographies).
+
+#### CSL YAML Templates
+
+Below are the YAML code of a couple that we use frequently (linked to the primary CSL repo)
+
+NIH Grant Proposals:  
+`csl: https://raw.githubusercontent.com/citation-style-language/styles/master/national-library-of-medicine-grant-proposals.csl`
+
+Elsevier (Vancouver substyle):  
+`csl: https://raw.githubusercontent.com/citation-style-language/styles-distribution/f8524f9b9df60e94e98f824f242a1fb27cc9fc59/elsevier-vancouver.csl`
+
+APA 7th Edition:  
+`csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl`
+
+
+## Other Lab Quarto Templates {#sec-Template}
+
+All of the following templates are .qmd files for use in creating lab-related documentation tailored to ARC standards with respect to margins, font, etc:
+
+### Simple 
+[Simple Quarto Template](https://github.com/jjcurtin/lab_support/blob/main/templates/simple.qmd). This simple template allows you to set margins/font and to switch from HTML to PDF output.
+
+### Simple PDF
+[Simple PDF YAML Template](https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_pdf.qmd). Simple template with YAML optimized for PDF output.
+
+### Simple HTML
+[Simple HTML YAML Template](https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_html.qmd) SUSAN ADD THIS
+
+### Simple R Analysis
+[Simple R Analyses HTML Template](https://github.com/jjcurtin/lab_support/blob/main/templates/yaml_r.qmd). Basic analysis script which invokes some of our paths and support functions. YAML optimized for HTML output.
+
+### Demo Slide Presentation
+[Demo slides](https://github.com/jjcurtin/lab_support/blob/main/templates/revealjs/demo_slides.qmd). A presentation template.
+
+### Letterhead
+[UW Letterhead](https://github.com/jjcurtin/lab_support/blob/main/templates/letterhead.qmd). Includes header images and signatures. See Susan if you plan to use this frequently enough that you'd like you name & sig embedded.
+
+## Advanced Rendering
+
+### Full book/website rendering
+
+For books and websites, which have many .qmd documents linked together, you would render the full book by simply calling `quarto render` (with no arguments) to render all documents in the active project directory.
+
+For books and websites, if anything changes in the .yml file (such as addition or deletion of a chapter), you MUST re-render the entire directory in this manner, otherwise the added/deleted chapter will not be rendered correctly.
+
+### Rendering multiple formats from a single .qmd script
+For rendering books and slides separately, we have written a bash script to handle setting the `_quarto.yml` file and then rendering the full project or a single file.  
+
+- call the function from the terminal: `./render.sh filename.qmd book`
+- the first parameter can be the name of the qmd file or `all` to render all units (only used for books, not slides)
+- the second parameter can be `book`, `slides` or `slides_wide` (the latter is primarily for rendering on giant monitors)
+
+### Rendering other formats and targets
+
+You can specify render targets and document render ordering more specifically in project metadata, see https://quarto.org/docs/projects/quarto-projects.html#render-targets
+
+You can then call a specific  format, e.g., PDF, with the `--to` flag: `quarto render --to pdf`. Only that specified format will be rendered.
+
+Other specific rendering resources:
+
+* [Rendering files with Vim](https://jjcurtin.github.io/docs_arc/vim.html#render-files) 
+* [Re-render and freeze](https://quarto.org/docs/projects/code-execution.html)
+
+
+## Using Parameters
+
+You define parameters in the YAML using the syntax below
+
+* You can assign initial values to the parameters.  These values will be used by default if you do not replace them with new values from the command line when you render the script.
+* You can update these values with new values you pass in when you render the script (see below).    
+* If you only provide a subset of updated parameter values when you render the document, the default values will be used for the remaining parameters.
+
+```{r}
+#| eval: false
+
+params:
+  pv1: 5
+  pv2: 10
+```
+
+
+In some instances, I prefer to assign the values from the params list to individual variables
+
+* Code is shorter when using these variables
+* I can update them interactively if I want to use different values (the params list is read-only)
+
+First set the parameters in the YAML as above.  Then put this code chunk right at the top of the script.   If you edit this code chunk to assign new values interactively, make sure you comment it out when you save the final script!
+```{r}
+#| eval: false
+
+pv1 <- params$pv1
+pv2 <- params$pv2
+# pv1 <- 5 # Use this line to interactively assign new value
+# pv2 <- 10 # use this line to interactively assign new value
+```
+
+
+### Using parameter values
+When you use params in the YAML, a list named `params` is created.  
+
+* You can then use this list as normal with no further code needed to establish the values.
+```{r}
+#| eval: false
+
+params$pv1 + params$pv2
+```
+
+* You can also access these values using inline r statements. See example below.  I strongly recommend using this in the title of your document so that you can confirm that you correctly updated the parameter values when you rendered!  e.g.,
+
+```{r}
+#| eval: false
+
+title: "Demo of quarto document with pv1 = `r params$pv1` and  pv2 = `r params$pv2`."
+```
+
+* Or if you assigned the parameter values to variables as I recommended, you can just use those variables as you normally would.  They will start with the values assigned to associated parameters (in YAML or input from command line)
+
+### Passing parameter values at command line
+
+I prefer to render quarto documents in the terminal.  
+
+* You can indicate the output filename (otherwise, the output file name is set to the input filename with a different extension).  
+* You can also pass in values to the parameters, which is typically why we use parameters in the first place
+
+Use the following syntax to render quarto documents at command line.
+
+* use -P to provide a parameter value.  No space between parameter name and value.  If you provide values for only a subset of parameters, defaults will be used for other parameters
+* use `-o` to specify filename (defaults to input filename if not provided).
+
+```{r}
+#| eval: false
+
+quarto render docname.qmd -o outputname.html  -P pv1:1 -P pv2:5
+```
+
+
+
+
+## Advanced Tables
+
+### HTML Tables
+If you use the kableExtra page, you will find it does away with the nice striping and spacing from plain kable(), and you then have to define that explicitly.
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(kableExtra, exclude="group_rows")
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(5) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  knitr::kable(.,
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) 
+
+
+```
+
+Note the table above, although the code is identical to the table displayed in the Basic Quarto section, has lost all formatting thanks to invoking kableExtra. The table below reproduces that formatting via kable_styling (with additional features such as floating around text, and footnotes; although it seems the float doesn't actually work!). 
+
+
+```{r}
+#| echo: false
+#| warning: false
+
+
+mtcars %>% 
+  select(mpg, cyl, gear) %>%
+  head(5) %>%
+  rownames_to_column("make") %>%
+  mutate(model = word(make, start = 2),
+    make = word(make)) %>% 
+  relocate(model, .after="make") %>%
+  kbl(.,format = "html",
+        align = c("l", "l", "c", "c", "c"),
+        col.names = c("Make", "Model", "Miles Per Gallon", "Cylinders", "Gears")) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = F,
+                position = "float_right") %>%
+  footnote(general = "Here is a general comments of the table. ",
+           number = c("Footnote 1; ", "Footnote 2; "),
+           alphabet = c("Footnote A; ", "Footnote B; "),
+           symbol = c("Footnote Symbol 1; ", "Footnote Symbol 2")
+           )
+           
+```
+
+Additional HTML-only features of kableExtra are documented [here](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html#HTML_Only_Features)
+
+
+### PDF/LaTeX Tables
+
+If using the [typst APAish manuscript](https://github.com/mvuorre/quarto-apaish) extension, note that Quarto 1.4XXX uses an older version of Typst without good table support. That should be fixed in the 1.5 release. (Summer 2025: still not fixed)
+
+The documentation for producing LaTeX tables in kableExtra is [here](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf)
+
+The following two tables demonstrate a complex table of the type used in the PDF ema and burden papers (here replicated with a far simpler dataset). This first table is the table code as extracted directly from the manuscript, with no additional formatting. It displays not unlike an HTML table:
+
+```{r}
+#| echo: false
+#| warning: false
+
+# display and format table
+iris %>% 
+  mutate(size = if_else(Petal.Width > 1, "large", "small")) %>%
+  group_by(Species, size) %>% 
+  tally() %>%
+  mutate(perc = n/nrow(iris)) %>% 
+  rbind(tibble(Species = "setosa", size = "large")) %>%
+  rbind(tibble(Species = "virginica", size = "small")) %>%
+  arrange(Species, size) %>% 
+  ungroup() %>% 
+  select(-Species) %>%    # TABLE CODE STARTS HERE vv 
+  kbl(longtable = TRUE,
+      booktabs = T,
+      col.names = c("", "N", "%"),
+      align = c("l", "c", "c"),
+      digits = 1,
+      caption = "Iris") %>%
+  kable_styling() %>% 
+  row_spec(row = 0, align = "c", italic = TRUE) %>% 
+  pack_rows("Setosa", 1, 2, bold = FALSE) %>% 
+  pack_rows("Versicolor", 3, 4, bold = FALSE) %>% 
+  pack_rows("Virginica", 5, 6, bold = FALSE)  %>% 
+  footnote(general="N = 75", threeparttable = TRUE) 
+
+```
+
+In LaTeX, this table displays quite differently. Below, the same code has been modified to reproduce *exactly* the look of the table as it appears in the PDF manuscript. That is, the code in the chunk above produces the output below when rendered with knitr to PDF; but rendering that output to HTML requires the additions in the chunk below:
+
+* `bootstrap_options = "none"` added to kable_styling removes the default horizontal lines, under each row, but then font size and table width must now be specified. 
+* `pack_rows()` adds horizontal lines in HTML but not LaTeX; those must be removed with the `label_row_css` option . 
+* Finally, column width is specified, and horizontal lines around the column headers and before the footnote, are added with `row_spec()`'s `extra_css` option.
+
+```{r}
+#| echo: false
+#| warning: false
+
+
+options(knitr.kable.NA = "")
+
+# display and format table
+iris %>% 
+  mutate(size = if_else(Petal.Width > 1, "large", "small")) %>%
+  group_by(Species, size) %>% 
+  tally() %>%
+  mutate(perc = n/nrow(iris)) %>% 
+  rbind(tibble(Species = "setosa", size = "large")) %>%
+  rbind(tibble(Species = "virginica", size = "small")) %>%
+  arrange(Species, size) %>% 
+  ungroup() %>% 
+  select(-Species) %>%  # TABLE CODE STARTS HERE vv 
+  kbl(longtable = TRUE,
+      booktabs = T,
+      col.names = c("", "N", "%"),
+      align = c("l", "c", "c"),
+      digits = 1,
+      caption = "Iris") %>%
+  kable_styling(bootstrap_options = "none", #remove all horizontal lines; must now specify font size and table width
+                font_size = 12,
+                full_width = TRUE) %>% 
+  row_spec(row = 0, align = "c", italic = TRUE) %>% 
+  pack_rows("Setosa", 1, 2, bold = FALSE, label_row_css = "border-bottom: none;") %>%  #remove horizontal line below packed rows
+  pack_rows("Versicolor", 3, 4, bold = FALSE, label_row_css = "border-bottom: none;") %>%  #remove horizontal line below packed rows
+  pack_rows("Virginica", 5, 6, bold = FALSE, label_row_css = "border-bottom: none;")  %>%  #remove horizontal line below packed rows
+  footnote(general="N = 75", threeparttable = TRUE) %>%
+  column_spec(1, width = "4in") %>% #specify column width
+  column_spec(2:3, width = "1in") %>% #specify column width
+  row_spec(0, extra_css = "border-bottom: 1px solid; border-top: 1px solid") %>% #add borders on the header row
+  row_spec(6, extra_css = "border-bottom: 1px solid") #add a border after the last row, before the footnote
+```
+
+### Useful Table Options and features
+
+To be sure tables display with NA cells as blanks (instead of "NA") include this before your first table:
+
+`options(knitr.kable.NA = "")`
+
+kableExtra has a useful function called collapse_rows, yet that seems to be [persistently](https://stackoverflow.com/questions/73789357/kableextra-html-table-not-collapsing-rows) [broken](https://github.com/haozhu233/kableExtra/issues/624) (Summer 2025: Ostensibly fixed)
+
+`row_spec()` has a parameter, `hline_after`, which, ostensibly, should create a horizontal line under that row, right? Apparently it [only works on LaTeX](https://stackoverflow.com/questions/53655983/row-spec-function-from-kableextra-does-not-create-a-horizontal-line-in-html-ou) although this is undocumented. Apparently the solution is to add `row_spec(X, extra_css = "border-bottom: 1px solid"))` (where x is the rownum; 0 for the header, `nrow(df)` for the last row)
+
+Similarly, to supress hlines on headers created by `pack_rows()`, you need to add `extra_css = "border-bottom: none"` into the `pack_rows()` command.
+
+
+## Advanced PDF formatting using LaTeX
+
+Formatting of a PDF rendered from Quarto can be finely controlled with the addition of LaTeX commands. See [this Quarto reference](https://quarto.org/docs/output-formats/pdf-basics.html) as well as some examples below: 
+
+### PDF Fonts
+To specify a font you add the following to the YAML:
+
+If using Xelatex:  
+`mainfont : FontName # for document text`  
+`sansfont : FontName # for H1-H6 text`  
+`monofont : FontName  # for code chunk text`   
+
+If using pdflatex:  
+`fontfamily : FontName # for document text`
+
+Where `FontName` is the name of your desired system font. To find available system fonts, run, `systemfonts::system_fonts()` and look for the *name* of the font (not the name of the font .tff file). For example, if you wish to use Arial font, your `FontName` should be "ArialMT", rather than "arial" or "Arial".
+
+
+### Inline Commands
+
+Certain LaTeX commands can be placed in qmd files as plaintext (on their own line, with surrounding blank lines), for example: `\newpage` starts a new page, `\hline` adds a horizontal line.
+
+### Chunk Commands
+
+Multiline commands can be wrapped in LaTeX code chunks:
+
+```{=latex}
+#| echo: true
+\begin{tabular}{ll}
+A & B \\
+A & B \\
+\end{tabular}
+```
+
+### LaTeX YAML Commands
+`\raggedright` added to the include-in-header YAML command, ensures lines are flush with the left margin and ragged on the right margin (vs justified where text is stretched to ensure both margins are flush)
+
+
+We use the following in the YAML header to set up a html document to render as a single file with a TOC.
+```{r}
+#| eval: false
+
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 4
+```
+
+### LaTeX Packages
+
+* `\usepackage{wrapfig}` - allow text wrapping
+* `\usepackage{float}` - allow use of float options such as H (use UPPERCASE to preserve floats)
+* `\usepackage{caption}` - allows supression of automatic caption numbering
+* `\usepackage{lscape}` - allows insertion of a landscape oriented page
+* [`\usepackage{enumitem}`](https://ctan.math.illinois.edu/macros/latex/contrib/enumitem/enumitem.pdf) - allows fine-grain control over list styling
