@@ -1,0 +1,162 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Visualizing geolocation data
+
+```{r setup}
+#| echo: false
+
+# source
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/fun_ml.R?raw=true")
+
+# conflicts
+options(conflicts.policy = "depends.ok")
+tidymodels_conflictRules()
+conflictRules("purrr", mask.ok = c("accumulate", "when"))
+conflictRules("Matrix", mask.ok = c("expand", "pack", "unpack"))
+
+# packages
+library(tidyverse)
+```
+
+Visualizing geolocation data can be an excellent way to create fun visuals for talks and to make data checking easier. Below are several ways to display maps of geolocation data.
+
+## Loading in and checking data.
+
+For these tutorials we will be using data from a single individual collected during the Women's March on the Washington Mall using the Moves app. These data were pulled from a [publicly available online tutorial](https://quantdev.ssri.psu.edu/tutorials/intro-geospatial-data-and-maps-r).
+
+```{r}
+gps <- read_csv("data/moves_example_data.csv",
+                show_col_types = FALSE) |>
+  janitor::clean_names() |> 
+  rename(lon = longitude,
+         lat = latitude) |>
+  glimpse()
+```
+
+## Creating static maps
+
+Static maps can be created using the `ggmap` library. You will need to set an API key for Stadia Maps to access some of the available designs (specified using the maptype argument in `get_map()`).
+
+```{r}
+library(ggmap)
+register_stadiamaps("d4bd71d7-556a-4627-9515-ef6e96823ce3")
+```
+
+Here is an example with points.
+```{r}
+cbbox <- make_bbox(lon = gps$lon, lat = gps$lat, f = .1)
+sq_map <- get_map(location = cbbox, maptype = "stamen_terrain", source = "stadia")
+    
+ggmap(sq_map) + 
+  geom_point(data = gps, aes(x = gps$lon, y = gps$lat), 
+            size = 3, alpha = 0.6, color="darkred") +
+  labs(x = " ", y = " ", title = "Static map (points)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+And an example with points that vary in size based on duration.
+```{r}
+cbbox <- make_bbox(lon = gps$lon, lat = gps$lat, f = .1)
+sq_map <- get_map(location = cbbox, maptype = "stamen_terrain", source = "stadia")
+    
+ggmap(sq_map) + 
+  geom_point(data = gps, aes(x = gps$lon, y = gps$lat, size = duration), 
+            alpha = 0.6, color="darkred") +
+  labs(x = " ", y = " ", title = "Static map (points based on dur.)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Here is an example with connected lines if you were interested in looking at the travel path that an individual took using a `geom_path()` layer.
+```{r}
+cbbox <- make_bbox(lon = gps$lon, lat = gps$lat, f = .1)
+sq_map <- get_map(location = cbbox, maptype = "stamen_terrain", source = "stadia")
+    
+ggmap(sq_map) + 
+  geom_path(data = gps, aes(x = gps$lon, y = gps$lat), 
+            linewidth = 1, lineend = "round", color="darkred") +
+  labs(x = " ", y = " ", title = "Static map (path traveled)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Creating dynamic maps
+
+Dynamic maps can be helpful visual tools for QC in addition to giving your audience something interesting to look at.
+
+### Animated maps
+
+We can create animated maps using moveVis, with help from move2 and raster.
+
+```{r}
+# devtools::install_github("16EAGLE/moveVis")
+library(moveVis)
+library(raster, exclude = c("select"))
+library(move2)
+library(magick)
+```
+
+You will need to first filter out any locations with less than 2 points (there is one such point in our location data). A later function will also be looking for an identification column, which will likely be present for any research participant data (but isn't in these mock data, so we'll add it in).
+```{r}
+gps_filtered <- gps |> 
+  group_by(name) |> 
+  filter(n() >= 2) |> 
+  ungroup() |> 
+  mutate(subid = 1)
+```
+
+Next, we need to convert the GPS data into a move object.
+```{r}
+gps_moves <- df2move(gps_filtered,
+        proj = "EPSG:4326",  # specifies the coordinate reference system
+        x = "lon", y = "lat",
+        time = "start", # in other datasets, this might be dttm_obs
+        track_id = "subid") # your subject identifier goes here
+```
+
+Then, we take our move object and interpolate it to be at regular time intervals.
+```{r}
+m <- align_move(gps_moves,
+                res = 5, unit = "mins") # data will be aligned to every 5 minutes
+```
+
+Now we can overlay these movement patterns onto a map.
+```{r}
+frames <- frames_spatial(m, path_colours = "darkblue",
+                         map_service = "osm_stamen", map_type = "terrain",
+                         map_token = "d4bd71d7-556a-4627-9515-ef6e96823ce3", # API key
+                         alpha = 0.5, path_legend = FALSE) |>  
+  add_labels(x = "Longitude", y = "Latitude") |>
+  add_northarrow() |>  
+  add_scalebar() |> 
+  add_timestamps(type = "label") |>  
+  add_progress()
+```
+
+In general, it's a good idea to look at some frames to make sure the map looks correct. You can index into your frames object using the following code.
+```{r}
+frames[[10]]
+```
+
+Once you've checked a few frames and it looks like everything is rendering as it should, you can save out the animation as a gif.
+```{r}
+outfile <- "data/moveVis.gif"
+
+if (!file.exists(outfile)) {
+  animate_frames(frames, out_file = outfile)
+} else {
+  message("File already exists, skipping animation rendering.")
+}
+```
+
+image_read() from the magick package can be used to display gifs (also works in your Viewer in RStudio!).
+```{r}
+img <- image_read("data/moveVis.gif")
+print(img)
+```
+
+### Interactive maps

@@ -37,6 +37,7 @@ book:
     - functions.qmd
     - ggplot2.qmd
     - simulations.qmd
+    - geolocation.qmd
     - programming.qmd
     - quarto.qmd
     - quarto.qmd
