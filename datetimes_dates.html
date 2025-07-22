@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; Exploring date-times and dates with lubridate – Data Wrangling and Visualization in the Tidyverse</title>
+<title>17&nbsp; Exploring date-times and dates with lubridate – Data Wrangling and Visualization in the Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,16 +65,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./resources.html" rel="next">
-<link href="./quarto2.html" rel="prev">
+<link href="./quarto.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-77205cbbef6a5b90ba72edc25dea2156.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datetimes_dates.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datetimes_dates.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -270,32 +270,38 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./geolocation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing geolocation data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./programming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Programming Notes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Programming Notes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Quarto (Revision Draft)</span></span></a>
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datetimes_dates.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">resources.html</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">resources.html</span></span></a>
   </div>
 </li>
     </ul>
@@ -308,10 +314,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#date-timesdttm" id="toc-date-timesdttm" class="nav-link active" data-scroll-target="#date-timesdttm"><span class="header-section-number">16.1</span> Date-times/dttm</a></li>
-  <li><a href="#dates" id="toc-dates" class="nav-link" data-scroll-target="#dates"><span class="header-section-number">16.2</span> Dates</a></li>
-  <li><a href="#converting-unix-times" id="toc-converting-unix-times" class="nav-link" data-scroll-target="#converting-unix-times"><span class="header-section-number">16.3</span> Converting unix times</a></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">16.4</span> Conclusions</a></li>
+  <li><a href="#date-timesdttm" id="toc-date-timesdttm" class="nav-link active" data-scroll-target="#date-timesdttm"><span class="header-section-number">17.1</span> Date-times/dttm</a></li>
+  <li><a href="#dates" id="toc-dates" class="nav-link" data-scroll-target="#dates"><span class="header-section-number">17.2</span> Dates</a></li>
+  <li><a href="#converting-unix-times" id="toc-converting-unix-times" class="nav-link" data-scroll-target="#converting-unix-times"><span class="header-section-number">17.3</span> Converting unix times</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">17.4</span> Conclusions</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jjcurtin/dwt/edit/main/datetimes_dates.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -320,7 +326,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Exploring date-times and dates with lubridate</span></h1>
 </div>
 
 
@@ -344,8 +350,8 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="st">"data"</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="date-timesdttm" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="date-timesdttm"><span class="header-section-number">16.1</span> Date-times/dttm</h2>
+<section id="date-timesdttm" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="date-timesdttm"><span class="header-section-number">17.1</span> Date-times/dttm</h2>
 <ul>
 <li>Create a tibble with a date as a character string</li>
 </ul>
@@ -518,8 +524,8 @@ $ t_dttm &lt;dttm&gt; 2017-01-27 18:01:00, 2017-01-28 05:59:00, 2017-01-27 06:01
 </div>
 </div>
 </section>
-<section id="dates" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="dates"><span class="header-section-number">16.2</span> Dates</h2>
+<section id="dates" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="dates"><span class="header-section-number">17.2</span> Dates</h2>
 <ul>
 <li>Use <span class="math inline">\(as\_date()\)</span> to convert character string to date</li>
 <li>date class does NOT have tz</li>
@@ -618,8 +624,8 @@ $ dates_asdates &lt;date&gt; 2017-01-27, 2017-01-28, 2017-01-29
 </div>
 </div>
 </section>
-<section id="converting-unix-times" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="converting-unix-times"><span class="header-section-number">16.3</span> Converting unix times</h2>
+<section id="converting-unix-times" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="converting-unix-times"><span class="header-section-number">17.3</span> Converting unix times</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.epochconverter.com/</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Epoch timestamp: 1485540001</span></span>
@@ -637,8 +643,8 @@ $ dates_asdates &lt;date&gt; 2017-01-27, 2017-01-28, 2017-01-29
 </div>
 </div>
 </section>
-<section id="conclusions" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">16.4</span> Conclusions</h2>
+<section id="conclusions" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">17.4</span> Conclusions</h2>
 <p>Lab practices:</p>
 <ul>
 <li>Only use lubridate functions for manipulation of date-time and date objects</li>
@@ -736,6 +742,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -846,6 +854,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1073,13 +1082,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./quarto2.html" class="pagination-link" aria-label="Quarto (Revision Draft)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Quarto (Revision Draft)</span></span>
+      <a href="./quarto.html" class="pagination-link" aria-label="Quarto">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Quarto</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./resources.html" class="pagination-link" aria-label="resources.html">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">resources.html</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">resources.html</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
