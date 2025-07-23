@@ -1,5 +1,14 @@
 ---
 output: html_document
+author: 
+  - name: Christopher Janssen
+    orcid: 0009-0001-2587-4367
+    corresponding: true
+    email: cjanssen3@wisc.edu
+  - name: Claire Punturieri
+    orcid: 0009-0003-7743-3736
+    corresponding: true
+    email: punturieri@wisc.edu
 editor_options: 
   chunk_output_type: console
 ---
@@ -160,3 +169,196 @@ print(img)
 ```
 
 ### Interactive maps
+
+Interactive maps using Leaflet provide an excellent way to explore GPS data with some new functionality.
+
+```{r}
+library(leaflet)
+library(htmlwidgets)
+```
+
+#### Basic Interactive Leaflet Map
+
+Here's a basic interactive map with clickable points:
+
+```{r}
+leaflet(gps) |>
+  addTiles() |>  # adds the default openstreetmap tiles
+  addCircleMarkers(
+    lng = ~lon,  # longitude column from data
+    lat = ~lat,  # latitude column from data
+    radius = 6,  # size of circles in pixels
+    color = "#000",  # border color
+    fillColor = "#C5050C",  # fill color (go badgers)
+    fillOpacity = 0.7,  # transparency (0 = transparent, 1 = opaque)
+    stroke = TRUE,  # whether to draw border
+    weight = 2,  # border thickness
+    popup = ~paste0(  # html popup when clicking points
+      "<strong>", name, "</strong><br>",
+      "Date: ", date, "<br>",
+      "Start: ", format(as.POSIXct(start), "%H:%M"), "<br>",
+      "Duration: ", round(duration/60, 1), " minutes"
+    )
+  ) |>
+  # center map on average coordinates
+  setView(lng = mean(gps$lon), lat = mean(gps$lat), zoom = 13)
+```
+
+#### Map with Duration-based Sizing
+
+We can also vary the point size based on duration to show how long the person spent at each location:
+
+```{r}
+leaflet(gps) |>
+  addTiles() |>
+  addCircleMarkers(
+    lng = ~lon, 
+    lat = ~lat,
+    # scale radius by duration with minimum size of 3 pixels
+    radius = ~pmax(3, duration/200),  
+    color = "#000",  # black border
+    fillColor = "#C5050C",  # red fill (go badgers)
+    fillOpacity = 0.6,
+    stroke = TRUE,
+    weight = 1,  # thinner border than previous example
+    popup = ~paste0(
+      "<strong>", name, "</strong><br>",
+      "Duration: ", round(duration/60, 1), " minutes<br>",
+      "Time: ", format(as.POSIXct(start), "%H:%M")
+    )
+  ) |>
+  setView(lng = mean(gps$lon), lat = mean(gps$lat), zoom = 13)
+```
+
+#### Map with Movement Path
+
+For showing movement patterns, we can add lines connecting the locations in chronological order:
+
+```{r}
+# first sort data by time to ensure correct path order
+gps_ordered <- gps |> arrange(as.POSIXct(start))
+
+leaflet(gps_ordered) |>
+  addTiles() |>
+  # add polylines !first! so they appear under the points
+  addPolylines(
+    lng = ~lon,
+    lat = ~lat,
+    color = "#C5050C",  # go badgers
+    weight = 3,  # line thickness
+    opacity = 0.7  # line transparency
+  ) |>
+  # add circle markers on top of the lines
+  addCircleMarkers(
+    lng = ~lon, 
+    lat = ~lat,
+    radius = 5,
+    color = "#000",  # black border
+    fillColor = "#FFF", # white fill (go badgers)
+    fillOpacity = 0.8,
+    weight = 2,
+    popup = ~paste0(
+      "<strong>", name, "</strong><br>",
+      "Time: ", format(as.POSIXct(start), "%H:%M"), "<br>",
+      "Duration: ", round(duration/60, 1), " minutes"
+    )
+  ) |>
+  setView(lng = mean(gps$lon), lat = mean(gps$lat), zoom = 13)
+```
+
+#### Map with Color-coding
+
+We can also add color-coding to better visualize patterns in the data:
+
+```{r}
+# example with color-coded duration using viridis palette
+gps_chron <- gps |>
+  mutate(
+    start_time = as.POSIXct(start),
+    duration_min = round(duration / 60, 1)
+  ) |>
+  arrange(start_time)
+
+# create color palette for duration
+pal <- colorNumeric("viridis", domain = gps_chron$duration)
+
+leaflet(gps_chron) |>
+  addTiles() |>
+  addCircleMarkers(
+    lng = ~lon, 
+    lat = ~lat,
+    radius = 6,
+    color = "#000",
+    fillColor = ~pal(duration),  # color by duration
+    fillOpacity = 0.7,
+    weight = 1,
+    popup = ~paste0(
+      "<strong>", name, "</strong><br>",
+      "Duration: ", duration_min, " minutes<br>",
+      "Time: ", format(start_time, "%H:%M")
+    )
+  ) |>
+  addLegend(
+    pal = pal, 
+    values = ~duration,
+    title = "Duration (sec)",
+    position = "bottomright"
+  ) |>
+  setView(lng = mean(gps_chron$lon), lat = mean(gps_chron$lat), zoom = 13)
+```
+
+#### Map with Layer Controls
+
+For datasets with multiple participants or groups, we can use layer controls to toggle different groups on and off:
+
+```{r}
+# artificially split data into two "participants" to demonstrate layer controls
+gps_participants <- gps |>
+  mutate(
+    start_time = as.POSIXct(start),
+    # split by time - early vs late attendees
+    participant = ifelse(start_time < median(start_time), "Early Attendee", "Late Attendee")
+  ) |>
+  arrange(start_time)
+
+# create base map
+map <- leaflet() |>
+  addTiles() |>
+  setView(lng = mean(gps_participants$lon), lat = mean(gps_participants$lat), zoom = 13)
+
+# use a for loop with indexed colors
+# for even more participants, you could also use `RColorBrewer::brewer.pal()` or `rainbow()` to automatically generate colors.
+participants <- unique(gps_participants$participant)
+colors <- c("#C5050C", "#2E86AB")  # red, blue
+
+# add points for each participant as separate groups
+for (i in seq_along(participants)) {
+  participant_data <- gps_participants |> filter(participant == participants[i])
+  
+  map <- map |>
+    addCircleMarkers(
+      data = participant_data,
+      lng = ~lon, 
+      lat = ~lat,
+      radius = 6,
+      color = "#000",
+      fillColor = colors[i],  # index into color vector
+      fillOpacity = 0.7,
+      weight = 1,
+      popup = ~paste0(
+        "<strong>", name, "</strong><br>",
+        "Group: ", participant, "<br>",
+        "Time: ", format(start_time, "%H:%M"), "<br>",
+        "Duration: ", round(duration/60, 1), " minutes"
+      ),
+      group = participants[i]  # use indexed participant name
+    )
+}
+
+# add layer controls to toggle groups
+map |>
+  addLayersControl(
+    overlayGroups = unique(gps_participants$participant),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+```
