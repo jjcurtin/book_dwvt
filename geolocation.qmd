@@ -1,14 +1,16 @@
 ---
 output: html_document
 author: 
-  - name: Christopher Janssen
-    orcid: 0009-0001-2587-4367
-    corresponding: true
-    email: cjanssen3@wisc.edu
   - name: Claire Punturieri
     orcid: 0009-0003-7743-3736
     corresponding: true
     email: punturieri@wisc.edu
+    url: https://arc.psych.wisc.edu/staff/punturieri-claire/
+  - name: Christopher Janssen
+    orcid: 0009-0001-2587-4367
+    corresponding: true
+    email: cjanssen3@wisc.edu
+    url: https://github.com/christopher-janssen
 editor_options: 
   chunk_output_type: console
 ---
@@ -326,23 +328,19 @@ map <- leaflet() |>
   addTiles() |>
   setView(lng = mean(gps_participants$lon), lat = mean(gps_participants$lat), zoom = 13)
 
-# use a for loop with indexed colors
-# for even more participants, you could also use `RColorBrewer::brewer.pal()` or `rainbow()` to automatically generate colors.
-participants <- unique(gps_participants$participant)
-colors <- c("#C5050C", "#2E86AB")  # red, blue
-
-# add points for each participant as separate groups
-for (i in seq_along(participants)) {
-  participant_data <- gps_participants |> filter(participant == participants[i])
+# define a function
+add_participant_markers <- function(participant_name, map_obj, data, colors) {
+  participant_data <- data |> filter(participant == participant_name)
+  color_index <- which(unique(data$participant) == participant_name)
   
-  map <- map |>
+  map_obj |>
     addCircleMarkers(
       data = participant_data,
       lng = ~lon, 
       lat = ~lat,
       radius = 6,
       color = "#000",
-      fillColor = colors[i],  # index into color vector
+      fillColor = colors[color_index],
       fillOpacity = 0.7,
       weight = 1,
       popup = ~paste0(
@@ -351,9 +349,18 @@ for (i in seq_along(participants)) {
         "Time: ", format(start_time, "%H:%M"), "<br>",
         "Duration: ", round(duration/60, 1), " minutes"
       ),
-      group = participants[i]  # use indexed participant name
+      group = participant_name
     )
 }
+
+# get all participants in a list
+participants <- unique(gps_participants$participant)
+colors <- c("#C5050C", "#2E86AB")  # red, blue
+
+# use reduce() to apply the function to each participant
+map <- participants |>
+  reduce(\(map_obj, participant) add_participant_markers(participant, map_obj, gps_participants, colors),
+         .init = map)
 
 # add layer controls to toggle groups
 map |>
