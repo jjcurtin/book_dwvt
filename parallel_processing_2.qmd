@@ -34,16 +34,6 @@ Here are the number of physical (not logical) cores on this machine.  You may ha
 parallel::detectCores(logical = FALSE)
 ```
 
-Lets use them by setting up a parallel backend.  
-
-- This works on Windows, Mac OSs, and Linux.  
-- Options that use forking rather than sockets may be [faster](https://www.r-bloggers.com/2019/06/parallel-r-socket-or-fork/) for Linux and Mac OSs but we prefer sockets because it works on all three major OSs and we use all three in our lab.
-- We prefer to use namespace when calling these functions rather than loading full packages
-```{r}
-# cl <- parallel::makePSOCKcluster(parallel::detectCores(logical = FALSE))
-# doParallel::registerDoParallel(cl)
-```
-
 
 ### future_map()
 
@@ -63,17 +53,13 @@ toc()
 
 Using `future_map()` with a plan (Do this!)
 ```{r}
+# library(future)  # need this loaded at top of script to use plan()
 plan(multisession, workers = parallel::detectCores(logical = FALSE))
-```
 
-```{r}
 tic()
 x <- future_map(c(2, 2, 2), \(time) Sys.sleep(time))
 toc()
-```
 
-Set plan back to sequential
-```{r}
 plan(sequential)
 ```
 
@@ -121,9 +107,12 @@ linear_reg(penalty = tune(), mixture = tune()) %>%
 toc()
 ```
 
-Now allow use of parallel processing (the default).  No plan is needed here (consistent with findings for `foreach()`).  Yay!
+
+Now with the use of a plan from furture package
 ```{r} 
+# library(future)  # need this loaded at top of script to use plan()
 plan(multisession, workers = parallel::detectCores(logical = FALSE))
+
 tic()
 linear_reg(penalty = tune(), mixture = tune()) %>% 
   set_engine("glmnet") %>% 
@@ -131,6 +120,7 @@ linear_reg(penalty = tune(), mixture = tune()) %>%
             resamples = splits, grid = tune_grid, 
             metrics = metric_set(rmse))
 toc()
+
 plan(sequential)
 ```
 
@@ -147,33 +137,28 @@ x <- foreach(time = c(2, 2, 2), .combine = "c") %do% {
 toc()
 ```
 
-`foreach()` in parallel mode using `%dopar%` but without a parallel plan.  in contrast to `future_map()`, no plan is needed for `foreach()`.  You should use it without a plan!
-```{r}
-tic()
-x <- foreach(time = c(2, 2, 2), .combine = "c") %dopar% {
-  Sys.sleep(time)
-  time
-}
-toc()
-```
 
-But a plan doesn't break anything either  Still, don't use it because not needed.
+foreach supports parallel processing with the future backend.   There are two additiona adjustments needed
+
+- library(doFuture) needs to be loaded
+- and %dofuture% replaces %do% (or the previously used %dopar%)
+
 ```{r}
+# library(future)  # need this loaded at top of script to use plan
+library(doFuture) # also need doFuture to use %dofuture% with foreach
+
 plan(multisession, workers = parallel::detectCores(logical = FALSE))
-```
 
-```{r}
 tic()
-x <- foreach(time = c(2, 2, 2), .combine = "c") %dopar% {
+x <- foreach(time = c(2, 2, 2), .combine = "c") %dofuture% {
   Sys.sleep(time)
   time
 }
 toc()
-```
 
-```{r}
 plan(sequential)
 ```
+
 
 Need a demo for how to handle random numbers. No error or warning here but `%dorng%` is recommended I think?
 ```{r}
@@ -184,50 +169,3 @@ x <- foreach(time = c(2, 2, 2), .combine = "c") %dopar% {
 }
 toc()
 ```
-
-## Final notes
-
-The following is often found as an alternative setup for a back-end for parallel processing.  It works for `future_map()` (when combined with plan) and for `foreach()` but not in the tidymodels implementations of resampling.  Not clear why since those use `foreach()` but this should  not be used if you plan to use tidymodels resampling.
-
-```{r}
-#| eval: false
-
-library(doFuture)
-registerDoFuture()
-```
-
-I tried this both directly and with various options of `plan()` 
-```{r}
-#| eval: false
-
-plan(multisession, workers = parallel::detectCores(logical = FALSE))
-```
-
-and with 
-```{r}
-#| eval: false
-
-cl <- makeCluster(parallel::detectCores(logical = FALSE))
-plan(cluster, workers = cl)
-```
-
-## Conclusions
-
-For `future_map()`, `foreach()`, and tidymodels functions in parallel, set up the parallel backend with this code chunk.
-
-```{r}
-#| eval: false
-
-cl <- parallel::makePSOCKcluster(parallel::detectCores(logical = FALSE))
-doParallel::registerDoParallel(cl)
-```
-
-Nothing further is needed to use `foreach()` or tidymodels functions.
-
-For `future_map()`, you need to set up a multisession plan with this code chunk
-```{r}
-#| eval: false
-
-plan(multisession, workers = parallel::detectCores(logical = FALSE))
-```
-
