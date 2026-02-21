@@ -72,14 +72,15 @@ First set up code for `tidymodels/tidyverse`, packages for parallel processing a
 
 library(tidyverse)
 library(tidymodels)
-options(conflicts.policy = "depends.ok")
 
-library(future)  # for setting up parallel processing plans for tidymodels and other paralle workflows
-library(doFuture) # for foreach parallel processing with future backend
+# for setting up parallel processing plans for tidymodels and other parallel workflows
+library(future)  
+# for foreach() parallel processing with future backend
+library(doFuture) 
 
 library(tictoc)  # for crude timing to evaluate benefits
 library(furrr) # for future_map()
-library(foreach, exclude = c("accumulate", "when")) # for foreach
+library(foreach, exclude = c("accumulate", "when")) # for foreach()
 
 # source for demo ML workflow in tidymodels
 source("https://github.com/jjcurtin/lab_support/blob/main/fun_ml.R?raw=true")
