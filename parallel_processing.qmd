@@ -146,6 +146,8 @@ First, let's benchmark without parallel processing.  `tune_grid()` (and `fit_res
 
 
 ```{r}
+#| label: sequential_tune_grid
+
 tic()
 linear_reg(penalty = tune(), mixture = tune()) %>% 
   set_engine("glmnet") %>% 
@@ -159,6 +161,8 @@ toc()
 
 Now  we set up a parallel plan (multisession) and run again.
 ```{r} 
+#| label: parallel_tune_grid 
+
 # library(future)  # need this loaded at top of script to use plan()
 plan(multisession, workers = parallel::detectCores(logical = FALSE))
 
